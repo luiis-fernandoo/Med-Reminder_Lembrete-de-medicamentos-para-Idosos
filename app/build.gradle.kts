@@ -46,4 +46,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database:20.0.2")
     implementation("com.google.firebase:firebase-storage:20.0.0")
+    //Gluid para foto
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 }

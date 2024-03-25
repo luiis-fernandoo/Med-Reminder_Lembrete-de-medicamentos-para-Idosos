@@ -32,28 +32,28 @@ public class FeedEntry implements BaseColumns {
         private static final String SQL_CREATE_ENTRIES_Elderly =
                 "CREATE TABLE " + helperElderly.TABLE_NAME + " (" +
                         helperElderly._ID + " INTEGER PRIMARY KEY, " +
-                        helperElderly.COLUMN_NAME_NAME + "TEXT," +
-                        helperElderly.COLUMN_NAME_PASSWORD + "TEXT," +
-                        helperElderly.COLUMN_NAME_PHOTO_PROFILE + "TEXT," +
-                        helperElderly.COLUMN_NAME_MEDICAMENTO_ID + " INTEGER REFERENCES, " +
-                        helperMedicine.TABLE_NAME + "(" + helperMedicine._ID + ")," +
+                        helperElderly.COLUMN_NAME_NAME + " TEXT," +
+                        helperElderly.COLUMN_NAME_EMAIL + " TEXT," +
+                        helperElderly.COLUMN_NAME_PASSWORD + " TEXT," +
+                        helperElderly.COLUMN_NAME_PHOTO_PROFILE + " TEXT," +
+                        helperElderly.COLUMN_NAME_CUIDADOR_ID + " INTEGER REFERENCES " +
+                        helperElderly.TABLE_NAME + "(" + helperElderlyCaregiver._ID + ")," +
                         helperElderly.COLUMN_NAME_AGE + " INTEGER)";
 
         private static final String SQL_CREATE_ENTRIES_ElderlyCaregiver =
                 "CREATE TABLE " + helperElderlyCaregiver.TABLE_NAME + " (" +
                         helperElderlyCaregiver._ID + " INTEGER PRIMARY KEY, " +
-                        helperElderlyCaregiver.COLUMN_NAME_NAME + "TEXT," +
-                        helperElderlyCaregiver.COLUMN_NAME_PASSWORD + "TEXT," +
-                        helperElderlyCaregiver.COLUMN_NAME_PHOTO_PROFILE + "TEXT," +
-                        helperElderlyCaregiver.COLUMN_NAME_IDOSO_ID + " INTEGER REFERENCES, " +
-                        helperElderly.TABLE_NAME + "(" + helperElderly._ID + ")";
+                        helperElderlyCaregiver.COLUMN_NAME_EMAIL + " TEXT," +
+                        helperElderlyCaregiver.COLUMN_NAME_NAME + " TEXT," +
+                        helperElderlyCaregiver.COLUMN_NAME_PASSWORD + " TEXT," +
+                        helperElderlyCaregiver.COLUMN_NAME_PHOTO_PROFILE + " TEXT)";
 
         private static final String SQL_CREATE_ENTRIES_Reminder =
                 "CREATE TABLE " + helperReminder.TABLE_NAME + " (" +
                         helperReminder._ID + " INTEGER PRIMARY KEY, " +
-                        helperReminder.COLUMN_NAME_MEDICAMENTO_ID + " INTEGER REFERENCES, " +
+                        helperReminder.COLUMN_NAME_MEDICAMENTO_ID + " INTEGER REFERENCES " +
                         helperMedicine.TABLE_NAME + "(" + helperMedicine._ID + ")," +
-                        helperReminder.COLUMN_NAME_IDOSO_ID + " INTEGER)," +
+                        helperReminder.COLUMN_NAME_IDOSO_ID + " INTEGER REFERENCES " +
                         helperElderly.TABLE_NAME + "(" + helperElderly._ID + ")," +
                         helperReminder.COLUMN_NAME_DOSE + " TEXT," +
                         helperReminder.COLUMN_NAME_DURATION + " TEXT," +
@@ -64,6 +64,7 @@ public class FeedEntry implements BaseColumns {
                         helperReminder.COLUMN_NAME_STATUS + " TEXT," +
                         helperReminder.COLUMN_NAME_PHOTO_MEDICINE_BOX + " TEXT," +
                         helperReminder.COLUMN_NAME_PHOTO_MEDICINE_PILL + " TEXT)";
+
 
         public DBHelpers(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -80,6 +81,10 @@ public class FeedEntry implements BaseColumns {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // Aqui você colocaria código para atualizar as tabelas, se necessário
+        }
+
+        public void deleteDatabase(Context context) {
+            context.deleteDatabase(DATABASE_NAME);
         }
     }
 }
