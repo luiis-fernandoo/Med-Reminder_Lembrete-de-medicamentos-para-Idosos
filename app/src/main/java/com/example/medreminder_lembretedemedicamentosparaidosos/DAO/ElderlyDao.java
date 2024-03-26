@@ -29,10 +29,8 @@ public class ElderlyDao {
         values.put("name", elderly.getName());
         values.put("password", elderly.getPassword());
         values.put("photo_profile", elderly.getProfile_photo());
-        if(elderly.getCuidador_id() != 0){
-            values.put("age", Math.min(elderly.getAge(), 0));
-            values.put("cuidador_id", elderly.getCuidador_id() != 0 ? elderly.getCuidador_id() : null);
-        }
+        values.put("age", elderly.getAge());
+        values.put("cuidador_id", elderly.getCuidador_id() != 0 ? elderly.getCuidador_id() : null);
         long resultado = dbLite.insert("elderly", null, values);
 
         return resultado != -1;

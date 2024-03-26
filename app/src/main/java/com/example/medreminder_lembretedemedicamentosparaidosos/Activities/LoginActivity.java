@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,10 +36,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView goRegister, notRegister, typeUserLogin;
+    private TextView goRegister, notRegister;
     private EditText emailLogin, passwordLogin;
     private Button buttonLogin;
     private String selectedUserType;
+    private SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         emailLogin = findViewById(R.id.emailLogin);
         passwordLogin = findViewById(R.id.passwordLogin);
         buttonLogin = findViewById(R.id.buttonLogin);
-        typeUserLogin = findViewById(R.id.typeUserLogin);
 
-        typeUserLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                exibirPopup(view);
-            }
-        });
+        sp = getSharedPreferences("app", Context.MODE_PRIVATE);
 
         goRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,27 +80,29 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = emailLogin.getText().toString().trim();
                 String password = passwordLogin.getText().toString();
-                String typeUser = selectedUserType;
 
-                if(typeUser.equals("Idoso")){
-                    Elderly elderly = new Elderly(email, password);
-                    ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
-                    if(elderlyDao.VerifyLogin()){
-                        SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("email", email);
-                        Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
-                        startActivity(intent);
-                    }else{
-                        loginFirebase(email, password);
-                    }
+                if (!isValidEmail(email)) {
+                    Toast.makeText(LoginActivity.this, "O endereço de e-mail é inválido.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    Toast.makeText(LoginActivity.this, "A senha deve ter pelo menos 6 caracteres.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Elderly elderly = new Elderly(email, password);
+                ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
+                if(elderlyDao.VerifyLogin()){
+                    saveEmailSharedPreferences(email);
+                    Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
+                    startActivity(intent);
+                    finish();
                 }else{
                     ElderlyCaregiver elderlyCaregiver = new ElderlyCaregiver(email, password);
                     ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), elderlyCaregiver);
                     if(elderlyCaregiverDao.VerifyLogin()){
-                        SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("email", email);
+                        saveEmailSharedPreferences(email);
                         Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
                         startActivity(intent);
                     }else{
@@ -115,55 +113,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void exibirPopup(View view) {
-        view = LayoutInflater.from(this).inflate(R.layout.popup_select_user, null);
-        Spinner spinner = view.findViewById(R.id.user_spinner);
-
-        String[] options = {"Idoso", "Cuidador de idoso"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedUserType = options[position];
-                typeUserLogin.setText(selectedUserType);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(view)
-                .setTitle("Selecionar usuário")
-                .setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String userType = (String) spinner.getSelectedItem();
-                    }
-                })
-                .create();
-        dialog.show();
-    }
-
     public void loginFirebase(String email, String password){
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         if (user != null) {
-                            SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("email", email);
+                            saveEmailSharedPreferences(email);
                             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("name");
                             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()) {
                                         String name = snapshot.getValue(String.class);
+                                        SharedPreferences.Editor editor = sp.edit();
                                         editor.putString("name", name);
                                         editor.putString("email", email);
                                         editor.apply();
@@ -180,14 +143,14 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(snapshot.exists()){
                                         String typeUser = snapshot.getValue(String.class);
+                                        SharedPreferences.Editor editor = sp.edit();
                                         editor.putString("typeUser", typeUser);
+                                        editor.apply();
                                     }
                                 }
 
                                 @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
+                                public void onCancelled(@NonNull DatabaseError error) {}
                             });
 
                             if(sp.getString("typeUser", "").equals("Idoso")){
@@ -196,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if(elderlyDao.insertNewElderly()){
                                     Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
                                     startActivity(intent);
+                                    finish();
                                 }
                             }else{
                                 ElderlyCaregiver elderlyCaregiver = new ElderlyCaregiver(sp.getString("name", ""), email, password);
@@ -203,10 +167,24 @@ public class LoginActivity extends AppCompatActivity {
                                 if(elderlyCaregiverDao.insertNewElderlyCaregiver()){
                                     Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
                                     startActivity(intent);
+                                    finish();
                                 }
                             }
                         }
+                    }else{
+                        Toast.makeText(LoginActivity.this, "O usuário não foi encontrado", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public void saveEmailSharedPreferences(String email){
+        SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("email", email);
+        editor.apply();
+    }
+
+    private boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

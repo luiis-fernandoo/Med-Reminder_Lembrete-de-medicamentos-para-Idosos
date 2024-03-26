@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,9 +62,8 @@ public class RegisterAcitivity extends AppCompatActivity {
     private ImageView photo_profile;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_PICK = 2;
-    private String selectedUserType;
+    private String selectedUserType, currentPhotoPath;
     private Uri selectedImageUri;
-    private String currentPhotoPath;
     private SharedPreferences sp;
 
 
@@ -83,9 +81,6 @@ public class RegisterAcitivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         sp = getSharedPreferences("app", Context.MODE_PRIVATE);
-//        FeedEntry.DBHelpers dbHelper = new FeedEntry.DBHelpers(this);
-//        dbHelper.deleteDatabase(this);
-
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,10 +106,21 @@ public class RegisterAcitivity extends AppCompatActivity {
     }
 
     public void registerFirebase(View view){
-        Log.d("", "Register: " + selectedImageUri);
         String email = emailRegister.getText().toString().trim();
         String password = passwordRegister.getText().toString().trim();
         String name = nameRegister.getText().toString().trim();
+        if (!isValidEmail(email)) {
+            Toast.makeText(RegisterAcitivity.this, "O endereço de e-mail é inválido.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.length() < 6) {
+            Toast.makeText(RegisterAcitivity.this, "A senha deve ter pelo menos 6 caracteres.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(selectedUserType == null){
+            Toast.makeText(RegisterAcitivity.this, "Selecione o tipo de usuário.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -133,12 +139,10 @@ public class RegisterAcitivity extends AppCompatActivity {
                                 uploadProfileImage(userID, userRef);
                                 saveImageToInternalStorage(selectedImageUri);
                             }
+                            saveEmailSharedPreferences(email);
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()){
-                                            SharedPreferences.Editor editor = sp.edit();
-                                            editor.putString("email", email);
-                                            Log.d("", "Login feito");
                                         }
                                     });
                             if(TextUtils.equals(typeUser.getText().toString().trim(),"Idoso")){
@@ -146,15 +150,20 @@ public class RegisterAcitivity extends AppCompatActivity {
                                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                                 if(elderlyDao.insertNewElderly()){
                                     Toast.makeText(RegisterAcitivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                                    Intent it = new Intent(RegisterAcitivity.this, HomeMoment.class);
+                                    startActivity(it);
+                                    finish();
                                 }
                             }else{
                                 ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), new ElderlyCaregiver(name, email, currentPhotoPath, password));
                                 if(elderlyCaregiverDao.insertNewElderlyCaregiver()){
                                     Toast.makeText(RegisterAcitivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                                    Intent it = new Intent(RegisterAcitivity.this, RegisterElderlyActivity.class);
+                                    startActivity(it);
+                                    finish();
                                 }
                             }
-                            Intent it = new Intent(RegisterAcitivity.this, HomeMoment.class);
-                            startActivity(it);
+
                         } else {
                             Toast.makeText(RegisterAcitivity.this, "Falha ao criar usuário: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -163,7 +172,6 @@ public class RegisterAcitivity extends AppCompatActivity {
     }
 
     private void uploadProfileImage(String userID, DatabaseReference userRef) {
-        Log.d("", "uploadProfileImage: " + selectedImageUri);
         String imageFileName = "profile_images/" + userID + ".jpg";
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
@@ -224,7 +232,6 @@ public class RegisterAcitivity extends AppCompatActivity {
             if (resultCode == RESULT_OK && data != null) {
                 selectedImageUri = data.getData();
                 if (selectedImageUri != null) {
-                    Log.d("", "OnActivity: " + selectedImageUri);
                     photo_profile.setVisibility(View.VISIBLE);
                     photo_profile.setImageURI(selectedImageUri);
                 } else {
@@ -258,9 +265,19 @@ public class RegisterAcitivity extends AppCompatActivity {
     }
 
     private void saveImageUrlInSharedPreferences(String imageUrl) {
-        SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("profile_image_url", imageUrl);
         editor.apply();
     }
+
+    public void saveEmailSharedPreferences(String email){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("email", email);
+        editor.apply();
+    }
+
+    private boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
 }

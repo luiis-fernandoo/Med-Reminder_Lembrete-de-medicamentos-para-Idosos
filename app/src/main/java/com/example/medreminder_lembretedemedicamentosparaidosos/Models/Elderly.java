@@ -1,10 +1,11 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Models;
 
+import android.text.Editable;
 import android.widget.TextView;
 
 public class Elderly extends Person{
 
-    private int age;
+    private String age;
     private int cuidador_id;
     private Person person;
 
@@ -13,7 +14,7 @@ public class Elderly extends Person{
     }
     public Elderly(String name, String email, String currentPhotoPath, String password, int age, int cuidador_id) {
         super(name, email, currentPhotoPath, password); // Chama o construtor da classe pai
-        this.age = age;
+        this.age = String.valueOf(age);
         this.cuidador_id = cuidador_id;
     }
 
@@ -29,6 +30,12 @@ public class Elderly extends Person{
         super(name, email, password);
     }
 
+    public Elderly(Editable name, String email, String currentPhotoPath, String password, Editable age, int cuidador_id) {
+        super(name, email, currentPhotoPath, password);
+        this.age = String.valueOf(age);
+        this.cuidador_id = cuidador_id;
+    }
+
     public int getCuidador_id() {
         return cuidador_id;
     }
@@ -37,11 +44,11 @@ public class Elderly extends Person{
         this.cuidador_id = cuidador_id;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

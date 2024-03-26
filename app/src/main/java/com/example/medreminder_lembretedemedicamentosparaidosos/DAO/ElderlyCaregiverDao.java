@@ -1,9 +1,11 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.HelperElderlyCaregiver;
@@ -35,7 +37,7 @@ public class ElderlyCaregiverDao {
     }
 
     public boolean VerifyLogin(){
-        SQLiteDatabase dbLite = this.db.getWritableDatabase();
+        SQLiteDatabase dbLite = this.db.getReadableDatabase();
 
         String sql = "SELECT * FROM elderlyCaregiver where email = ? AND password = ?";
         Cursor cursor = dbLite.rawQuery(sql, new String[]{elderlyCaregiver.getEmail(), elderlyCaregiver.getPassword()});
@@ -47,5 +49,26 @@ public class ElderlyCaregiverDao {
             cursor.close();
             return false;
         }
+    }
+
+    @SuppressLint("Range")
+    public ElderlyCaregiver getElderlyCaregiver(String email){
+        SQLiteDatabase dbLite = this.db.getReadableDatabase();
+
+        String sql = "Select * From elderlyCaregiver Where email = '"+ email +"';";
+        Log.d("", "SQL: " + sql);
+        ElderlyCaregiver caregiver = new ElderlyCaregiver();
+        Cursor cursor = dbLite.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            caregiver.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            caregiver.setName(cursor.getString(cursor.getColumnIndex("name")));
+            caregiver.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+        }
+        cursor.close();
+        db.close();
+
+        Log.d("", "Usuário no banco " + caregiver.getName());
+        return caregiver;
     }
 }

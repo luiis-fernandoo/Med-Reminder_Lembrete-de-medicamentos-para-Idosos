@@ -21,6 +21,9 @@
         android:theme="@style/Theme.MedReminderLembreteDeMedicamentosParaIdosos"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.RegisterElderlyActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.LoginActivity"
             android:exported="false" />
         <activity
@@ -30,7 +33,7 @@
             android:name=".Activities.RegisterAcitivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

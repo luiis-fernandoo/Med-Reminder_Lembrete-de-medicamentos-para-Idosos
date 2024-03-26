@@ -1,5 +1,7 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Models;
 
+import android.text.Editable;
+
 public class Person {
 
     private int _id;
@@ -15,8 +17,8 @@ public class Person {
         this.password = password;
     }
 
-    public Person(String name, String password) {
-        this.name = name;
+    public Person(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
@@ -24,9 +26,21 @@ public class Person {
         this.name = name;
     }
 
+
     public Person(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
+    }
+
+    public Person() {
+
+    }
+
+    public Person(Editable name, String email, String currentPhotoPath, String password) {
+        this.name = String.valueOf(name);
+        this.email = email;
+        this.profile_photo = currentPhotoPath;
         this.password = password;
     }
 

@@ -13,4 +13,13 @@ public class ElderlyCaregiver extends Person{
     public ElderlyCaregiver(String name, String email, String password) {
         super(name, email, password);
     }
+
+
+    public ElderlyCaregiver(String email) {
+        super(email);
+    }
+
+    public ElderlyCaregiver() {
+        super();
+    }
 }
