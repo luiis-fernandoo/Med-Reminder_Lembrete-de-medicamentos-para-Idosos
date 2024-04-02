@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddMedicineActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addMedicine"
+        android:layout_width="278dp"
+        android:layout_height="59dp"
+        android:alpha="75"
+        android:background="@drawable/shape_buttons"
+        android:text="ADICIONAR MEDICAMENTO"
+        android:textColor="#FFFFFF"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="57dp"
+        tools:layout_editor_absoluteY="502dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="233dp"
+        android:layout_height="136dp"
+        app:srcCompat="@drawable/comprimidos_removebg_preview"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="228dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

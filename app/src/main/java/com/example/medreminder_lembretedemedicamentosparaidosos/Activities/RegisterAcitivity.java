@@ -150,7 +150,7 @@ public class RegisterAcitivity extends AppCompatActivity {
                                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                                 if(elderlyDao.insertNewElderly()){
                                     Toast.makeText(RegisterAcitivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
-                                    Intent it = new Intent(RegisterAcitivity.this, HomeMoment.class);
+                                    Intent it = new Intent(RegisterAcitivity.this, MenuActivity.class);
                                     startActivity(it);
                                     finish();
                                 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.SearchMedicineActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="413dp"
+        android:layout_height="237dp"
+        android:src="@drawable/captura_de_tela_2024_03_18_152732"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-3dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="149dp"
+        android:text="Buscar Medicamento"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <EditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="335dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="21dp"
+        android:background="@drawable/bg_list"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center_vertical"
+        android:hint="Digite o nome do medicamento..."
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="#A9FFFFFF"
+        android:textColorHint="#79000000"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

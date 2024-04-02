@@ -19,8 +19,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        FeedEntry.DBHelpers dbHelper = new FeedEntry.DBHelpers(this);
-        dbHelper.deleteDatabase(this);
+//        FeedEntry.DBHelpers dbHelper = new FeedEntry.DBHelpers(this);
+//        dbHelper.deleteDatabase(this);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
                 String savedEmail = sp.getString("email", "");
 
                 if (!savedEmail.isEmpty()) {
-                    Intent intent = new Intent(SplashActivity.this, HomeMoment.class);
+                    Intent intent = new Intent(SplashActivity.this, SearchMedicineActivity.class);
                     startActivity(intent);
                     finish();
                 }else{
@@ -39,6 +39,6 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             }
-        }, 3000);
+        }, 2000);
     }
 }

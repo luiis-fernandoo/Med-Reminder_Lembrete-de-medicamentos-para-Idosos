@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 Elderly elderly = new Elderly(name);
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                 if(elderlyDao.insertNewElderly()){
-                    Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
+                    Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);
                 }
             }
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                 if(elderlyDao.VerifyLogin()){
                     saveEmailSharedPreferences(email);
-                    Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
+                    Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);
                     finish();
                 }else{
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                     ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), elderlyCaregiver);
                     if(elderlyCaregiverDao.VerifyLogin()){
                         saveEmailSharedPreferences(email);
-                        Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
+                        Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                         startActivity(intent);
                     }else{
                         loginFirebase(email, password);
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Elderly elderly = new Elderly(sp.getString("name", ""), email, password);
                                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                                 if(elderlyDao.insertNewElderly()){
-                                    Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
+                                    Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                                 ElderlyCaregiver elderlyCaregiver = new ElderlyCaregiver(sp.getString("name", ""), email, password);
                                 ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), elderlyCaregiver);
                                 if(elderlyCaregiverDao.insertNewElderlyCaregiver()){
-                                    Intent intent = new Intent(LoginActivity.this, HomeMoment.class);
+                                    Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
