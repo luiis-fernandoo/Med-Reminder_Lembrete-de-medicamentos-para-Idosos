@@ -48,5 +48,9 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.0.0")
     //Gluid para foto
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    //Okhtp
+    implementation("com.squareup.okhttp3:okhttp:3.14.9")
+    //recycle
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
 }

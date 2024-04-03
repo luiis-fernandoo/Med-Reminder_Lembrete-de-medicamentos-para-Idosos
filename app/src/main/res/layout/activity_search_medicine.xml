@@ -42,12 +42,30 @@
         android:hint="Digite o nome do medicamento..."
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textColor="#A9FFFFFF"
+        android:textColor="#A9000000"
         android:textColorHint="#79000000"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <LinearLayout
+        android:layout_width="337dp"
+        android:layout_height="285dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.204"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleViewMedicineItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
