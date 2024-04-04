@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.HomeFragment;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
@@ -68,7 +69,7 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         laterElderly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(RegisterElderlyActivity.this, HomeMoment.class);
+                Intent it = new Intent(RegisterElderlyActivity.this, HomeFragment.class);
                 startActivity(it);
                 finish();
             }

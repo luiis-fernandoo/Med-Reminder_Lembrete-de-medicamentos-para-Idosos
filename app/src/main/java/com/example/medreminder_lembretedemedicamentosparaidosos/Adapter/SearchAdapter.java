@@ -1,6 +1,7 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.TypeMedicineActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 import org.json.JSONArray;
@@ -50,7 +52,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return 10;
+        return medicineList.length();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -64,12 +66,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         public void bind(JSONObject medicine) {
             try {
                 String nomeProduto = medicine.getString("nomeProduto");
-
+                String numProcesso = medicine.getString("numProcesso");
                 medicineTextId.setText(nomeProduto);
                 medicineTextId.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d("", "Medicamento clicado: " + nomeProduto);
+                        Intent it = new Intent(context, TypeMedicineActivity.class);
+                        it.putExtra("medicine", numProcesso);
+                        context.startActivity(it);
                     }
                 });
             } catch (JSONException e) {
