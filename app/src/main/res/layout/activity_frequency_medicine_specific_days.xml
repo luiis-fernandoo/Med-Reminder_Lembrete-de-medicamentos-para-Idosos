@@ -18,7 +18,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSunday"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="49dp"
         android:layout_marginEnd="48dp"
@@ -33,7 +33,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonMonday"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="48dp"
@@ -47,7 +47,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonTuesDay"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="48dp"
@@ -61,7 +61,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonWednesday"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="48dp"
@@ -75,7 +75,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonThursday"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="48dp"
@@ -89,7 +89,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonFriday"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="48dp"
@@ -103,7 +103,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSaturday"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="48dp"
@@ -132,12 +132,17 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonConfirmDays"
         android:layout_width="315dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="48dp"
         android:background="@drawable/shape_buttons"
         android:text="Confirmar"
         android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="809dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSaturday"
         tools:ignore="MissingConstraints" />
 
 

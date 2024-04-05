@@ -57,7 +57,7 @@ public class SearchMedicineActivity extends AppCompatActivity implements MyAsync
                 try {
                     JSONArray results = result.getJSONArray("content");
                     if (results.length() > 0) {
-                        SearchAdapter searchAdapter = new SearchAdapter(getApplicationContext(), results);
+                        SearchAdapter searchAdapter = new SearchAdapter(this, results);
                         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 1);
                         recycleViewMedicineItem.removeAllViews();
                         recycleViewMedicineItem.setLayoutManager(layoutManager);

@@ -23,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
 
-        //replaceFragment(new);
+        replaceFragment(new HomeFragment());
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if(item.getItemId()== R.id.home){

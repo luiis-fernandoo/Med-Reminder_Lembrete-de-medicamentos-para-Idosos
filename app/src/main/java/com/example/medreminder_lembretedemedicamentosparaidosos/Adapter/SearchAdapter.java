@@ -1,5 +1,6 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -20,19 +21,18 @@ import org.json.JSONObject;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder>{
 
-    private final Context context;
+    private final Activity activity;
     private final JSONArray medicineList;
 
-    public SearchAdapter(Context context, JSONArray medicineList) {
-        this.context = context;
+    public SearchAdapter(Activity activity, JSONArray medicineList) {
+        this.activity = activity;
         this.medicineList = medicineList;
     }
-
 
     @NonNull
     @Override
     public SearchAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.medicine_item_layout, parent, false);
+            View view = LayoutInflater.from(activity).inflate(R.layout.medicine_item_layout, parent, false);
             return new MyViewHolder(view);
     }
 
@@ -71,9 +71,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
                 medicineTextId.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent it = new Intent(context, TypeMedicineActivity.class);
+                        Intent it = new Intent(activity, TypeMedicineActivity.class);
                         it.putExtra("medicine", numProcesso);
-                        context.startActivity(it);
+                        activity.startActivity(it);
                     }
                 });
             } catch (JSONException e) {

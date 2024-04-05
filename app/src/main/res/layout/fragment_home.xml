@@ -6,9 +6,26 @@
     tools:context=".Fragments.HomeFragment">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/buttonAddMedicine"
+        android:layout_width="315dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="500dp"
+        android:background="@drawable/shape_buttons"
+        android:text="Adicionar Medicamento" />
+
+    <TextView
+        android:id="@+id/textView9"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/shape_top_bar" />
+        android:layout_height="59dp"
+        android:background="@drawable/shape_top_bar"
+        android:fontFamily="serif-monospace"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Domingo, 01 de Abril"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="26sp"
+        android:textStyle="bold" />
 
 </FrameLayout>

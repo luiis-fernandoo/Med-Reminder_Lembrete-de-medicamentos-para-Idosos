@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.HomeFragment;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
@@ -30,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                 String savedEmail = sp.getString("email", "");
 
                 if (!savedEmail.isEmpty()) {
-                    Intent intent = new Intent(SplashActivity.this, SearchMedicineActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, MenuActivity.class);
                     startActivity(intent);
                     finish();
                 }else{
