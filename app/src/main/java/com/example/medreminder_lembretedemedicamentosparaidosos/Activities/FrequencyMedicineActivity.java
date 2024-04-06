@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -52,8 +53,8 @@ public class FrequencyMedicineActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(getApplicationContext(), FrequencyMedicineSpecificDaysActivity.class);
                 it.putExtra("medicine", medicine);
-                it.putExtra("typeMedicine", "pill");
-                it.putExtra("frequencyMedicine", typeMedicine);
+                it.putExtra("typeMedicine", typeMedicine);
+                it.putExtra("frequencyMedicine", "specificDay");
                 startActivity(it);
             }
         });
