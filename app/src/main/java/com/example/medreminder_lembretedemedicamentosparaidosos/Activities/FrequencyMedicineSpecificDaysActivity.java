@@ -94,7 +94,7 @@ public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
                 for (Button button : selectedButtons) {
                     selectedButtonTexts.add(button.getText().toString());
                 }
-                Intent it = new Intent(getApplicationContext(), FrequencyMedicineSpecificDaysActivity.class);
+                Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);

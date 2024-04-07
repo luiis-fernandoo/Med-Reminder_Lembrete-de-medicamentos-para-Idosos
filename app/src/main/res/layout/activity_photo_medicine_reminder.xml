@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D78DB"
+    tools:context=".Activities.PhotoMedicineReminder">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="500dp"
+        android:layout_height="800dp"
+        android:layout_marginTop="27dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:srcCompat="@drawable/layout_photo" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="343dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="34dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Clique na câmera do centro para tirar a foto"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="233dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Tire a foto da embalagem EXEMPLO:"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+    <ImageView
+        android:id="@+id/imagePhotoCapture"
+        android:layout_width="106dp"
+        android:layout_height="116dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:srcCompat="@drawable/medicamento_generico"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/iconCameraPhoto"
+        android:layout_width="132dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="88dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagePhotoCapture"
+        app:srcCompat="@drawable/icon_camera" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

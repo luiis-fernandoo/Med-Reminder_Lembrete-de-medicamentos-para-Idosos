@@ -37,7 +37,7 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
                 it.putExtra("frequencyTimes", "everyDay");
-                it.putExtra("frequencyDay", "oneTime");
+                it.putExtra("frequencyDay", 1);
                 startActivity(it);
             }
         });
@@ -49,7 +49,8 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyMedicineEveryDay", "twoTimes");
+                it.putExtra("frequencyTimes", "everyDay");
+                it.putExtra("frequencyDay", 2);
                 startActivity(it);
             }
         });
@@ -61,7 +62,8 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyMedicineEveryDay", "ThreeTimes");
+                it.putExtra("frequencyTimes", "everyDay");
+                it.putExtra("frequencyDay", 3);
                 startActivity(it);
             }
         });
@@ -73,7 +75,8 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyMedicineEveryDay", "moreThanThreeTimes");
+                it.putExtra("frequencyTimes", "everyDay");
+                it.putExtra("frequencyDay", 1);
                 startActivity(it);
             }
         });
@@ -85,7 +88,8 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyMedicineEveryDay", "eachXhours");
+                it.putExtra("frequencyTimes", "everyDay");
+                it.putExtra("frequencyDay", 1);
                 startActivity(it);
             }
         });

@@ -2,53 +2,62 @@ package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.HourReminderAdapter;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.SearchAdapter;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ScheduleItem;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
-import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class SetScheduleActivity extends AppCompatActivity {
 
-    private TextView selectType, quantity, selectHour;
+    private TextView selectType, quantity, selectHour,textDose;
     private ImageView selectQuantity;
-    private String valueQuantity, hourReminder;
+    private String valueQuantity, hourReminder, frequencyTimes, typeMedicine, medicine, frequencyMedicine;
+    private LinearLayout buttonOk;
+    private Button buttonNext;
+    private ArrayList<String> selectedButtonTexts;
+    private int count = 1, frequencyDay, frequencyDifferenceDays;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_schedule);
         Intent it = getIntent();
-        String medicine = it.getStringExtra("medicine");
-        String typeMedicine = it.getStringExtra("typeMedicine");
-        String frequencyMedicine = it.getStringExtra("frequencyMedicine");
-        if (it.getStringExtra("frequencyTimes").equals("everyDay")) {
-            String frequencyDay = it.getStringExtra("frequencyDay");
+        medicine = it.getStringExtra("medicine");
+        typeMedicine = it.getStringExtra("typeMedicine");
+        frequencyMedicine = it.getStringExtra("frequencyMedicine");
+        frequencyTimes = it.getStringExtra("frequencyTimes");
+        if (frequencyTimes.equals("everyDay")) {
+            frequencyDay = it.getIntExtra("frequencyDay", 1);
+        }else if(frequencyTimes.equals("everyOtherDay")){
+            frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
+        }else if(frequencyTimes.equals("specificDays")){
+            selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
         }
 
         selectQuantity = findViewById(R.id.selectQuantity);
         quantity = findViewById(R.id.quantity);
         selectType = findViewById(R.id.selectType);
         selectHour = findViewById(R.id.selectHour);
+        buttonNext = findViewById(R.id.buttonNext);
+        textDose = findViewById(R.id.textDose);
+
 
         switch (typeMedicine) {
             case "pill":
@@ -62,10 +71,13 @@ public class SetScheduleActivity extends AppCompatActivity {
                 break;
         }
 
+        ArrayList<ScheduleItem> scheduleItems = new ArrayList<>();
+
+
         selectQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                exibirPopup(view);
+                popup_quantity(view);
             }
         });
 
@@ -76,42 +88,45 @@ public class SetScheduleActivity extends AppCompatActivity {
             }
         });
 
-    }
-    private void exibirPopup(View view) {
-        view = LayoutInflater.from(this).inflate(R.layout.popup_select_quantity, null);
-        Spinner spinner = view.findViewById(R.id.medicine_quantity_spinner);
-
-        String[] options = {"1", "2", "3", "4", "5"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, options);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                valueQuantity = options[position];
-                quantity.setText(valueQuantity);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(SetScheduleActivity.this, "Nenhuma quantidade definida", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                scheduleItems.add(new ScheduleItem(hourReminder, valueQuantity));
+                if(count == frequencyDay){
+                    intentEveryDay(scheduleItems);
+                }else if(frequencyDifferenceDays != -1){
+                    intentEveryOtherDay(scheduleItems);
+                }else if(selectedButtonTexts != null){
+                    intentSpecificDay(scheduleItems);
+                }else{
+                    count ++;
+                    textDose.setText("Selecione o horário da "+ count + "° dose:");
+                }
             }
         });
 
-        androidx.appcompat.app.AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(view)
-                .setTitle("Selecionar quantidade")
-                .setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        valueQuantity = (String) spinner.getSelectedItem();
-                        Log.d("", "quantity: " + valueQuantity);
-                    }
-                })
-                .create();
-        dialog.show();
+    }
+
+    public void popup_quantity(View view){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_select_quantity, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonOk = popupView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editTextInput = popupView.findViewById(R.id.editText_input);
+                valueQuantity = editTextInput.getText().toString();
+                quantity.setText(valueQuantity);
+                alertDialog.dismiss();
+            }
+        });
     }
 
     public void selectHourClock(){
@@ -125,4 +140,38 @@ public class SetScheduleActivity extends AppCompatActivity {
 
         timePickerDialog.show();
     }
+
+    public void intentEveryDay(ArrayList<ScheduleItem> scheduleItems){
+        Intent it = new Intent(SetScheduleActivity.this, PhotoMedicineReminder.class);
+        it.putExtra("medicine", medicine);
+        it.putExtra("typeMedicine", typeMedicine);
+        it.putExtra("frequencyMedicine", frequencyMedicine);
+        it.putExtra("frequencyTimes", frequencyTimes);
+        it.putExtra("frequencyDay", frequencyDay);
+        it.putExtra("timeAndQuantity", scheduleItems);
+        startActivity(it);
+    }
+
+    public void intentEveryOtherDay(ArrayList<ScheduleItem> scheduleItems){
+        Intent it = new Intent(SetScheduleActivity.this, PhotoMedicineReminder.class);
+        it.putExtra("medicine", medicine);
+        it.putExtra("typeMedicine", typeMedicine);
+        it.putExtra("frequencyMedicine", frequencyMedicine);
+        it.putExtra("frequencyTimes", frequencyTimes);
+        it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
+        it.putExtra("timeAndQuantity", scheduleItems);
+        startActivity(it);
+    }
+
+    public void intentSpecificDay(ArrayList<ScheduleItem> scheduleItems){
+        Intent it = new Intent(SetScheduleActivity.this, PhotoMedicineReminder.class);
+        it.putExtra("medicine", medicine);
+        it.putExtra("typeMedicine", typeMedicine);
+        it.putExtra("frequencyMedicine", frequencyMedicine);
+        it.putExtra("frequencyTimes", frequencyTimes);
+        it.putExtra("selectedButtonTexts", selectedButtonTexts);
+        it.putExtra("timeAndQuantity", scheduleItems);
+        startActivity(it);
+    }
+
 }

@@ -55,7 +55,7 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         buttonConfirmFrequencyDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getApplicationContext(), FrequencyMedicineSpecificDaysActivity.class);
+                Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
