@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ScheduleItem;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,22 +23,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PhotoMedicineReminder extends AppCompatActivity {
+public class PhotoMedicinePackagingActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 101;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imagePhotoCapture, iconCameraPhoto;
     private TextView textViewHeader;
-    private String currentPhotoPath, medicine, typeMedicine, frequencyMedicine, frequencyTimes;
+    private String currentPhotoPath, medicine, typeMedicine, frequencyMedicine, frequencyTimes, currentPhotoPathPrevius;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
     private int frequencyDay, frequencyDifferenceDays;
     private Button buttonNext;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_medicine_reminder);
+        setContentView(R.layout.activity_photo_medicine_packaging);
 
         Intent it = getIntent();
         medicine = it.getStringExtra("medicine");
@@ -57,7 +54,7 @@ public class PhotoMedicineReminder extends AppCompatActivity {
             }
         }
         scheduleItems = it.getParcelableArrayListExtra("timeAndQuantity");
-
+        currentPhotoPathPrevius = it.getStringExtra("currentPhotoPath");
 
         imagePhotoCapture = findViewById(R.id.imagePhotoCapture);
         iconCameraPhoto = findViewById(R.id.iconCameraPhoto);
@@ -75,7 +72,7 @@ public class PhotoMedicineReminder extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(PhotoMedicineReminder.this, PhotoMedicinePackagingActivity.class);
+                Intent it = new Intent(PhotoMedicinePackagingActivity.this, MenuActivity.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
@@ -90,11 +87,18 @@ public class PhotoMedicineReminder extends AppCompatActivity {
                     }
                 }
                 it.putExtra("timeAndQuantity", scheduleItems);
-                it.putExtra("currentPhotoPath", currentPhotoPath);
+                it.putExtra("currentPhotoPathOne", currentPhotoPathPrevius);
+                it.putExtra("currentPhotoPathTwo", currentPhotoPath);
                 startActivity(it);
             }
         });
     }
+
+    //    private void saveImageUrlInSharedPreferences(String imageUrl) {
+//        SharedPreferences.Editor editor = sp.edit();
+//        editor.putString("medicine", imageUrl);
+//        editor.apply();
+//    }
 
     private void saveImageToInternalStorage(Bitmap bitmap) {
         try {
@@ -113,13 +117,6 @@ public class PhotoMedicineReminder extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-//    private void saveImageUrlInSharedPreferences(String imageUrl) {
-//        SharedPreferences.Editor editor = sp.edit();
-//        editor.putString("medicine", imageUrl);
-//        editor.apply();
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,7 +128,7 @@ public class PhotoMedicineReminder extends AppCompatActivity {
 
                     // Exibe a imagem capturada no ImageView
                     imagePhotoCapture.setImageBitmap(imageBitmap);
-                    textViewHeader.setText("SUA FOTO DA CAIXA DO MEDICAMENTO");
+                    textViewHeader.setText("SUA FOTO DA EMBALAGEM DO MEDICAMENTO:");
                     saveImageToInternalStorage(imageBitmap);
                 } else {
                     Toast.makeText(this, "Falha ao capturar a imagem", Toast.LENGTH_SHORT).show();
@@ -142,7 +139,7 @@ public class PhotoMedicineReminder extends AppCompatActivity {
         }
     }
 
-//    private void displayImage() {
+    //    private void displayImage() {
 //        if (currentPhotoPath != null) {
 //            // Carrega a imagem do caminho do arquivo
 //            Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
