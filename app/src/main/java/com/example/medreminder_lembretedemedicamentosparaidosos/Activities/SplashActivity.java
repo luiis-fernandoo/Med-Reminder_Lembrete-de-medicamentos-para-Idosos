@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                 String savedEmail = sp.getString("email", "");
 
                 if (!savedEmail.isEmpty()) {
-                    Intent intent = new Intent(SplashActivity.this, PhotoMedicineReminder.class);
+                    Intent intent = new Intent(SplashActivity.this, ResetReminder.class);
                     startActivity(intent);
                     finish();
                 }else{
