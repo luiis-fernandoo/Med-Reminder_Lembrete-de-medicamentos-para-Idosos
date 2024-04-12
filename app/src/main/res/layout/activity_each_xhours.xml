@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.EachXhoursActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="413dp"
+        android:layout_height="237dp"
+        android:src="@drawable/captura_de_tela_2024_03_18_152732"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-3dp"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/inputMoreThanThreeTimes"
+        android:layout_width="121dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="145dp"
+        android:background="@drawable/bg_list"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:hint="Digite aqui..."
+        android:inputType="number"
+        android:textColor="#000000"
+        android:textColorHint="#750D78DB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="344dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="34dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Digite de quantas em quantas horas você toma esse medicamento"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonNext"
+        android:layout_width="315dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/shape_buttons"
+        android:text="Próximo"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputMoreThanThreeTimes" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

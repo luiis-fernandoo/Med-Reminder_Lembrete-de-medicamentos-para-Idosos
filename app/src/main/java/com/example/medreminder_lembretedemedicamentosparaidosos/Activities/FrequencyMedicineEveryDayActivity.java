@@ -36,7 +36,6 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", "everyDay");
                 it.putExtra("frequencyDay", 1);
                 startActivity(it);
             }
@@ -49,7 +48,6 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", "everyDay");
                 it.putExtra("frequencyDay", 2);
                 startActivity(it);
             }
@@ -62,7 +60,6 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", "everyDay");
                 it.putExtra("frequencyDay", 3);
                 startActivity(it);
             }
@@ -71,11 +68,10 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
         buttonMoreThanThreeTimesPerDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
+                Intent it = new Intent(getApplicationContext(), MoreThanThreeTimesActivity.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", "everyDay");
                 it.putExtra("frequencyDay", 1);
                 startActivity(it);
             }
@@ -84,12 +80,10 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
         buttonEarchXhours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
+                Intent it = new Intent(getApplicationContext(), EachXhoursActivity.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", "everyDay");
-                it.putExtra("frequencyDay", 1);
                 startActivity(it);
             }
         });

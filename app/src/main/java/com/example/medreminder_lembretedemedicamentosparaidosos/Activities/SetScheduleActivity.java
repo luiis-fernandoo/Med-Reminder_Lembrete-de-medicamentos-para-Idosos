@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -27,11 +28,11 @@ public class SetScheduleActivity extends AppCompatActivity {
 
     private TextView selectType, quantity, selectHour,textDose;
     private ImageView selectQuantity;
-    private String valueQuantity, hourReminder, frequencyTimes, typeMedicine, medicine, frequencyMedicine;
+    private String valueQuantity = String.valueOf(1), hourReminder, typeMedicine, medicine, frequencyMedicine;
     private LinearLayout buttonOk;
     private Button buttonNext;
     private ArrayList<String> selectedButtonTexts;
-    private int count = 1, frequencyDay, frequencyDifferenceDays;
+    private int count = 1, frequencyDay, frequencyDifferenceDays, eachXhours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +42,14 @@ public class SetScheduleActivity extends AppCompatActivity {
         medicine = it.getStringExtra("medicine");
         typeMedicine = it.getStringExtra("typeMedicine");
         frequencyMedicine = it.getStringExtra("frequencyMedicine");
-        frequencyTimes = it.getStringExtra("frequencyTimes");
-        if (frequencyTimes.equals("everyDay")) {
+        if (frequencyMedicine.equals("everyDay")) {
             frequencyDay = it.getIntExtra("frequencyDay", 1);
-        }else if(frequencyTimes.equals("everyOtherDay")){
+            if(it.getIntExtra("eachXhours", 0) != 0){
+                eachXhours = it.getIntExtra("eachXhours", 0);
+            }
+        }else if(frequencyMedicine.equals("everyOtherDay")){
             frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
-        }else if(frequencyTimes.equals("specificDays")){
+        }else if(frequencyMedicine.equals("specificDay")){
             selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
         }
 
@@ -93,7 +96,7 @@ public class SetScheduleActivity extends AppCompatActivity {
                 scheduleItems.add(new ScheduleItem(hourReminder, valueQuantity));
                 if(count == frequencyDay){
                     intentEveryDay(scheduleItems);
-                }else if(frequencyDifferenceDays != -1){
+                }else if(frequencyDifferenceDays != 0 && frequencyDifferenceDays != -1){
                     intentEveryOtherDay(scheduleItems);
                 }else if(selectedButtonTexts != null){
                     intentSpecificDay(scheduleItems);
@@ -120,7 +123,7 @@ public class SetScheduleActivity extends AppCompatActivity {
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editTextInput = popupView.findViewById(R.id.inputRemainingPills);
+                EditText editTextInput = popupView.findViewById(R.id.inputMoreThanThreeTimes);
                 valueQuantity = editTextInput.getText().toString();
                 quantity.setText(valueQuantity);
                 alertDialog.dismiss();
@@ -145,9 +148,11 @@ public class SetScheduleActivity extends AppCompatActivity {
         it.putExtra("medicine", medicine);
         it.putExtra("typeMedicine", typeMedicine);
         it.putExtra("frequencyMedicine", frequencyMedicine);
-        it.putExtra("frequencyTimes", frequencyTimes);
         it.putExtra("frequencyDay", frequencyDay);
         it.putExtra("timeAndQuantity", scheduleItems);
+        if(eachXhours != 0){
+            it.putExtra("eachXhours", eachXhours);
+        }
         startActivity(it);
     }
 
@@ -156,7 +161,6 @@ public class SetScheduleActivity extends AppCompatActivity {
         it.putExtra("medicine", medicine);
         it.putExtra("typeMedicine", typeMedicine);
         it.putExtra("frequencyMedicine", frequencyMedicine);
-        it.putExtra("frequencyTimes", frequencyTimes);
         it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
         it.putExtra("timeAndQuantity", scheduleItems);
         startActivity(it);
@@ -167,8 +171,8 @@ public class SetScheduleActivity extends AppCompatActivity {
         it.putExtra("medicine", medicine);
         it.putExtra("typeMedicine", typeMedicine);
         it.putExtra("frequencyMedicine", frequencyMedicine);
-        it.putExtra("frequencyTimes", frequencyTimes);
         it.putExtra("selectedButtonTexts", selectedButtonTexts);
+        Log.d("", "Na int de set: " + selectedButtonTexts);
         it.putExtra("timeAndQuantity", scheduleItems);
         startActivity(it);
     }

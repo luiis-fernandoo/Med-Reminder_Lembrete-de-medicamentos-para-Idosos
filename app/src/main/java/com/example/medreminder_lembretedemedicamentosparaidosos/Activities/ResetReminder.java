@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class ResetReminder extends AppCompatActivity {
 
-    private String remainingPills, warningPills, medicine, typeMedicine, frequencyMedicine, frequencyTimes, currentPhotoPathOne, currentPhotoPathTwo;
+    private String remainingPills, warningPills, medicine, typeMedicine, frequencyMedicine, currentPhotoPathOne, currentPhotoPathTwo;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
     private int frequencyDay, frequencyDifferenceDays;
@@ -33,13 +34,13 @@ public class ResetReminder extends AppCompatActivity {
         medicine = it.getStringExtra("medicine");
         typeMedicine = it.getStringExtra("typeMedicine");
         frequencyMedicine = it.getStringExtra("frequencyMedicine");
-        frequencyTimes = it.getStringExtra("frequencyTimes");
-        if(frequencyTimes != null){
-            if (frequencyTimes.equals("everyDay")) {
+        if(frequencyMedicine != null){
+            if (frequencyMedicine.equals("everyDay")) {
                 frequencyDay = it.getIntExtra("frequencyDay", 1);
-            }else if(frequencyTimes.equals("everyOtherDay")){
+            }else if(frequencyMedicine.equals("everyOtherDay")){
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
-            }else if(frequencyTimes.equals("specificDays")){
+                Log.d("", "PhotoPackaging "+ frequencyDifferenceDays);
+            }else if(frequencyMedicine.equals("specificDay")){
                 selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
             }
         }
@@ -47,7 +48,7 @@ public class ResetReminder extends AppCompatActivity {
         currentPhotoPathOne = it.getStringExtra("currentPhotoPathOne");
         currentPhotoPathTwo = it.getStringExtra("currentPhotoPathTwo");
 
-        inputRemainingPills = findViewById(R.id.inputRemainingPills);
+        inputRemainingPills = findViewById(R.id.inputMoreThanThreeTimes);
         inputWarningPills = findViewById(R.id.inputWarningPills);
         buttonNext = findViewById(R.id.buttonNext);
         buttonSkip = findViewById(R.id.buttonSkip);
@@ -58,17 +59,16 @@ public class ResetReminder extends AppCompatActivity {
                 remainingPills = inputRemainingPills.getText().toString();
                 warningPills = inputWarningPills.getText().toString();
 
-                Intent it = new Intent(ResetReminder.this, MenuActivity.class);
+                Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", frequencyTimes);
-                if(frequencyTimes != null){
-                    if (frequencyTimes.equals("everyDay")) {
+                if(frequencyMedicine != null){
+                    if (frequencyMedicine.equals("everyDay")) {
                         it.putExtra("frequencyDay", frequencyDay);
-                    }else if(frequencyTimes.equals("everyOtherDay")){
+                    }else if(frequencyMedicine.equals("everyOtherDay")){
                         it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
-                    }else if(frequencyTimes.equals("specificDays")){
+                    }else if(frequencyMedicine.equals("specificDay")){
                         it.putExtra("selectedButtonTexts", selectedButtonTexts);
                     }
                 }

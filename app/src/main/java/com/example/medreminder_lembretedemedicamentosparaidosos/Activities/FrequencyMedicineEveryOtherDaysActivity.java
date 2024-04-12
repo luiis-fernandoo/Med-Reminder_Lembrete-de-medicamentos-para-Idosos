@@ -55,11 +55,11 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         buttonConfirmFrequencyDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("", "Dentro da classe: " + differenceInDays);
                 Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", "everyOtherDay");
                 it.putExtra("frequencyDifferenceDays", differenceInDays);
                 startActivity(it);
             }

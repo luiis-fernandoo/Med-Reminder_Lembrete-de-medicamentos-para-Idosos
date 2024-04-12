@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,13 +44,12 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
         medicine = it.getStringExtra("medicine");
         typeMedicine = it.getStringExtra("typeMedicine");
         frequencyMedicine = it.getStringExtra("frequencyMedicine");
-        frequencyTimes = it.getStringExtra("frequencyTimes");
-        if(frequencyTimes != null){
-            if (frequencyTimes.equals("everyDay")) {
+        if(frequencyMedicine != null){
+            if (frequencyMedicine.equals("everyDay")) {
                 frequencyDay = it.getIntExtra("frequencyDay", 1);
-            }else if(frequencyTimes.equals("everyOtherDay")){
+            }else if(frequencyMedicine.equals("everyOtherDay")){
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
-            }else if(frequencyTimes.equals("specificDays")){
+            }else if(frequencyMedicine.equals("specificDay")){
                 selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
             }
         }
@@ -72,17 +72,16 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(PhotoMedicinePackagingActivity.this, MenuActivity.class);
+                Intent it = new Intent(PhotoMedicinePackagingActivity.this, ResetReminder.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", frequencyTimes);
-                if(frequencyTimes != null){
-                    if (frequencyTimes.equals("everyDay")) {
+                if(frequencyMedicine != null){
+                    if (frequencyMedicine.equals("everyDay")) {
                         it.putExtra("frequencyDay", frequencyDay);
-                    }else if(frequencyTimes.equals("everyOtherDay")){
+                    }else if(frequencyMedicine.equals("everyOtherDay")){
                         it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
-                    }else if(frequencyTimes.equals("specificDays")){
+                    }else if(frequencyMedicine.equals("specificDay")){
                         it.putExtra("selectedButtonTexts", selectedButtonTexts);
                     }
                 }

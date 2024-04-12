@@ -98,9 +98,8 @@ public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyTimes", "specificDays");
                 it.putStringArrayListExtra("selectedButtonTexts", selectedButtonTexts);
-
+                Log.d("", "Na classe: " + selectedButtonTexts);
                 startActivity(it);
             }
         });
