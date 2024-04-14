@@ -1,13 +1,16 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +27,8 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
     private int differenceInDays;
     CalendarView calendarView;
     Button buttonConfirmFrequencyDate;
-    private TextView intervalDays;
+    private TextView intervalDays, warningText;
+    private LinearLayout buttonOk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +59,37 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         buttonConfirmFrequencyDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("", "Dentro da classe: " + differenceInDays);
+                if(differenceInDays >=0){
+                    popup_warning(view);
+                }
                 Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", frequencyMedicine);
                 it.putExtra("frequencyDifferenceDays", differenceInDays);
                 startActivity(it);
+            }
+        });
+    }
+
+    public void popup_warning(View view){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
+
+        warningText = findViewById(R.id.warningText);
+        warningText.setText("Escolha uma data a frente da data atual, por favor.");
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonOk = popupView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
             }
         });
     }

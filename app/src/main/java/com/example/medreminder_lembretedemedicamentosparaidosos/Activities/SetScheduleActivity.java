@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 public class SetScheduleActivity extends AppCompatActivity {
 
-    private TextView selectType, quantity, selectHour,textDose;
+    private TextView selectType, quantity, selectHour,textDose, warningText;
     private ImageView selectQuantity;
     private String valueQuantity = String.valueOf(1), hourReminder, typeMedicine, medicine, frequencyMedicine;
     private LinearLayout buttonOk;
@@ -103,6 +103,7 @@ public class SetScheduleActivity extends AppCompatActivity {
                 }else{
                     count ++;
                     textDose.setText("Selecione o horário da "+ count + "° dose:");
+                    selectHour.setText("00:00");
                 }
             }
         });
@@ -125,6 +126,10 @@ public class SetScheduleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText editTextInput = popupView.findViewById(R.id.inputMoreThanThreeTimes);
                 valueQuantity = editTextInput.getText().toString();
+                int quant = Integer.parseInt(valueQuantity);
+                if(quant <= 0){
+                    popup_warning(view);
+                }
                 quantity.setText(valueQuantity);
                 alertDialog.dismiss();
             }
@@ -175,6 +180,27 @@ public class SetScheduleActivity extends AppCompatActivity {
         Log.d("", "Na int de set: " + selectedButtonTexts);
         it.putExtra("timeAndQuantity", scheduleItems);
         startActivity(it);
+    }
+
+    public void popup_warning(View view){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
+
+        warningText = findViewById(R.id.warningText);
+        warningText.setText("O número não pode ser menor que 4, por favor, escolha outro número o escolha outra opção.");
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonOk = popupView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
 }
