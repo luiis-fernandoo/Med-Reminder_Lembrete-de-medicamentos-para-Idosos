@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +66,6 @@ public class RegisterAcitivity extends AppCompatActivity {
     private String selectedUserType, currentPhotoPath;
     private Uri selectedImageUri;
     private SharedPreferences sp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +139,7 @@ public class RegisterAcitivity extends AppCompatActivity {
                                 uploadProfileImage(userID, userRef);
                                 saveImageToInternalStorage(selectedImageUri);
                             }
-                            saveEmailSharedPreferences(email);
+                            saveEmailSharedPreferences(email, selectedUserType);
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(task1 -> {
                                         if (task1.isSuccessful()){
@@ -150,7 +150,7 @@ public class RegisterAcitivity extends AppCompatActivity {
                                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                                 if(elderlyDao.insertNewElderly()){
                                     Toast.makeText(RegisterAcitivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
-                                    Intent it = new Intent(RegisterAcitivity.this, MenuActivity.class);
+                                    Intent it = new Intent(RegisterAcitivity.this, AddMedicineActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
@@ -270,14 +270,15 @@ public class RegisterAcitivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public void saveEmailSharedPreferences(String email){
+    public void saveEmailSharedPreferences(String email, String selectedUserType){
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("email", email);
+        editor.putString("selectedUserType", "");
+        editor.putInt("isFirstTime", 1);
         editor.apply();
     }
 
     private boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
-
 }

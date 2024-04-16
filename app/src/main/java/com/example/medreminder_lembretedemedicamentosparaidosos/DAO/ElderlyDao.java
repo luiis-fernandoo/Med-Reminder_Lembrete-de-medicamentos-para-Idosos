@@ -1,5 +1,6 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +10,9 @@ import android.util.Log;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.HelperElderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ElderlyDao {
     private final Elderly elderly;
@@ -49,6 +53,29 @@ public class ElderlyDao {
             cursor.close();
             return false;
         }
+    }
+
+    @SuppressLint("Range")
+    public List<Elderly> getElderlyByCareviger(int cuidador_id){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        List<Elderly> elderlies = new ArrayList<>();
+        String sql = "Select * From elderly Where cuidador_id = ? ;";
+
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(cuidador_id)});
+
+        while (cursor.moveToNext()) {
+            Elderly elderly = new Elderly();
+            elderly.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            elderly.setName(cursor.getString(cursor.getColumnIndex("name")));
+            elderly.setProfile_photo(cursor.getString(cursor.getColumnIndex("profile_photo")));
+            elderly.setAge(cursor.getString(cursor.getColumnIndex("age")));
+            elderly.setCuidador_id(cursor.getInt(cursor.getColumnIndex("cuidador_id")));
+            elderlies.add(elderly);
+        }
+
+        cursor.close();
+        db.close();
+        return elderlies;
     }
 
 }

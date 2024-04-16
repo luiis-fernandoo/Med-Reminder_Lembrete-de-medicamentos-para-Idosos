@@ -61,13 +61,14 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(differenceInDays >=0){
                     popup_warning(view);
+                }else{
+                    Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
+                    it.putExtra("medicine", medicine);
+                    it.putExtra("typeMedicine", typeMedicine);
+                    it.putExtra("frequencyMedicine", frequencyMedicine);
+                    it.putExtra("frequencyDifferenceDays", differenceInDays);
+                    startActivity(it);
                 }
-                Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
-                it.putExtra("medicine", medicine);
-                it.putExtra("typeMedicine", typeMedicine);
-                it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyDifferenceDays", differenceInDays);
-                startActivity(it);
             }
         });
     }
@@ -76,7 +77,7 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
 
-        warningText = findViewById(R.id.warningText);
+        warningText = popupView.findViewById(R.id.warningText);
         warningText.setText("Escolha uma data a frente da data atual, por favor.");
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

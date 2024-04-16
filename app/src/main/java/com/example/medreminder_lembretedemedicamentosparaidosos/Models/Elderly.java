@@ -29,6 +29,7 @@ public class Elderly extends Person{
     public Elderly(String name, String email, String password) {
         super(name, email, password);
     }
+    public Elderly(){}
 
     public Elderly(Editable name, String email, String currentPhotoPath, String password, Editable age, int cuidador_id) {
         super(name, email, currentPhotoPath, password);

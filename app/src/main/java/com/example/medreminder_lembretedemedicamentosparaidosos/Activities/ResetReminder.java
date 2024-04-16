@@ -67,7 +67,34 @@ public class ResetReminder extends AppCompatActivity {
                 int warning = Integer.parseInt(warningPills);
                 if(remaining < 1 || warning < 0){
                     popup_warning(view);
+                }else{
+                    Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
+                    it.putExtra("medicine", medicine);
+                    it.putExtra("typeMedicine", typeMedicine);
+                    it.putExtra("frequencyMedicine", frequencyMedicine);
+                    if(frequencyMedicine != null){
+                        if (frequencyMedicine.equals("everyDay")) {
+                            it.putExtra("frequencyDay", frequencyDay);
+                        }else if(frequencyMedicine.equals("everyOtherDay")){
+                            it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
+                        }else if(frequencyMedicine.equals("specificDay")){
+                            it.putExtra("selectedButtonTexts", selectedButtonTexts);
+                        }
+                    }
+                    it.putExtra("timeAndQuantity", scheduleItems);
+                    it.putExtra("currentPhotoPathOne", currentPhotoPathOne);
+                    it.putExtra("currentPhotoPathTwo", currentPhotoPathTwo);
+                    it.putExtra("remainingPills", remainingPills);
+                    it.putExtra("warningPills", warningPills);
+
+                    startActivity(it);
                 }
+            }
+        });
+
+        buttonSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 it.putExtra("medicine", medicine);
                 it.putExtra("typeMedicine", typeMedicine);
@@ -84,17 +111,7 @@ public class ResetReminder extends AppCompatActivity {
                 it.putExtra("timeAndQuantity", scheduleItems);
                 it.putExtra("currentPhotoPathOne", currentPhotoPathOne);
                 it.putExtra("currentPhotoPathTwo", currentPhotoPathTwo);
-                it.putExtra("remainingPills", remainingPills);
-                it.putExtra("warningPills", warningPills);
-
                 startActivity(it);
-            }
-        });
-
-        buttonSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
     }
@@ -103,7 +120,7 @@ public class ResetReminder extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
 
-        warningText = findViewById(R.id.warningText);
+        warningText = popupView.findViewById(R.id.warningText);
         warningText.setText("Valor inserido invalido!");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(popupView);

@@ -1,6 +1,7 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -11,10 +12,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +36,13 @@ import java.util.Date;
 
 public class RegisterElderlyActivity extends AppCompatActivity {
 
-    private TextView laterElderly;
+    private TextView laterElderly, warningText;
     private Button buttonRegisterElderly;
     private ImageView imageElderly;
     private EditText nameRegisterElderly, ageRegisterElderly;
     private Uri selectedImageUri;
     private String currentPhotoPath;
+    private LinearLayout buttonOk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,15 @@ public class RegisterElderlyActivity extends AppCompatActivity {
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                 if(elderlyDao.insertNewElderly()){
                     Toast.makeText(RegisterElderlyActivity.this, "Idoso cadastrado com sucesso!!", Toast.LENGTH_SHORT).show();
+                    int isFirstTime = sp.getInt("isFirstTime", 0);
+                    if(isFirstTime == 1){
+                        popup_warning(view);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("elderly", String.valueOf(nameRegisterElderly.getText()));
+                        editor.apply();
+                        Intent it = new Intent(RegisterElderlyActivity.this, AddMedicineActivity.class);
+                        startActivity(it);
+                    }
                 }
             }
         });
@@ -123,5 +136,26 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void popup_warning(View view){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
+
+        warningText = popupView.findViewById(R.id.warningText);
+        warningText.setText("Esse foi um tutorial de como cadastrar idoso, você pode cadastrar mais idosos na aba de perfil.");
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonOk = popupView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

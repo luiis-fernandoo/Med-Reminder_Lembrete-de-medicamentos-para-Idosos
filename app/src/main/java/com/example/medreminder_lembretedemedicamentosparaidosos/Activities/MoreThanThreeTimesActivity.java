@@ -43,13 +43,14 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
                 result = Integer.parseInt(inputMoreThanThreeTimes.getText().toString());
                 if(result <= 3){
                     popup_warning(view);
+                }else{
+                    Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
+                    it.putExtra("medicine", medicine);
+                    it.putExtra("typeMedicine", typeMedicine);
+                    it.putExtra("frequencyMedicine", frequencyMedicine);
+                    it.putExtra("frequencyDay", result);
+                    startActivity(it);
                 }
-                Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);
-                it.putExtra("medicine", medicine);
-                it.putExtra("typeMedicine", typeMedicine);
-                it.putExtra("frequencyMedicine", frequencyMedicine);
-                it.putExtra("frequencyDay", result);
-                startActivity(it);
             }
         });
     }
@@ -58,7 +59,7 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
 
-        warningText = findViewById(R.id.warningText);
+        warningText = popupView.findViewById(R.id.warningText);
         warningText.setText("O número não pode ser menor que 4, por favor, escolha outro número o escolha outra opção.");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(popupView);

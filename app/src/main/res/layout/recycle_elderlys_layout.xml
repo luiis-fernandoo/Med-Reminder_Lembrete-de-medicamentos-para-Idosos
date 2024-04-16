@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="match_parent"
+        android:layout_height="117dp"
+        app:srcCompat="@drawable/bg_list" />
+
+    <ImageView
+        android:id="@+id/imageElderlyChoice"
+        android:layout_width="84dp"
+        android:layout_height="68dp"
+        android:layout_alignBottom="@+id/imageView9"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        app:srcCompat="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/textNameElderly"
+        android:layout_width="138dp"
+        android:layout_height="32dp"
+        android:layout_alignBottom="@+id/imageView9"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginBottom="43dp"
+        android:layout_toEndOf="@+id/imageElderlyChoice"
+        android:fontFamily="sans-serif-black"
+        android:text="Manoel Soares"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textAgeElderly"
+        android:layout_width="80dp"
+        android:layout_height="33dp"
+        android:layout_alignBottom="@+id/imageView9"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="43dp"
+        android:layout_toEndOf="@+id/textNameElderly"
+        android:fontFamily="sans-serif-black"
+        android:text="69 Anos"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="20sp" />
+</RelativeLayout>
