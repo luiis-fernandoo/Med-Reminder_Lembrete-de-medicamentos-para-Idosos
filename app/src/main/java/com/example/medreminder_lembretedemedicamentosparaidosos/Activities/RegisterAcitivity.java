@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -273,9 +274,10 @@ public class RegisterAcitivity extends AppCompatActivity {
     public void saveEmailSharedPreferences(String email, String selectedUserType){
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("email", email);
-        editor.putString("selectedUserType", "");
+        editor.putString("selectedUserType", selectedUserType);
         editor.putInt("isFirstTime", 1);
         editor.apply();
+        Log.d("", ": " + selectedUserType);
     }
 
     private boolean isValidEmail(CharSequence target) {

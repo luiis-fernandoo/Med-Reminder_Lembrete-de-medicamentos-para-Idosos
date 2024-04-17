@@ -41,14 +41,15 @@ public class RegisterElderlyActivity extends AppCompatActivity {
     private ImageView imageElderly;
     private EditText nameRegisterElderly, ageRegisterElderly;
     private Uri selectedImageUri;
-    private String currentPhotoPath;
+    private String currentPhotoPath, text;
     private LinearLayout buttonOk;
+    private SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_elderly);
 
-        SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("app", Context.MODE_PRIVATE);
 
         String emailCareviger = sp.getString("email", "");
 
@@ -73,7 +74,7 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         laterElderly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(RegisterElderlyActivity.this, HomeFragment.class);
+                Intent it = new Intent(RegisterElderlyActivity.this, MenuActivity.class);
                 startActivity(it);
                 finish();
             }
@@ -84,17 +85,20 @@ public class RegisterElderlyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Elderly elderly = new Elderly(nameRegisterElderly.getText(), "Null", currentPhotoPath, "Null", ageRegisterElderly.getText(), caregiver.get_id());
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
-                if(elderlyDao.insertNewElderly()){
-                    Toast.makeText(RegisterElderlyActivity.this, "Idoso cadastrado com sucesso!!", Toast.LENGTH_SHORT).show();
-                    int isFirstTime = sp.getInt("isFirstTime", 0);
-                    if(isFirstTime == 1){
-                        popup_warning(view);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("elderly", String.valueOf(nameRegisterElderly.getText()));
-                        editor.apply();
-                        Intent it = new Intent(RegisterElderlyActivity.this, AddMedicineActivity.class);
-                        startActivity(it);
+                if(elderlyDao.verifyElderlyExists(String.valueOf(nameRegisterElderly.getText()), caregiver.get_id())){
+                    if(elderlyDao.insertNewElderly()){
+                        Toast.makeText(RegisterElderlyActivity.this, "Idoso cadastrado com sucesso!!", Toast.LENGTH_SHORT).show();
+                        int isFirstTime = sp.getInt("isFirstTime", 0);
+                        if(isFirstTime == 1){
+                            text = "Esse foi um tutorial de como cadastrar idoso, você pode cadastrar mais idosos na aba de perfil.";
+                            popup_warning(view, text);
+                        }else{
+                            continueToNextActivity();
+                        }
                     }
+                }else{
+                    text = "Você já cadastrou um usuário com esse nome.";
+                    popup_warning(view, text);
                 }
             }
         });
@@ -138,12 +142,12 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         }
     }
 
-    public void popup_warning(View view){
+    public void popup_warning(View view, String text){
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
 
         warningText = popupView.findViewById(R.id.warningText);
-        warningText.setText("Esse foi um tutorial de como cadastrar idoso, você pode cadastrar mais idosos na aba de perfil.");
+        warningText.setText(text);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(popupView);
 
@@ -155,7 +159,18 @@ public class RegisterElderlyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
+                if(text.equals("Esse foi um tutorial de como cadastrar idoso, você pode cadastrar mais idosos na aba de perfil.")){
+                    continueToNextActivity();
+                }
             }
         });
+    }
+
+    private void continueToNextActivity() {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("chosenElderly", String.valueOf(nameRegisterElderly.getText()));
+        editor.apply();
+        Intent it = new Intent(RegisterElderlyActivity.this, AddMedicineActivity.class);
+        startActivity(it);
     }
 }

@@ -56,7 +56,6 @@ public class ElderlyCaregiverDao {
         SQLiteDatabase dbLite = this.db.getReadableDatabase();
 
         String sql = "Select * From elderlyCaregiver Where email = '"+ email +"';";
-        Log.d("", "SQL: " + sql);
         ElderlyCaregiver caregiver = new ElderlyCaregiver();
         Cursor cursor = dbLite.rawQuery(sql, null);
 
@@ -68,7 +67,6 @@ public class ElderlyCaregiverDao {
         cursor.close();
         db.close();
 
-        Log.d("", "Usuário no banco " + caregiver.getName());
         return caregiver;
     }
 }

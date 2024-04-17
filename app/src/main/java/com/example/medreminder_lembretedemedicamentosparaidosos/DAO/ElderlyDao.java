@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.HelperElderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class ElderlyDao {
             Elderly elderly = new Elderly();
             elderly.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
             elderly.setName(cursor.getString(cursor.getColumnIndex("name")));
-            elderly.setProfile_photo(cursor.getString(cursor.getColumnIndex("profile_photo")));
+            elderly.setProfile_photo(cursor.getString(cursor.getColumnIndex("photo_profile")));
             elderly.setAge(cursor.getString(cursor.getColumnIndex("age")));
             elderly.setCuidador_id(cursor.getInt(cursor.getColumnIndex("cuidador_id")));
             elderlies.add(elderly);
@@ -78,4 +79,18 @@ public class ElderlyDao {
         return elderlies;
     }
 
+    @SuppressLint("Range")
+    public boolean verifyElderlyExists(String name, int cuidador_id) {
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "Select * From elderly Where name = '"+ name +"' AND cuidador_id = '"+ cuidador_id +"';";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            return false;
+        } else {
+            cursor.close();
+            return true;
+        }
+    }
 }

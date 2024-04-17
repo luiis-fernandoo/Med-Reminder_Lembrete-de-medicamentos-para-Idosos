@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.ChoiceElderlyAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
@@ -23,7 +24,7 @@ public class ChoiceElderlyActivity extends AppCompatActivity {
     private RecyclerView recycleElderly;
     private SharedPreferences sp;
     private String caregiver;
-    private ChoiceElderlyAdapter choiceElderlyAdapter;
+    private List<Elderly> elderlyList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +39,12 @@ public class ChoiceElderlyActivity extends AppCompatActivity {
         ElderlyCaregiver elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(caregiver);
 
         ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
-        List<Elderly> elderlyList = new ArrayList<>();
         elderlyList = elderlyDao.getElderlyByCareviger(elderlyCaregiver.get_id());
 
-        recycleElderly = findViewById(R.id.recycleElderly);
+        ChoiceElderlyAdapter choiceElderlyAdapter = new ChoiceElderlyAdapter(elderlyList, this, sp);
         recycleElderly.setLayoutManager(new LinearLayoutManager(this));
-        choiceElderlyAdapter = new ChoiceElderlyAdapter(this);
         recycleElderly.setAdapter(choiceElderlyAdapter);
-
-        choiceElderlyAdapter.setElderlies(elderlyList);
+        recycleElderly.setAdapter(choiceElderlyAdapter);
 
     }
 }
