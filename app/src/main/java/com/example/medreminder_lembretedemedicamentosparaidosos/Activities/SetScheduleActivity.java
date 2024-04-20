@@ -23,6 +23,7 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class SetScheduleActivity extends AppCompatActivity {
 
@@ -141,7 +142,8 @@ public class SetScheduleActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                hourReminder = hourOfDay + ":" + minute;
+                String formattedMinute = String.format(Locale.getDefault(), "%02d", minute);
+                hourReminder = hourOfDay + ":" + formattedMinute;
                 selectHour.setText(hourReminder);
             }
         }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), false);

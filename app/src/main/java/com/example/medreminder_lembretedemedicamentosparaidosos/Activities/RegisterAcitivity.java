@@ -277,7 +277,6 @@ public class RegisterAcitivity extends AppCompatActivity {
         editor.putString("selectedUserType", selectedUserType);
         editor.putInt("isFirstTime", 1);
         editor.apply();
-        Log.d("", ": " + selectedUserType);
     }
 
     private boolean isValidEmail(CharSequence target) {

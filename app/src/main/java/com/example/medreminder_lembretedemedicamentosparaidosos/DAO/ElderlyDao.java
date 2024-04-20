@@ -93,4 +93,44 @@ public class ElderlyDao {
             return true;
         }
     }
+
+    @SuppressLint("Range")
+    public Elderly getElderlyByEmail(String email){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "Select * From elderly Where email = ? ;";
+        Cursor cursor = db.rawQuery(sql, new String[]{email});
+        Elderly elderly = new Elderly();
+
+        if(cursor.moveToFirst()){
+            elderly.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            elderly.setName(cursor.getString(cursor.getColumnIndex("name")));
+            elderly.setProfile_photo(cursor.getString(cursor.getColumnIndex("photo_profile")));
+            elderly.setAge(cursor.getString(cursor.getColumnIndex("age")));
+            elderly.setCuidador_id(cursor.getInt(cursor.getColumnIndex("cuidador_id")));
+        }
+
+        cursor.close();
+        db.close();
+        return elderly;
+    }
+
+    @SuppressLint("Range")
+    public Elderly getElderlyByName(String name){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "Select * From elderly Where name = ? ;";
+        Cursor cursor = db.rawQuery(sql, new String[]{name});
+        Elderly elderly = new Elderly();
+
+        if(cursor.moveToFirst()){
+            elderly.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            elderly.setName(cursor.getString(cursor.getColumnIndex("name")));
+            elderly.setProfile_photo(cursor.getString(cursor.getColumnIndex("photo_profile")));
+            elderly.setAge(cursor.getString(cursor.getColumnIndex("age")));
+            elderly.setCuidador_id(cursor.getInt(cursor.getColumnIndex("cuidador_id")));
+        }
+
+        cursor.close();
+        db.close();
+        return elderly;
+    }
 }

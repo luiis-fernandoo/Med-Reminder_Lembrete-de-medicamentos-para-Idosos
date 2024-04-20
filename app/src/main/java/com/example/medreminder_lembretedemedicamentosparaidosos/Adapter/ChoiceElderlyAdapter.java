@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,7 +64,8 @@ public class ChoiceElderlyAdapter extends RecyclerView.Adapter<ChoiceElderlyAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageElderlyChoice, clickToNext;
+        LinearLayout clickToNext;
+        ImageView imageElderlyChoice;
         TextView textNameElderly, textAgeElderly;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -77,7 +79,7 @@ public class ChoiceElderlyAdapter extends RecyclerView.Adapter<ChoiceElderlyAdap
         public void bind(Elderly elderly, Context context) {
             Log.d("", "Entrou " + elderly.getName());
             textNameElderly.setText(elderly.getName());
-            textAgeElderly.setText(elderly.getAge());
+            textAgeElderly.setText(elderly.getAge() + " Anos");
             if(elderly.getProfile_photo()!=null){
                 Glide.with(itemView.getContext())
                         .load(elderly.getProfile_photo())

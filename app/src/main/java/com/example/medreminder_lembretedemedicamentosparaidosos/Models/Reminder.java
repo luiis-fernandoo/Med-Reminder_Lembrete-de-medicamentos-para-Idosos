@@ -6,16 +6,33 @@ public class Reminder {
 
     private int _id;
     private int idoso_id;
-    private int medicamento_id;
-    private String frequency;
-    private String dose;
+    private String medicamento_id;
+    private String everyday;
+    private String time;
     private Date date;
-    private String duration;
-    private String replacement;
+    private String quantity;
+    private String warning;
+    private String remaining;
     private String type_medicine;
     private int status;
     private String photo_medicine_box;
     private String photo_medicine_pill;
+
+    public Reminder(){}
+
+    public Reminder(int idoso_id, String medicamento_id, String typeMedicine, String everyday, String time, Date date, String quantity, String remaining, String warning, String photo_medicine_box, String photo_medicine_pill) {
+        this.idoso_id = idoso_id;
+        this.medicamento_id = medicamento_id;
+        this.type_medicine = typeMedicine;
+        this.everyday = everyday;
+        this.time = time;
+        this.date = date;
+        this.quantity = quantity;
+        this.remaining = remaining;
+        this.warning = warning;
+        this.photo_medicine_box = photo_medicine_box;
+        this.photo_medicine_pill = photo_medicine_pill;
+    }
 
     public int get_id() {
         return _id;
@@ -33,28 +50,28 @@ public class Reminder {
         this.idoso_id = idoso_id;
     }
 
-    public int getMedicamento_id() {
+    public String getMedicamento_id() {
         return medicamento_id;
     }
 
-    public void setMedicamento_id(int medicamento_id) {
+    public void setMedicamento_id(String medicamento_id) {
         this.medicamento_id = medicamento_id;
     }
 
-    public String getFrequency() {
-        return frequency;
+    public String getEveryday() {
+        return everyday;
     }
 
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
+    public void setEveryday(String everyday) {
+        this.everyday = everyday;
     }
 
-    public String getDose() {
-        return dose;
+    public String getTime() {
+        return time;
     }
 
-    public void setDose(String dose) {
-        this.dose = dose;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public Date getDate() {
@@ -65,20 +82,20 @@ public class Reminder {
         this.date = date;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getWarning() {
+        return warning;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setWarning(String warning) {
+        this.warning = warning;
     }
 
-    public String getReplacement() {
-        return replacement;
+    public String getRemaining() {
+        return remaining;
     }
 
-    public void setReplacement(String replacement) {
-        this.replacement = replacement;
+    public void setRemaining(String remaining) {
+        this.remaining = remaining;
     }
 
     public String getType_medicine() {
@@ -112,4 +129,13 @@ public class Reminder {
     public void setPhoto_medicine_pill(String photo_medicine_pill) {
         this.photo_medicine_pill = photo_medicine_pill;
     }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
 }

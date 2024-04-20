@@ -52,16 +52,16 @@ public class FeedEntry implements BaseColumns {
                 "CREATE TABLE " + helperReminder.TABLE_NAME + " (" +
                         helperReminder._ID + " INTEGER PRIMARY KEY, " +
                         helperReminder.COLUMN_NAME_MEDICAMENTO_ID + " INTEGER REFERENCES " +
-                        helperMedicine.TABLE_NAME + "(" + helperMedicine._ID + ")," +
+                        helperMedicine.TABLE_NAME + "(" + helperMedicine.COLUMN_NAME_PROCESS_NUMBER + ")," +
                         helperReminder.COLUMN_NAME_IDOSO_ID + " INTEGER REFERENCES " +
                         helperElderly.TABLE_NAME + "(" + helperElderly._ID + ")," +
-                        helperReminder.COLUMN_NAME_DOSE + " TEXT," +
-                        helperReminder.COLUMN_NAME_DURATION + " TEXT," +
-                        helperReminder.COLUMN_NAME_FREQUENCY + " TEXT," +
+                        helperReminder.COLUMN_NAME_TIME + " TEXT," +
+                        helperReminder.COLUMN_NAME_EVERYDAY + " TEXT," +
+                        helperReminder.COLUMN_NAME_QUANTITY + " TEXT," +
                         helperReminder.COLUMN_NAME_DATE + " DATE," +
-                        helperReminder.COLUMN_NAME_REPLACEMENT + " TEXT," +
+                        helperReminder.COLUMN_NAME_REMAINING + " TEXT," +
                         helperReminder.COLUMN_NAME_TYPE_MEDICINE + " TEXT," +
-                        helperReminder.COLUMN_NAME_STATUS + " TEXT," +
+                        helperReminder.COLUMN_NAME_WARNING + " TEXT," +
                         helperReminder.COLUMN_NAME_PHOTO_MEDICINE_BOX + " TEXT," +
                         helperReminder.COLUMN_NAME_PHOTO_MEDICINE_PILL + " TEXT)";
 

@@ -1,61 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/clickToNext"
-        android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:src="@drawable/bg_list" />
-
-    <ImageView
-        android:id="@+id/imageElderlyChoice"
-        android:layout_width="84dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginBottom="23dp"
-        android:src="@drawable/profile" />
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:id="@+id/clickToNext"
+        android:layout_width="310dp"
+        android:layout_height="91dp"
+        android:background="@drawable/bg_list"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageElderlyChoice"
+            android:layout_width="78dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/profile" />
 
         <TextView
             android:id="@+id/textNameElderly"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="32dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:fontFamily="sans-serif-black"
-            android:text="Manoel Soares"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            tools:ignore="RtlCompat" />
+            android:layout_marginStart="10dp"
+            android:text="Manoel"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textAgeElderly"
-            android:layout_width="102dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="42dp"
-            android:layout_marginEnd="46dp"
-            android:layout_marginBottom="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:fontFamily="sans-serif-black"
+            android:layout_marginStart="10dp"
             android:text="69 Anos"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            tools:ignore="RtlCompat" />
-
+            android:textSize="20sp" />
     </LinearLayout>
+
 </LinearLayout>

@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.TypeMedicineActivity;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.MedicineDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Medicine;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 import org.json.JSONArray;
@@ -71,9 +74,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
                 medicineTextId.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent it = new Intent(activity, TypeMedicineActivity.class);
-                        it.putExtra("medicine", numProcesso);
-                        activity.startActivity(it);
+                        MedicineDao medicineDao = new MedicineDao(activity, new Medicine());
+                        if(medicineDao.insertNewReminder(medicine)){
+                            Intent it = new Intent(activity, TypeMedicineActivity.class);
+                            it.putExtra("medicine", numProcesso);
+                            activity.startActivity(it);
+                        }else{
+                            Toast.makeText(activity, "Não foi possível cadastrar medicamento", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             } catch (JSONException e) {

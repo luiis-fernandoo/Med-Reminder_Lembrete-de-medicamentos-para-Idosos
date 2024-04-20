@@ -3,7 +3,9 @@ package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,22 +14,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ScheduleItem;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ResetReminder extends AppCompatActivity {
 
-    private String remainingPills, warningPills, medicine, typeMedicine, frequencyMedicine, currentPhotoPathOne, currentPhotoPathTwo;
+    private String remainingPills, warningPills, medicine, typeMedicine, frequencyMedicine, currentPhotoPathOne, currentPhotoPathTwo, everyday, time, quantity;
+    private Date date;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
-    private int frequencyDay, frequencyDifferenceDays;
+    private int idoso_id, frequencyDifferenceDays;
     private EditText inputRemainingPills, inputWarningPills;
     private Button buttonNext, buttonSkip;
     private TextView warningText;
     private LinearLayout buttonOk;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +50,38 @@ public class ResetReminder extends AppCompatActivity {
         frequencyMedicine = it.getStringExtra("frequencyMedicine");
         if(frequencyMedicine != null){
             if (frequencyMedicine.equals("everyDay")) {
-                frequencyDay = it.getIntExtra("frequencyDay", 1);
+                everyday = "S";
             }else if(frequencyMedicine.equals("everyOtherDay")){
+                everyday = "N";
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
-                Log.d("", "PhotoPackaging "+ frequencyDifferenceDays);
             }else if(frequencyMedicine.equals("specificDay")){
+                everyday = "N";
                 selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
             }
         }
+
         scheduleItems = it.getParcelableArrayListExtra("timeAndQuantity");
         currentPhotoPathOne = it.getStringExtra("currentPhotoPathOne");
         currentPhotoPathTwo = it.getStringExtra("currentPhotoPathTwo");
+
+        sp = getSharedPreferences("app", Context.MODE_PRIVATE);
+        String typeUser = sp.getString("selectedUserType", "");
+
+        if(typeUser.equals("Idoso")){
+            String email = sp.getString("email", "");
+            ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
+            Elderly elderly = elderlyDao.getElderlyByEmail(email);
+            idoso_id = elderly.get_id();
+        }else{
+            if(sp.getInt("chosenElderly", 0) != 0){
+                idoso_id = sp.getInt("chosenElderly", 0);
+            }else if(sp.getString("chosenElderly", null) != null){
+                String name = sp.getString("chosenElderly", null);
+                ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
+                Elderly elderly = elderlyDao.getElderlyByName(name);
+                idoso_id = elderly.get_id();
+            }
+        }
 
         inputRemainingPills = findViewById(R.id.inputMoreThanThreeTimes);
         inputWarningPills = findViewById(R.id.inputWarningPills);
@@ -68,26 +99,7 @@ public class ResetReminder extends AppCompatActivity {
                 if(remaining < 1 || warning < 0){
                     popup_warning(view);
                 }else{
-                    Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
-                    it.putExtra("medicine", medicine);
-                    it.putExtra("typeMedicine", typeMedicine);
-                    it.putExtra("frequencyMedicine", frequencyMedicine);
-                    if(frequencyMedicine != null){
-                        if (frequencyMedicine.equals("everyDay")) {
-                            it.putExtra("frequencyDay", frequencyDay);
-                        }else if(frequencyMedicine.equals("everyOtherDay")){
-                            it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
-                        }else if(frequencyMedicine.equals("specificDay")){
-                            it.putExtra("selectedButtonTexts", selectedButtonTexts);
-                        }
-                    }
-                    it.putExtra("timeAndQuantity", scheduleItems);
-                    it.putExtra("currentPhotoPathOne", currentPhotoPathOne);
-                    it.putExtra("currentPhotoPathTwo", currentPhotoPathTwo);
-                    it.putExtra("remainingPills", remainingPills);
-                    it.putExtra("warningPills", warningPills);
-
-                    startActivity(it);
+                    registerReminder();
                 }
             }
         });
@@ -95,23 +107,7 @@ public class ResetReminder extends AppCompatActivity {
         buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
-                it.putExtra("medicine", medicine);
-                it.putExtra("typeMedicine", typeMedicine);
-                it.putExtra("frequencyMedicine", frequencyMedicine);
-                if(frequencyMedicine != null){
-                    if (frequencyMedicine.equals("everyDay")) {
-                        it.putExtra("frequencyDay", frequencyDay);
-                    }else if(frequencyMedicine.equals("everyOtherDay")){
-                        it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
-                    }else if(frequencyMedicine.equals("specificDay")){
-                        it.putExtra("selectedButtonTexts", selectedButtonTexts);
-                    }
-                }
-                it.putExtra("timeAndQuantity", scheduleItems);
-                it.putExtra("currentPhotoPathOne", currentPhotoPathOne);
-                it.putExtra("currentPhotoPathTwo", currentPhotoPathTwo);
-                startActivity(it);
+                registerReminder();
             }
         });
     }
@@ -135,5 +131,27 @@ public class ResetReminder extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
+    }
+
+    public void registerReminder(){
+        if(everyday.equals("S")) {
+            for (int i = 0; i < scheduleItems.size(); i++) {
+                time = scheduleItems.get(i).getTime();
+                quantity = scheduleItems.get(i).getQuantity();
+                ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
+                        idoso_id,
+                        medicine, typeMedicine,
+                        everyday, time,
+                        date, quantity,
+                        remainingPills, warningPills,
+                        currentPhotoPathOne, currentPhotoPathTwo));
+                if(reminderDao.insertNewReminder()){
+                    Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
+                    startActivity(it);
+                }else{
+                    Toast.makeText(ResetReminder.this, "Não foi possível cadastrar medicamento", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 }
