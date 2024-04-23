@@ -37,6 +37,7 @@ public class ReminderDao {
         values.put("type_medicine", reminder.getType_medicine());
         values.put("time", reminder.getTime());
         values.put("quantity", reminder.getQuantity());
+        values.put("day_of_week", reminder.getDayOfWeek());
         values.put("remaining", reminder.getRemaining());
         values.put("warning", reminder.getWarning());
         values.put("photo_medicine_box", reminder.getPhoto_medicine_box());

@@ -10,6 +10,7 @@ public class Reminder {
     private String everyday;
     private String time;
     private Date date;
+    private String dayOfWeek;
     private String quantity;
     private String warning;
     private String remaining;
@@ -20,7 +21,7 @@ public class Reminder {
 
     public Reminder(){}
 
-    public Reminder(int idoso_id, String medicamento_id, String typeMedicine, String everyday, String time, Date date, String quantity, String remaining, String warning, String photo_medicine_box, String photo_medicine_pill) {
+    public Reminder(int idoso_id, String medicamento_id, String typeMedicine, String everyday, String time, Date date, String quantity,String dayOfWeek, String remaining, String warning, String photo_medicine_box, String photo_medicine_pill) {
         this.idoso_id = idoso_id;
         this.medicamento_id = medicamento_id;
         this.type_medicine = typeMedicine;
@@ -28,6 +29,7 @@ public class Reminder {
         this.time = time;
         this.date = date;
         this.quantity = quantity;
+        this.dayOfWeek = dayOfWeek;
         this.remaining = remaining;
         this.warning = warning;
         this.photo_medicine_box = photo_medicine_box;
@@ -137,5 +139,11 @@ public class Reminder {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
 
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 }

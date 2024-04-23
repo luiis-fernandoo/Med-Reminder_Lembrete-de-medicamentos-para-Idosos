@@ -59,7 +59,7 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         buttonConfirmFrequencyDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(differenceInDays >=0){
+                if(differenceInDays <=0){
                     popup_warning(view);
                 }else{
                     Intent it = new Intent(getApplicationContext(), SetScheduleActivity.class);

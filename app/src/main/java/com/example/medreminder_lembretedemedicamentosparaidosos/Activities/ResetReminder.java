@@ -24,11 +24,12 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ScheduleI
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ResetReminder extends AppCompatActivity {
 
-    private String remainingPills, warningPills, medicine, typeMedicine, frequencyMedicine, currentPhotoPathOne, currentPhotoPathTwo, everyday, time, quantity;
+    private String remainingPills, warningPills, medicine, typeMedicine,dayOfWeek, frequencyMedicine, currentPhotoPathOne, currentPhotoPathTwo, everyday, time, quantity;
     private Date date;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
@@ -54,9 +55,11 @@ public class ResetReminder extends AppCompatActivity {
             }else if(frequencyMedicine.equals("everyOtherDay")){
                 everyday = "N";
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
+                Log.d("", "Fre " + frequencyDifferenceDays);
             }else if(frequencyMedicine.equals("specificDay")){
                 everyday = "N";
                 selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
+                Log.d("", "Select " + selectedButtonTexts);
             }
         }
 
@@ -135,22 +138,76 @@ public class ResetReminder extends AppCompatActivity {
 
     public void registerReminder(){
         if(everyday.equals("S")) {
-            for (int i = 0; i < scheduleItems.size(); i++) {
-                time = scheduleItems.get(i).getTime();
-                quantity = scheduleItems.get(i).getQuantity();
-                ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
-                        idoso_id,
-                        medicine, typeMedicine,
-                        everyday, time,
-                        date, quantity,
-                        remainingPills, warningPills,
-                        currentPhotoPathOne, currentPhotoPathTwo));
-                if(reminderDao.insertNewReminder()){
-                    Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
-                    startActivity(it);
-                }else{
-                    Toast.makeText(ResetReminder.this, "Não foi possível cadastrar medicamento", Toast.LENGTH_SHORT).show();
+            try {
+                for (int i = 0; i < scheduleItems.size(); i++) {
+                    time = scheduleItems.get(i).getTime();
+                    quantity = scheduleItems.get(i).getQuantity();
+                    ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
+                            idoso_id,
+                            medicine, typeMedicine,
+                            everyday, time,
+                            date, quantity,
+                            dayOfWeek, remainingPills,
+                            warningPills, currentPhotoPathOne,
+                            currentPhotoPathTwo));
+                    reminderDao.insertNewReminder();
                 }
+                Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
+                startActivity(it);
+            }catch (Exception e){
+                Log.d("", "Erro: " + e);
+                Toast.makeText(this, "Não foi possível cadastrar o medicamento, tente novamente", Toast.LENGTH_SHORT).show();
+            }
+
+        }else if(everyday.equals("N") && frequencyDifferenceDays > 0){
+            Calendar nextDoseDate = Calendar.getInstance();
+            try {
+                for (int i=0; i<15; i++){
+                    nextDoseDate.add(Calendar.DAY_OF_MONTH, + (frequencyDifferenceDays + 1));
+                    while (nextDoseDate.get(Calendar.DAY_OF_MONTH) > 28 &&
+                            nextDoseDate.get(Calendar.DAY_OF_MONTH) < 31) {
+                        nextDoseDate.add(Calendar.DAY_OF_MONTH, 1);
+                    }
+                    date = nextDoseDate.getTime();
+                    time = scheduleItems.get(0).getTime();
+                    quantity = scheduleItems.get(0).getQuantity();
+                    ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
+                            idoso_id,
+                            medicine, typeMedicine,
+                            everyday, time,
+                            date, quantity,
+                            dayOfWeek, remainingPills,
+                            warningPills, currentPhotoPathOne,
+                            currentPhotoPathTwo));
+                    reminderDao.insertNewReminder();
+                }
+                Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
+                startActivity(it);
+            }catch (Exception e){
+                Log.d("", "Erro: " + e);
+                Toast.makeText(this, "Não foi possível cadastrar o medicamento, tente novamente", Toast.LENGTH_SHORT).show();
+            }
+        }else if(everyday.equals("N") && selectedButtonTexts != null){
+            try {
+                for (int i=0; i<selectedButtonTexts.size(); i++){
+                    time = scheduleItems.get(0).getTime();
+                    quantity = scheduleItems.get(0).getQuantity();
+                    dayOfWeek = selectedButtonTexts.get(i);
+                            ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
+                            idoso_id,
+                            medicine, typeMedicine,
+                            everyday, time,
+                            date, quantity,
+                            dayOfWeek, remainingPills,
+                            warningPills, currentPhotoPathOne,
+                            currentPhotoPathTwo));
+                    reminderDao.insertNewReminder();
+                }
+                Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
+                startActivity(it);
+            }catch (Exception e){
+                Log.d("", "Erro: " + e);
+                Toast.makeText(this, "Não foi possível cadastrar o medicamento, tente novamente", Toast.LENGTH_SHORT).show();
             }
         }
     }
