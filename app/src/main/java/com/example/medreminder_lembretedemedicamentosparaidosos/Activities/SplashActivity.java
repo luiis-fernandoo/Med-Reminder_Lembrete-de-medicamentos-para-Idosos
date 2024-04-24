@@ -23,6 +23,8 @@ public class SplashActivity extends AppCompatActivity {
 //        FeedEntry.DBHelpers dbHelper = new FeedEntry.DBHelpers(this);
 //        dbHelper.deleteDatabase(this);
 
+        //https://chat.openai.com/c/9800978d-6c70-42cb-8332-e5bae444b6f9;
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

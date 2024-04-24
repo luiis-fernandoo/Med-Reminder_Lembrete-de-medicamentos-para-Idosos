@@ -56,6 +56,21 @@ public class ElderlyDao {
         }
     }
 
+    public boolean VerifyGuest(){
+        SQLiteDatabase dbLite = this.db.getWritableDatabase();
+
+        String sql = "SELECT * FROM elderly where name = ?";
+        Cursor cursor = dbLite.rawQuery(sql, new String[]{elderly.getName()});
+
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            return true;
+        } else {
+            cursor.close();
+            return false;
+        }
+    }
+
     @SuppressLint("Range")
     public List<Elderly> getElderlyByCareviger(int cuidador_id){
         SQLiteDatabase db = this.db.getReadableDatabase();

@@ -68,7 +68,20 @@ public class LoginActivity extends AppCompatActivity {
                 String name = "Convidado";
                 Elderly elderly = new Elderly(name);
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
-                if(elderlyDao.insertNewElderly()){
+                if(elderlyDao.VerifyGuest()){
+                    SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("Guest", name);
+                    editor.putString("selectedUserType", "Idoso");
+                    editor.apply();
+                    Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                    startActivity(intent);
+                }
+                else if(elderlyDao.insertNewElderly()){
+                    SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("Guest", name);
+                    editor.apply();
                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);
                 }
@@ -94,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                 Elderly elderly = new Elderly(email, password);
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                 if(elderlyDao.VerifyLogin()){
-                    saveEmailSharedPreferences(email);
+                    saveEmailSharedPreferences(email, "Idoso");
                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);
                     finish();
@@ -102,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                     ElderlyCaregiver elderlyCaregiver = new ElderlyCaregiver(email, password);
                     ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), elderlyCaregiver);
                     if(elderlyCaregiverDao.VerifyLogin()){
-                        saveEmailSharedPreferences(email);
+                        saveEmailSharedPreferences(email, "Cuidador de idoso");
                         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                         startActivity(intent);
                     }else{
@@ -119,7 +132,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         if (user != null) {
-                            saveEmailSharedPreferences(email);
                             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("name");
                             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -144,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if(snapshot.exists()){
                                         String typeUser = snapshot.getValue(String.class);
                                         SharedPreferences.Editor editor = sp.edit();
-                                        editor.putString("typeUser", typeUser);
+                                        editor.putString("selectedUserType", typeUser);
                                         editor.apply();
                                     }
                                 }
@@ -153,10 +165,11 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onCancelled(@NonNull DatabaseError error) {}
                             });
 
-                            if(sp.getString("typeUser", "").equals("Idoso")){
+                            if(sp.getString("selectedUserType", "").equals("Idoso")){
                                 Elderly elderly = new Elderly(sp.getString("name", ""), email, password);
                                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                                 if(elderlyDao.insertNewElderly()){
+                                    saveEmailSharedPreferences(email, sp.getString("selectedUserType", ""));
                                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -165,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                                 ElderlyCaregiver elderlyCaregiver = new ElderlyCaregiver(sp.getString("name", ""), email, password);
                                 ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), elderlyCaregiver);
                                 if(elderlyCaregiverDao.insertNewElderlyCaregiver()){
+                                    saveEmailSharedPreferences(email, sp.getString("selectedUserType", ""));
                                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -177,10 +191,11 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public void saveEmailSharedPreferences(String email){
+    public void saveEmailSharedPreferences(String email, String selectedUserType){
         SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("email", email);
+        editor.putString("selectedUserType", selectedUserType);
         editor.apply();
     }
 

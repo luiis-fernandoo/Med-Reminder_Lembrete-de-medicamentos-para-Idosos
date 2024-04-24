@@ -55,11 +55,9 @@ public class ResetReminder extends AppCompatActivity {
             }else if(frequencyMedicine.equals("everyOtherDay")){
                 everyday = "N";
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
-                Log.d("", "Fre " + frequencyDifferenceDays);
             }else if(frequencyMedicine.equals("specificDay")){
                 everyday = "N";
                 selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
-                Log.d("", "Select " + selectedButtonTexts);
             }
         }
 
@@ -69,15 +67,22 @@ public class ResetReminder extends AppCompatActivity {
 
         sp = getSharedPreferences("app", Context.MODE_PRIVATE);
         String typeUser = sp.getString("selectedUserType", "");
-
+        Log.d("", "Select" + typeUser);
         if(typeUser.equals("Idoso")){
-            String email = sp.getString("email", "");
             ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
-            Elderly elderly = elderlyDao.getElderlyByEmail(email);
-            idoso_id = elderly.get_id();
+            if(sp.getString("Guest", "").equals("Convidado")){
+                Elderly elderly = elderlyDao.getElderlyByName("Convidado");
+                idoso_id = elderly.get_id();
+                Log.d("","Entrou no errado: " + idoso_id);
+            }else{
+                String email = sp.getString("email", "");
+                Elderly elderly = elderlyDao.getElderlyByEmail(email);
+                idoso_id = elderly.get_id();
+                Log.d("","Entrou no certo: " + idoso_id);
+            }
         }else{
-            if(sp.getInt("chosenElderly", 0) != 0){
-                idoso_id = sp.getInt("chosenElderly", 0);
+            if(sp.getInt("chosenElderlyById", 0) != 0){
+                idoso_id = sp.getInt("chosenElderlyById", 0);
             }else if(sp.getString("chosenElderly", null) != null){
                 String name = sp.getString("chosenElderly", null);
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());

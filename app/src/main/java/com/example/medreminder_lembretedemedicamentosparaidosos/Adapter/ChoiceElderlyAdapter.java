@@ -89,7 +89,7 @@ public class ChoiceElderlyAdapter extends RecyclerView.Adapter<ChoiceElderlyAdap
                 @Override
                 public void onClick(View view) {
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("chosenElderly", String.valueOf(elderly.get_id()));
+                    editor.putString("chosenElderlyById", String.valueOf(elderly.get_id()));
                     editor.apply();
                     Intent it = new Intent(context, SearchMedicineActivity.class);
                     context.startActivity(it);

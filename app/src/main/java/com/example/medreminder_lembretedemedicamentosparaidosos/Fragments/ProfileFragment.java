@@ -85,6 +85,12 @@ public class ProfileFragment extends Fragment {
 
         editor.remove("email");
         editor.remove("profile_image_url");
+        editor.remove("Convidado");
+        editor.remove("selectedUserType");
+        editor.remove("name");
+        editor.remove("isFirstTime");
+        editor.remove("chosenElderly");
+        editor.remove("chosenElderlyById");
 
         editor.apply();
         Intent intent = new Intent(requireActivity(), LoginActivity.class);
