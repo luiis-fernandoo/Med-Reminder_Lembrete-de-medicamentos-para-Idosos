@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
 
         editor.remove("email");
         editor.remove("profile_image_url");
-        editor.remove("Convidado");
+        editor.remove("Guest");
         editor.remove("selectedUserType");
         editor.remove("name");
         editor.remove("isFirstTime");

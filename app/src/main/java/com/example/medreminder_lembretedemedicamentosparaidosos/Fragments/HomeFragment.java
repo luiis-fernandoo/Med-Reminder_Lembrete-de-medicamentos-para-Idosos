@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.work.BackoffPolicy;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +18,10 @@ import android.widget.Button;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.ChoiceElderlyActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.SearchMedicineActivity;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Broadcast.MyWorker;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +78,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         buttonAddMedicine = view.findViewById(R.id.buttonAddMedicine);
+
+        WorkManager workManager = WorkManager.getInstance(getContext());
+        workManager.enqueueUniquePeriodicWork("workAlarmManager", ExistingPeriodicWorkPolicy.KEEP,
+                new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.DAYS).setBackoffCriteria(BackoffPolicy.LINEAR, 60000, TimeUnit.MILLISECONDS)
+                        .build());
 
         buttonAddMedicine.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("Guest", name);
                     editor.putString("selectedUserType", "Idoso");
                     editor.apply();
+                    Log.d("", "Shared de convidado: " + sp.getString("Guest", ""));
                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);
                 }

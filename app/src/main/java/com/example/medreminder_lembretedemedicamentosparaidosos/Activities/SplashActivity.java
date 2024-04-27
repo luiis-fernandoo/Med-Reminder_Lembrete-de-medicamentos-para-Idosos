@@ -23,20 +23,24 @@ public class SplashActivity extends AppCompatActivity {
 //        FeedEntry.DBHelpers dbHelper = new FeedEntry.DBHelpers(this);
 //        dbHelper.deleteDatabase(this);
 
-        //https://chat.openai.com/c/9800978d-6c70-42cb-8332-e5bae444b6f9;
-
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
                 String savedEmail = sp.getString("email", "");
+                String guest = sp.getString("Guest", "");
 
                 if (!savedEmail.isEmpty()) {
                     Intent intent = new Intent(SplashActivity.this, MenuActivity.class);
                     startActivity(intent);
                     finish();
-                }else{
+                }else if(guest.equals("Convidado")){
+                    Intent intent = new Intent(SplashActivity.this, MenuActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
                     Intent it = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(it);
                     finish();

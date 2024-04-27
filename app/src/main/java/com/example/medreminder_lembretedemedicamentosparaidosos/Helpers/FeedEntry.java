@@ -61,6 +61,7 @@ public class FeedEntry implements BaseColumns {
                         helperReminder.COLUMN_NAME_DAY_OF_WEEK + " TEXT," +
                         helperReminder.COLUMN_NAME_DATE + " DATE," +
                         helperReminder.COLUMN_NAME_REMAINING + " TEXT," +
+                        helperReminder.COLUMN_NAME_STATUS + " TEXT," +
                         helperReminder.COLUMN_NAME_TYPE_MEDICINE + " TEXT," +
                         helperReminder.COLUMN_NAME_WARNING + " TEXT," +
                         helperReminder.COLUMN_NAME_PHOTO_MEDICINE_BOX + " TEXT," +
