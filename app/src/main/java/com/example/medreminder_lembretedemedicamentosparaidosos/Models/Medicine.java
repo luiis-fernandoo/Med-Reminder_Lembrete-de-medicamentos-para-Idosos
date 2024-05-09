@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Medicine {
 
+    private int _id;
     private int product_id;
     private int register_number;
     private String product_name;
@@ -12,11 +13,15 @@ public class Medicine {
     private String cnpj;
     private int transaction_number;
     private Date date;
-    private int process_number;
+    private String process_number;
     private String id_protected_patient_leaflet;
     private String id_protected_professional_leaflet;
     private Date update_date;
 
+    public Medicine (String process_number){
+        this.process_number = process_number;
+    }
+    public Medicine(){}
     public int getProduct_id() {
         return product_id;
     }
@@ -81,11 +86,11 @@ public class Medicine {
         this.date = date;
     }
 
-    public int getProcess_number() {
+    public String getProcess_number() {
         return process_number;
     }
 
-    public void setProcess_number(int process_number) {
+    public void setProcess_number(String process_number) {
         this.process_number = process_number;
     }
 
@@ -111,5 +116,12 @@ public class Medicine {
 
     public void setUpdate_date(Date update_date) {
         this.update_date = update_date;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+    public void set_id(int _id) {
+        this._id = _id;
     }
 }

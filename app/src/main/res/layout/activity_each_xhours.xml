@@ -16,7 +16,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/inputMoreThanThreeTimes"
+        android:id="@+id/inputNameEdit"
         android:layout_width="121dp"
         android:layout_height="40dp"
         android:layout_marginStart="145dp"
@@ -62,6 +62,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputMoreThanThreeTimes" />
+        app:layout_constraintTop_toBottomOf="@+id/inputNameEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

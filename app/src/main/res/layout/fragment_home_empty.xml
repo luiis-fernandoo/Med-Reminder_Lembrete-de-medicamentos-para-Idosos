@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D78DB"
+    tools:context=".Fragments.HomeFragment">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="500dp"
+        android:layout_height="750dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/layout_photo" />
+
+    <TextView
+        android:id="@+id/currentDay"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Domingo, 01 de Abril"
+        android:textAlignment="viewStart"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/icons8_emoji_de_calend_rio_48" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="220dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Medicamentos para hoje"
+        android:textAllCaps="true"
+        android:textColor="#0D78DB"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="160dp"
+        android:layout_height="122dp"
+        android:layout_gravity="center"
+        android:alpha="0.5"
+        app:srcCompat="@drawable/calendario" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonAddMedicine"
+        android:layout_width="315dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/shape_buttons"
+        android:text="Adicionar medicamento"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+
+</FrameLayout>

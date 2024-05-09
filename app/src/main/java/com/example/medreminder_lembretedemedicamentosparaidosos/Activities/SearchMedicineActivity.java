@@ -83,9 +83,9 @@ public class SearchMedicineActivity extends AppCompatActivity implements MyAsync
             @Override
             public void run() {
                 if(!TextUtils.isEmpty(query)){
-                    MyAsyncTask myAsyncTaskSearch = new MyAsyncTask(SearchMedicineActivity.this, query);
+                    String url = "https://consultas.anvisa.gov.br/api/consulta/bulario?filter%5BnomeProduto%5D="+query+"&page=1";
+                    MyAsyncTask myAsyncTaskSearch = new MyAsyncTask(SearchMedicineActivity.this, url);
                     myAsyncTaskSearch.execute();
-                }else{
                 }
             }
         }).start();

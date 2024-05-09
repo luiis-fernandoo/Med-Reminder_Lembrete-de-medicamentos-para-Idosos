@@ -44,7 +44,5 @@ public class ChoiceElderlyActivity extends AppCompatActivity {
         ChoiceElderlyAdapter choiceElderlyAdapter = new ChoiceElderlyAdapter(elderlyList, this, sp);
         recycleElderly.setLayoutManager(new LinearLayoutManager(this));
         recycleElderly.setAdapter(choiceElderlyAdapter);
-        recycleElderly.setAdapter(choiceElderlyAdapter);
-
     }
 }

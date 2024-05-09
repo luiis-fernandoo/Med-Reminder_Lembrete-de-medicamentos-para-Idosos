@@ -25,7 +25,7 @@ public class EachXhoursActivity extends AppCompatActivity {
         String typeMedicine = it.getStringExtra("typeMedicine");
         String frequencyMedicine = it.getStringExtra("frequencyMedicine");
 
-        inputEachHour = findViewById(R.id.inputMoreThanThreeTimes);
+        inputEachHour = findViewById(R.id.inputNameEdit);
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override

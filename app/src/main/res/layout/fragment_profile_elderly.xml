@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D78DB"
+    tools:context=".Fragments.ProfileFragment">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="500dp"
+        android:layout_height="750dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/layout_photo" />
+
+    <TextView
+        android:id="@+id/typeUser"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="310dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Idoso"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageProfile"
+        android:layout_width="142dp"
+        android:layout_height="129dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/round_image"
+        android:src="@drawable/profile_photo_removebg_preview" />
+
+    <TextView
+        android:id="@+id/nameProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="160dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Nome Idoso"
+        android:textAllCaps="true"
+        android:textColor="#3F51B5"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/ageProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="220dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Idade:"
+        android:textAllCaps="true"
+        android:textColor="#3F51B5"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="138dp"
+        android:layout_height="57dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="330dp"
+        android:src="@drawable/element_list" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="138dp"
+        android:layout_height="57dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="330dp"
+        android:src="@drawable/element_list" />
+
+    <ImageView
+        android:id="@+id/imageEdit"
+        android:layout_width="34dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="340dp"
+        android:layout_marginTop="180dp"
+        android:src="@drawable/pen" />
+
+    <TextView
+        android:id="@+id/textInfoMedicine"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="345dp"
+        android:fontFamily="sans-serif-black"
+        android:text="20"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textInfoReminder"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="270dp"
+        android:layout_marginTop="345dp"
+        android:fontFamily="sans-serif-black"
+        android:text="10"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogout"
+        android:layout_width="115dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="550dp"
+        android:background="@drawable/shape_button_exit"
+        android:text="Sair"
+        android:textColor="#FFFFFF" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonDeleteProfile"
+        android:layout_width="215dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="600dp"
+        android:background="@drawable/shape_button_delete"
+        android:text="Apagar Conta"
+        android:textColor="#FFFFFF" />
+
+</FrameLayout>

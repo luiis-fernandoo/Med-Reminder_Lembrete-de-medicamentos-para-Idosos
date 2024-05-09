@@ -1,7 +1,6 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Adapter;
 
 import android.app.Activity;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,15 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.AddMedicineActivity;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.ChoiceElderlyActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.SearchMedicineActivity;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.TypeMedicineActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -70,8 +63,8 @@ public class ChoiceElderlyAdapter extends RecyclerView.Adapter<ChoiceElderlyAdap
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageElderlyChoice = itemView.findViewById(R.id.imageElderlyChoice);
-            textNameElderly = itemView.findViewById(R.id.textNameElderly);
+            imageElderlyChoice = itemView.findViewById(R.id.imageBox);
+            textNameElderly = itemView.findViewById(R.id.textNameMedicine);
             textAgeElderly = itemView.findViewById(R.id.textAgeElderly);
             clickToNext = itemView.findViewById(R.id.clickToNext);
         }
@@ -89,7 +82,7 @@ public class ChoiceElderlyAdapter extends RecyclerView.Adapter<ChoiceElderlyAdap
                 @Override
                 public void onClick(View view) {
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("chosenElderlyById", String.valueOf(elderly.get_id()));
+                    editor.putInt("chosenElderlyById", elderly.get_id());
                     editor.apply();
                     Intent it = new Intent(context, SearchMedicineActivity.class);
                     context.startActivity(it);

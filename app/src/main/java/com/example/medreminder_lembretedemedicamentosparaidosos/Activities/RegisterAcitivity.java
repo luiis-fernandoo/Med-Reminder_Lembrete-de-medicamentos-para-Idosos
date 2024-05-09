@@ -4,22 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,14 +21,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
@@ -77,7 +69,7 @@ public class RegisterAcitivity extends AppCompatActivity {
         nameRegister = findViewById(R.id.nameRegister);
         passwordRegister = findViewById(R.id.passwordRegister);
         buttonRegister = findViewById(R.id.buttonRegister);
-        typeUser = findViewById(R.id.typeUser);
+        typeUser = findViewById(R.id.currentDay);
         photo_profile = findViewById(R.id.photo_profile);
         firebaseAuth = FirebaseAuth.getInstance();
 

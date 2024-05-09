@@ -3,7 +3,9 @@ package com.example.medreminder_lembretedemedicamentosparaidosos.Models;
 import android.text.Editable;
 import android.widget.TextView;
 
-public class Elderly extends Person{
+import com.example.medreminder_lembretedemedicamentosparaidosos.Interface.PopupInterface;
+
+public class Elderly extends Person implements PopupInterface {
 
     private String age;
     private int cuidador_id;

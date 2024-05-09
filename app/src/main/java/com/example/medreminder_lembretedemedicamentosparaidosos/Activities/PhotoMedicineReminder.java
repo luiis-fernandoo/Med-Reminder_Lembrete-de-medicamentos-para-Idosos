@@ -1,9 +1,15 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,7 +30,7 @@ import java.util.Date;
 
 public class PhotoMedicineReminder extends AppCompatActivity {
 
-    private static final int REQUEST_CAMERA_PERMISSION = 101;
+    private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imagePhotoCapture, iconCameraPhoto;
     private TextView textViewHeader;
@@ -33,12 +39,14 @@ public class PhotoMedicineReminder extends AppCompatActivity {
     private ArrayList<ScheduleItem> scheduleItems;
     private int frequencyDay, frequencyDifferenceDays;
     private Button buttonNext;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_medicine_reminder);
 
+        activity = this;
         Intent it = getIntent();
         medicine = it.getStringExtra("medicine");
         typeMedicine = it.getStringExtra("typeMedicine");
@@ -63,8 +71,15 @@ public class PhotoMedicineReminder extends AppCompatActivity {
         iconCameraPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1);
+                // Verifique se a permissão da câmera foi concedida
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    // Se a permissão da câmera não foi concedida, solicite ao usuário
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                } else {
+                    // Se a permissão da câmera foi concedida, você pode abrir a câmera
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                }
             }
         });
 
@@ -147,4 +162,24 @@ public class PhotoMedicineReminder extends AppCompatActivity {
 //            Toast.makeText(this, "Caminho da imagem não encontrado", Toast.LENGTH_SHORT).show();
 //        }
 //    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CAMERA_PERMISSION: {
+                // Se a solicitação de permissão foi cancelada, os arrays de resultados estarão vazios.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // A permissão foi concedida. Agora você pode abrir a câmera
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                } else {
+                    // A permissão foi negada. Mostre uma mensagem ao usuário explicando que ele não pode usar a câmera sem conceder a permissão.
+                    Toast.makeText(this, "Permissão de câmera necessária para usar a câmera", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+            // Outras verificações de 'case' para outras permissões que este aplicativo pode solicitar
+        }
+    }
 }

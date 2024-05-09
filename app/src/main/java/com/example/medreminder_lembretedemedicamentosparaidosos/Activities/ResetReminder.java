@@ -2,6 +2,8 @@ package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.medreminder_lembretedemedicamentosparaidosos.Broadcast.MyWorker;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ScheduleItem;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
@@ -33,7 +38,7 @@ public class ResetReminder extends AppCompatActivity {
     private Date date;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
-    private int idoso_id, frequencyDifferenceDays;
+    private int idoso_id, frequencyDifferenceDays, cuidador_id = 0;
     private EditText inputRemainingPills, inputWarningPills;
     private Button buttonNext, buttonSkip;
     private TextView warningText;
@@ -73,12 +78,10 @@ public class ResetReminder extends AppCompatActivity {
             if(sp.getString("Guest", "").equals("Convidado")){
                 Elderly elderly = elderlyDao.getElderlyByName("Convidado");
                 idoso_id = elderly.get_id();
-                Log.d("","Entrou no errado: " + idoso_id);
             }else{
                 String email = sp.getString("email", "");
                 Elderly elderly = elderlyDao.getElderlyByEmail(email);
                 idoso_id = elderly.get_id();
-                Log.d("","Entrou no certo: " + idoso_id);
             }
         }else{
             if(sp.getInt("chosenElderlyById", 0) != 0){
@@ -89,9 +92,13 @@ public class ResetReminder extends AppCompatActivity {
                 Elderly elderly = elderlyDao.getElderlyByName(name);
                 idoso_id = elderly.get_id();
             }
+            String email = sp.getString("email", null);
+            ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), new ElderlyCaregiver());
+            ElderlyCaregiver elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(email);
+            cuidador_id = elderlyCaregiver.get_id();
         }
 
-        inputRemainingPills = findViewById(R.id.inputMoreThanThreeTimes);
+        inputRemainingPills = findViewById(R.id.inputNameEdit);
         inputWarningPills = findViewById(R.id.inputWarningPills);
         buttonNext = findViewById(R.id.buttonNext);
         buttonSkip = findViewById(R.id.buttonSkip);
@@ -142,13 +149,14 @@ public class ResetReminder extends AppCompatActivity {
     }
 
     public void registerReminder(){
+        WorkManager workManager = WorkManager.getInstance(getApplicationContext());
         if(everyday.equals("S")) {
             try {
                 for (int i = 0; i < scheduleItems.size(); i++) {
                     time = scheduleItems.get(i).getTime();
                     quantity = scheduleItems.get(i).getQuantity();
                     ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
-                            idoso_id,
+                            idoso_id, cuidador_id,
                             medicine, typeMedicine,
                             everyday, time,
                             date, quantity,
@@ -157,6 +165,7 @@ public class ResetReminder extends AppCompatActivity {
                             currentPhotoPathTwo));
                     reminderDao.insertNewReminder();
                 }
+                workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
                 Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 startActivity(it);
             }catch (Exception e){
@@ -177,7 +186,7 @@ public class ResetReminder extends AppCompatActivity {
                     time = scheduleItems.get(0).getTime();
                     quantity = scheduleItems.get(0).getQuantity();
                     ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
-                            idoso_id,
+                            idoso_id, cuidador_id,
                             medicine, typeMedicine,
                             everyday, time,
                             date, quantity,
@@ -186,6 +195,7 @@ public class ResetReminder extends AppCompatActivity {
                             currentPhotoPathTwo));
                     reminderDao.insertNewReminder();
                 }
+                workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
                 Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 startActivity(it);
             }catch (Exception e){
@@ -197,9 +207,9 @@ public class ResetReminder extends AppCompatActivity {
                 for (int i=0; i<selectedButtonTexts.size(); i++){
                     time = scheduleItems.get(0).getTime();
                     quantity = scheduleItems.get(0).getQuantity();
-                    dayOfWeek = selectedButtonTexts.get(i);
+                    dayOfWeek = selectedButtonTexts.get(i).toLowerCase();
                             ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
-                            idoso_id,
+                            idoso_id, cuidador_id,
                             medicine, typeMedicine,
                             everyday, time,
                             date, quantity,
@@ -208,6 +218,7 @@ public class ResetReminder extends AppCompatActivity {
                             currentPhotoPathTwo));
                     reminderDao.insertNewReminder();
                 }
+                workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
                 Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 startActivity(it);
             }catch (Exception e){

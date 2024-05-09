@@ -6,6 +6,7 @@ public class HelperReminder implements BaseColumns {
     public String TABLE_NAME = "reminder";
     public String COLUMN_NAME_IDOSO_ID = "idoso_id";
     public String COLUMN_NAME_MEDICAMENTO_ID = "medicamento_id";
+    public String COLUMN_NAME_CUIDADOR_ID = "cuidador_id";
     public String COLUMN_NAME_EVERYDAY = "everyday";
     public String COLUMN_NAME_DATE = "date";
     public String COLUMN_NAME_DAY_OF_WEEK = "day_of_week";

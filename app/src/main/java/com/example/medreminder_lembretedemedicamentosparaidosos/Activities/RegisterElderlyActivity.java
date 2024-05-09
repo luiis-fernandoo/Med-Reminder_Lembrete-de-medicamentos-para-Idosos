@@ -3,6 +3,9 @@ package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.HomeFragment;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.ProfileFragment;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
@@ -44,6 +48,7 @@ public class RegisterElderlyActivity extends AppCompatActivity {
     private String currentPhotoPath, text;
     private LinearLayout buttonOk;
     private SharedPreferences sp;
+    private int isFirstTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +93,7 @@ public class RegisterElderlyActivity extends AppCompatActivity {
                 if(elderlyDao.verifyElderlyExists(String.valueOf(nameRegisterElderly.getText()), caregiver.get_id())){
                     if(elderlyDao.insertNewElderly()){
                         Toast.makeText(RegisterElderlyActivity.this, "Idoso cadastrado com sucesso!!", Toast.LENGTH_SHORT).show();
-                        int isFirstTime = sp.getInt("isFirstTime", 0);
+                        isFirstTime = sp.getInt("isFirstTime", 0);
                         if(isFirstTime == 1){
                             text = "Esse foi um tutorial de como cadastrar idoso, você pode cadastrar mais idosos na aba de perfil.";
                             popup_warning(view, text);
@@ -170,7 +175,18 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("chosenElderly", String.valueOf(nameRegisterElderly.getText()));
         editor.apply();
-        Intent it = new Intent(RegisterElderlyActivity.this, AddMedicineActivity.class);
-        startActivity(it);
+        if(isFirstTime == 1){
+            Intent it = new Intent(RegisterElderlyActivity.this, AddMedicineActivity.class);
+            startActivity(it);
+        }else{
+
+        }
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
     }
 }

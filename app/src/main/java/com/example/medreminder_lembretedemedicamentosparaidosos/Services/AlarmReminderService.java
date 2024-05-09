@@ -1,63 +1,125 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Services;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.AlarmTransparentActivity;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AlarmReminderService extends Service {
 
+    private static final String CHANNEL_ID = "channel_id";
+    private static final String CHANNEL_NAME = "Channel Name";
+    private static final String ACTION_STOP = "STOP";
+    private static final int NOTIFICATION_ID = 1;
+
+    private ReminderDao reminderDao;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && "STOP".equals(intent.getAction())) {
+        acquireWakeLock();
+
+        if (intent != null && ACTION_STOP.equals(intent.getAction())) {
             stopForeground(true);
             stopSelf();
             return START_NOT_STICKY;
         }
 
-        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(getApplicationContext().VIBRATOR_SERVICE);
+        int reminderId = intent.getIntExtra("reminderId", -1);
+        vibrate();
+
+        createNotificationChannel();
+        Notification notification = createNotification();
+        Reminder reminder = new Reminder(reminderId);
+        reminderDao = new ReminderDao(getApplicationContext(), reminder);
+        reminderDao.setStatusAlarm(1, reminder.get_id());
+
+        showAlertDialog();
+
+        startForeground(NOTIFICATION_ID, notification);
+
+        return START_STICKY;
+
+    }
+
+    private void acquireWakeLock() {
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                "MyApp::MyWakelockTag");
+        wakeLock.acquire(3000000);
+    }
+
+    private void vibrate() {
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(2000);
+    }
 
-        String channelId = "channel_id";
-        String channelName = "Channel Name";
-
-        // Criar um canal de notificação
+    private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
         }
+    }
 
-        // Criar uma intenção para parar o serviço
+    private Notification createNotification() {
         Intent stopIntent = new Intent(this, AlarmReminderService.class);
-        stopIntent.setAction("STOP");
+        stopIntent.setAction(ACTION_STOP);
         PendingIntent stopPendingIntent = PendingIntent.getService(this, 0, stopIntent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        // Criar uma notificação
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
         builder.setContentTitle("Lembrete de remédio")
                 .setContentText("Está na hora de tomar o seu remédio!")
-                .setSmallIcon(R.drawable.icon_camera) // ícone do aplicativo
-                .addAction(R.drawable.bg_list, "OK", stopPendingIntent) // botão OK
-                .setAutoCancel(true); // fechar notificação ao clicar
+                .setSmallIcon(R.drawable.icon_camera)
+                .addAction(R.drawable.bg_list, "OK", stopPendingIntent)
+                .setAutoCancel(true);
 
-        Notification notification = builder.build();
+        return builder.build();
+    }
 
-        startForeground(1, notification);
-        return START_STICKY;
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Alarme!");
+        builder.setMessage("Hora de fazer algo.");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+        } else {
+            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        }
+        dialog.show();
     }
 
     @Nullable

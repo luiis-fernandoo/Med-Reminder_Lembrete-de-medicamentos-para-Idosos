@@ -148,4 +148,56 @@ public class ElderlyDao {
         db.close();
         return elderly;
     }
+
+    @SuppressLint("Range")
+    public Elderly getElderlyById(int _id){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "Select * From elderly Where _id = ? ;";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(_id)});
+        Elderly elderly = new Elderly();
+
+        if(cursor.moveToFirst()){
+            elderly.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            elderly.setName(cursor.getString(cursor.getColumnIndex("name")));
+            elderly.setProfile_photo(cursor.getString(cursor.getColumnIndex("photo_profile")));
+            elderly.setAge(cursor.getString(cursor.getColumnIndex("age")));
+            elderly.setCuidador_id(cursor.getInt(cursor.getColumnIndex("cuidador_id")));
+        }
+
+        cursor.close();
+        db.close();
+        return elderly;
+    }
+
+    public boolean deleteElderly(int idoso_id){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+
+            long resultado = dbLite.delete("elderly", "_id = ?", new String[]{String.valueOf(idoso_id)});
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela elderly: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateElderly(Elderly elderly){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("name", elderly.getName());
+            values.put("age", elderly.getAge());
+            String whereClause = "_id = ?";
+            String[] whereArgs = {String.valueOf(elderly.get_id())};
+
+            long resultado = db.update("elderly", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

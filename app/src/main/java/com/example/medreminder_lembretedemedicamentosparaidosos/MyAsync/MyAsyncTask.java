@@ -13,15 +13,14 @@ import java.io.IOException;
 
 public class MyAsyncTask extends AsyncTask<Void, Void, String> {
     private AsyncTaskListener listener;
-    private String url, medicine;
-    public MyAsyncTask(AsyncTaskListener listener, String medicine) {
+    private String url;
+    public MyAsyncTask(AsyncTaskListener listener, String url) {
         this.listener = listener;
-        this.medicine = medicine;
+        this.url = url;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
-        this.url = "https://consultas.anvisa.gov.br/api/consulta/bulario?filter%5BnomeProduto%5D="+this.medicine+"&page=1";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(this.url)

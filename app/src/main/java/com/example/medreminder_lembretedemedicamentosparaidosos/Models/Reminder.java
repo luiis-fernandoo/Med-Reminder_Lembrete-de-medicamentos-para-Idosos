@@ -7,6 +7,7 @@ public class Reminder {
     private int _id;
     private int idoso_id;
     private String medicamento_id;
+    private int cuidador_id;
     private String everyday;
     private String time;
     private Date date;
@@ -20,9 +21,13 @@ public class Reminder {
     private String photo_medicine_pill;
 
     public Reminder(){}
+    public Reminder(int _id){
+        this._id = _id;
+    }
 
-    public Reminder(int idoso_id, String medicamento_id, String typeMedicine, String everyday, String time, Date date, String quantity,String dayOfWeek, String remaining, String warning, String photo_medicine_box, String photo_medicine_pill) {
+    public Reminder(int idoso_id, int cuidador_id, String medicamento_id, String typeMedicine, String everyday, String time, Date date, String quantity,String dayOfWeek, String remaining, String warning, String photo_medicine_box, String photo_medicine_pill) {
         this.idoso_id = idoso_id;
+        this.cuidador_id = cuidador_id;
         this.medicamento_id = medicamento_id;
         this.type_medicine = typeMedicine;
         this.everyday = everyday;
@@ -146,4 +151,12 @@ public class Reminder {
     public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
+    public int getCuidador_id() {
+        return cuidador_id;
+    }
+
+    public void setCuidador_id(int cuidador_id) {
+        this.cuidador_id = cuidador_id;
+    }
+
 }

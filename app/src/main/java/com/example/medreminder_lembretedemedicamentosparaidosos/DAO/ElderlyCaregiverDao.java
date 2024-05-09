@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.HelperElderlyCaregiver;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 
 public class ElderlyCaregiverDao {
@@ -63,10 +64,45 @@ public class ElderlyCaregiverDao {
             caregiver.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
             caregiver.setName(cursor.getString(cursor.getColumnIndex("name")));
             caregiver.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+            caregiver.setAge(cursor.getString(cursor.getColumnIndex("age")));
+            caregiver.setProfile_photo(cursor.getString(cursor.getColumnIndex("photo_profile")));
+
         }
         cursor.close();
         db.close();
 
         return caregiver;
+    }
+
+    public boolean deleteCaregiver(int cuidador_id){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+
+            long resultado = dbLite.delete("elderlyCaregiver", "_id = ?", new String[]{String.valueOf(cuidador_id)});
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela Caregiver: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateCaregiver(ElderlyCaregiver elderlyCaregiver){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("name", elderlyCaregiver.getName());
+            values.put("age", elderlyCaregiver.getAge());
+            String whereClause = "_id = ?";
+            String[] whereArgs = {String.valueOf(elderlyCaregiver.get_id())};
+
+            long resultado = db.update("elderlyCaregiver", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

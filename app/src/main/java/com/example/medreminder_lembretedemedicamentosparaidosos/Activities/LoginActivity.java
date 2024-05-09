@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("Guest", name);
+                    editor.putString("selectedUserType", "Idoso");
                     editor.apply();
                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);

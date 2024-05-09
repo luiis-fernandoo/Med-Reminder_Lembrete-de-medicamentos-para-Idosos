@@ -5,14 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
@@ -35,7 +33,7 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
         String frequencyMedicine = it.getStringExtra("frequencyMedicine");
 
         buttonNext = findViewById(R.id.buttonNext);
-        inputMoreThanThreeTimes = findViewById(R.id.inputMoreThanThreeTimes);
+        inputMoreThanThreeTimes = findViewById(R.id.inputNameEdit);
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override

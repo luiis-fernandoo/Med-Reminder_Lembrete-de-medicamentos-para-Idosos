@@ -46,6 +46,7 @@ public class FeedEntry implements BaseColumns {
                         helperElderlyCaregiver.COLUMN_NAME_EMAIL + " TEXT," +
                         helperElderlyCaregiver.COLUMN_NAME_NAME + " TEXT," +
                         helperElderlyCaregiver.COLUMN_NAME_PASSWORD + " TEXT," +
+                        helperElderlyCaregiver.COLUMN_NAME_AGE + " TEXT," +
                         helperElderlyCaregiver.COLUMN_NAME_PHOTO_PROFILE + " TEXT)";
 
         private static final String SQL_CREATE_ENTRIES_Reminder =
@@ -53,6 +54,8 @@ public class FeedEntry implements BaseColumns {
                         helperReminder._ID + " INTEGER PRIMARY KEY, " +
                         helperReminder.COLUMN_NAME_MEDICAMENTO_ID + " INTEGER REFERENCES " +
                         helperMedicine.TABLE_NAME + "(" + helperMedicine.COLUMN_NAME_PROCESS_NUMBER + ")," +
+                        helperReminder.COLUMN_NAME_CUIDADOR_ID + " INTEGER REFERENCES " +
+                        helperElderlyCaregiver.TABLE_NAME + "(" + helperElderlyCaregiver._ID + ")," +
                         helperReminder.COLUMN_NAME_IDOSO_ID + " INTEGER REFERENCES " +
                         helperElderly.TABLE_NAME + "(" + helperElderly._ID + ")," +
                         helperReminder.COLUMN_NAME_TIME + " TEXT," +

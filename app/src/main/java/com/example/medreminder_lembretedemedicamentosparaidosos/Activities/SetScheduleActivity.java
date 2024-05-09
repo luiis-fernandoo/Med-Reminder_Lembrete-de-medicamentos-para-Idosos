@@ -125,7 +125,7 @@ public class SetScheduleActivity extends AppCompatActivity {
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editTextInput = popupView.findViewById(R.id.inputMoreThanThreeTimes);
+                EditText editTextInput = popupView.findViewById(R.id.inputNameEdit);
                 valueQuantity = editTextInput.getText().toString();
                 int quant = Integer.parseInt(valueQuantity);
                 if(quant <= 0){

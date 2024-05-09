@@ -3,4 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.MedicineFragment"/>
+    android:background="#0D78DB"
+    tools:context=".Fragments.MedicineFragment" >
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="495dp"
+        android:layout_height="663dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/layout_photo" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="251dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="35dp"
+        android:layout_marginBottom="290dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Seus Medicamentos"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="78dp"
+        android:layout_height="112dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/hospital_medicine_pills_pack_by_vexels" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="543dp"
+        android:layout_marginTop="190dp"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleReminder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</FrameLayout>

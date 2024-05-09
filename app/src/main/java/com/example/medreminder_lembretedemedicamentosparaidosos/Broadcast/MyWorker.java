@@ -24,8 +24,13 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MyWorker extends Worker {
     private static final int SCHEDULE_ALARM_REQUEST_CODE = 1;
@@ -47,7 +52,6 @@ public class MyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-
         sp = getApplicationContext().getSharedPreferences("app", Context.MODE_PRIVATE);
 
         selectedUserType = sp.getString("selectedUserType", "");
@@ -56,30 +60,47 @@ public class MyWorker extends Worker {
             if(sp.getString("Guest", "").equals("Convidado")){
                 guestElderly = elderlyDao.getElderlyByName("Convidado");
                 reminders = reminderDao.getAllRemindersByElderly(guestElderly.get_id());
-                Log.d("", "Reminders de convidado: " + reminders.get(0).getType_medicine());
             }else{
                 elderly = elderlyDao.getElderlyByEmail(sp.getString("email", ""));
                 reminders = reminderDao.getAllRemindersByElderly(elderly.get_id());
-                Log.d("", "Reminders de idoso: " + reminders);
             }
         }else{
             ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), new ElderlyCaregiver());
             elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(sp.getString("email", ""));
-            elderlies = new ArrayList<>();
-            elderlies = elderlyDao.getElderlyByCareviger(elderlyCaregiver.get_id());
-            for(int i=0; i<elderlies.size(); i++){
+            reminders = reminderDao.getAllRemindersByCaregiver(elderlyCaregiver.get_id());
+        }
+        if(reminders.size() != 0){
+            for (int i=0; i<reminders.size(); i++) {
+                if (reminders.get(i).getEveryday().equals("S")) {
+                    String time = reminders.get(i).getTime();
+                    Calendar calendar = Calendar.getInstance();
 
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    try {
+                        Date date = sdf.parse(time);
+                        if (date != null) {
+                            Calendar alarmTime = Calendar.getInstance();
+                            alarmTime.setTime(date);
+
+                            calendar.set(Calendar.HOUR_OF_DAY, alarmTime.get(Calendar.HOUR_OF_DAY));
+                            calendar.set(Calendar.MINUTE, alarmTime.get(Calendar.MINUTE));
+                            calendar.set(Calendar.SECOND, 0);
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(getApplicationContext(), BroadcastReceiver.class);
+                    intent.putExtra("reminderId", reminders.get(i).get_id());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),  reminders.get(i).get_id(), intent, PendingIntent.FLAG_IMMUTABLE);
+
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    Log.d("", "Horário do alarme setado: " + calendar.getTime());
+                }
             }
         }
-
-        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), BroadcastReceiver.class); // Substitua MyAlarmReceiver pela sua classe BroadcastReceiver
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        if (alarmManager != null) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, pendingIntent);
-        }
-
         return Result.success(); // Retorna Result.success() se o trabalho for concluído com sucesso
     }
+
 }

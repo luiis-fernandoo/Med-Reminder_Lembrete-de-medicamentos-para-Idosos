@@ -1,17 +1,25 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.HelperMedicine;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Medicine;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MedicineDao {
@@ -48,5 +56,46 @@ public class MedicineDao {
             Log.d("Error", "Error: " + error);
             return false;
         }
+    }
+
+    @SuppressLint("Range")
+    public Medicine getMedicineByProcessNumber(){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "Select * From medicine Where process_number = ? ;";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(medicine.getProcess_number())});
+        Medicine medicine = new Medicine();
+
+        if(cursor.moveToFirst()){
+            medicine.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            medicine.setProcess_number(cursor.getString(cursor.getColumnIndex("process_number")));
+            medicine.setProduct_name(cursor.getString(cursor.getColumnIndex("product_name")));
+        }
+
+        cursor.close();
+        db.close();
+        return medicine;
+    }
+
+    @SuppressLint("Range")
+    public List<Medicine> getAllMedicinesByProcessNumber(String processNumber){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        List<Medicine> medicines = new ArrayList<>();
+        String sql = "Select * From medicine Where number_process = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{processNumber});
+
+        while (cursor.moveToNext()) {
+            Medicine medicine = new Medicine();
+
+            medicine.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            medicine.setProcess_number(cursor.getString(cursor.getColumnIndex("idoso_id")));
+            medicine.setProduct_name(cursor.getString(cursor.getColumnIndex("cuidador_id")));
+
+            medicines.add(medicine);
+        }
+
+        cursor.close();
+        db.close();
+
+        return medicines;
     }
 }

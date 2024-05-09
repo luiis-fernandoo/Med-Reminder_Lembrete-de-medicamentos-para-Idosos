@@ -1,14 +1,30 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.MedicineAdapter;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.MedicineDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Medicine;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +41,17 @@ public class MedicineFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ElderlyCaregiver elderlyCaregiver;
+    private ReminderDao reminderDao;
+    private MedicineDao medicineDao;
+    private Elderly elderly, guestElderly;
+    private ElderlyDao elderlyDao;
+    private Medicine medicine;
+    private SharedPreferences sp;
+    private List<Reminder> reminders;
+    private List<Medicine> medicines = new ArrayList<>();
+    private String selectedUserType;
+    private RecyclerView recycleMedicine;
 
     public MedicineFragment() {
         // Required empty public constructor
@@ -60,7 +87,61 @@ public class MedicineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_medicine, container, false);
+        View view = inflater.inflate(R.layout.fragment_medicine, container, false);
+
+        recycleMedicine = view.findViewById(R.id.recycleReminder);
+
+        sp = requireContext().getSharedPreferences("app", Context.MODE_PRIVATE);
+
+        selectedUserType = sp.getString("selectedUserType", "");
+        reminderDao = new ReminderDao(requireContext(), new Reminder());
+        if(selectedUserType.equals("Idoso")){
+            elderlyDao = new ElderlyDao(requireContext(), new Elderly());
+            if(sp.getString("Guest", "").equals("Convidado")){
+                guestElderly = elderlyDao.getElderlyByName("Convidado");
+                reminders = reminderDao.getAllRemindersByElderlyForMedicine(guestElderly.get_id());
+                if(reminders != null){
+                    for(int i=0; i<reminders.size(); i++){
+                        medicineDao = new MedicineDao(requireContext(), new Medicine(reminders.get(i).getMedicamento_id()));
+                        medicine = medicineDao.getMedicineByProcessNumber();
+                        medicines.add(medicine);
+                    }
+                }
+            }else{
+                elderly = elderlyDao.getElderlyByEmail(sp.getString("email", ""));
+                reminders = reminderDao.getAllRemindersByElderlyForMedicine(elderly.get_id());
+                if(reminders != null){
+                    for(int i=0; i<reminders.size(); i++){
+                        medicineDao = new MedicineDao(requireContext(), new Medicine(reminders.get(i).getMedicamento_id()));
+                        medicine = medicineDao.getMedicineByProcessNumber();
+                        medicines.add(medicine);
+                    }
+                }
+            }
+
+            if(medicines != null){
+                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp);
+                recycleMedicine.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recycleMedicine.setAdapter(medicineAdapter);
+            }
+        }else{
+            ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(requireContext(), new ElderlyCaregiver());
+            elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(sp.getString("email", ""));
+            reminders = reminderDao.getAllRemindersByCaregiverForMedicine(elderlyCaregiver.get_id());
+            if(reminders != null){
+                for(int i=0; i<reminders.size(); i++){
+                    medicineDao = new MedicineDao(requireContext(), new Medicine(reminders.get(i).getMedicamento_id()));
+                    medicine = medicineDao.getMedicineByProcessNumber();
+                    medicines.add(medicine);
+                }
+            }
+
+            if(medicines != null){
+                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp);
+                recycleMedicine.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recycleMedicine.setAdapter(medicineAdapter);
+            }
+        }
+        return view;
     }
 }

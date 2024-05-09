@@ -1,6 +1,15 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Models;
 
-public class ElderlyCaregiver extends Person{
+import com.example.medreminder_lembretedemedicamentosparaidosos.Interface.PopupInterface;
+
+public class ElderlyCaregiver extends Person implements PopupInterface {
+
+    private String age;
+
+    public ElderlyCaregiver(String name, String email, String currentPhotoPath, String password, String age) {
+        super(name, email, currentPhotoPath, password);
+        this.age = age;
+    }
 
     public ElderlyCaregiver(String name, String email, String currentPhotoPath, String password) {
         super(name, email, currentPhotoPath, password);
@@ -21,5 +30,13 @@ public class ElderlyCaregiver extends Person{
 
     public ElderlyCaregiver() {
         super();
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 }

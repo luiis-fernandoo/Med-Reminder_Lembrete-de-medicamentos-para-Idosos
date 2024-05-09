@@ -8,4 +8,5 @@ public class HelperElderlyCaregiver implements BaseColumns {
     public String COLUMN_NAME_EMAIL = "email";
     public String COLUMN_NAME_PHOTO_PROFILE = "photo_profile";
     public String COLUMN_NAME_PASSWORD = "password";
+    public String COLUMN_NAME_AGE = "age";
 }
