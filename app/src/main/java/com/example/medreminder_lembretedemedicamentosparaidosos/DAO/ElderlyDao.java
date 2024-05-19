@@ -11,6 +11,7 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntr
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.HelperElderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ElderlyDao {
     private final FeedEntry.DBHelpers db;
     private HelperElderly helperElderly;
     private static final String TAG = "FilmLog";
+    private Context context;
 
     public ElderlyDao(Context ctx, Elderly elderly) {
         this.elderly = elderly;
@@ -172,8 +174,24 @@ public class ElderlyDao {
     public boolean deleteElderly(int idoso_id){
         try {
             SQLiteDatabase dbLite = this.db.getWritableDatabase();
-
             long resultado = dbLite.delete("elderly", "_id = ?", new String[]{String.valueOf(idoso_id)});
+            ReminderDao reminderDao = new ReminderDao(context, new Reminder());
+            reminderDao.deleteReminderByElderly(idoso_id);
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela elderly: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteElderlyByCaregiver(int cuidador_id){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+
+            long resultado = dbLite.delete("elderly", "cuidador_id = ?", new String[]{String.valueOf(cuidador_id)});
+            ReminderDao reminderDao = new ReminderDao(context, new Reminder());
+            reminderDao.deleteReminderByCaregiver(cuidador_id);
             db.close();
             return resultado != -1;
         } catch (Exception e) {

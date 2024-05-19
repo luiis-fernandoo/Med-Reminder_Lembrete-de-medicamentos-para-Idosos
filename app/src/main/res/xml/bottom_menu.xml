@@ -3,21 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Início"
+        android:title="@string/Home"
         android:icon="@drawable/baseline_home_24"
         android:id="@+id/home"/>
     <item
         android:id="@+id/medicine"
-        android:title="medicamentos"
+        android:title="@string/Medicines"
         android:icon="@drawable/baseline_medicine_24"/>
     <item
         android:id="@+id/reminder"
-        android:title="Lembretes"
+        android:title="@string/Reminders"
         android:icon="@drawable/baseline_add_alert_24"/>
     <item
         android:id="@+id/profile"
-        android:title="Perfil"
+        android:title="@string/Profile"
         android:icon="@drawable/baseline_person_2_24"/>
-
 
 </menu>

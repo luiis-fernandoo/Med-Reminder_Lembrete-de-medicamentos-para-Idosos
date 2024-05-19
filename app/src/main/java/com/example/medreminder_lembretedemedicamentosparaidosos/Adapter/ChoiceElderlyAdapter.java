@@ -1,5 +1,6 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -69,10 +70,10 @@ public class ChoiceElderlyAdapter extends RecyclerView.Adapter<ChoiceElderlyAdap
             clickToNext = itemView.findViewById(R.id.clickToNext);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(Elderly elderly, Context context) {
-            Log.d("", "Entrou " + elderly.getName());
             textNameElderly.setText(elderly.getName());
-            textAgeElderly.setText(elderly.getAge() + " Anos");
+            textAgeElderly.setText(elderly.getAge() + " " + context.getString(R.string.age));
             if(elderly.getProfile_photo()!=null){
                 Glide.with(itemView.getContext())
                         .load(elderly.getProfile_photo())

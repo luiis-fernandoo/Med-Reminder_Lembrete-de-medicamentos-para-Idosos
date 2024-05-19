@@ -27,7 +27,7 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
     private int differenceInDays;
     CalendarView calendarView;
     Button buttonConfirmFrequencyDate;
-    private TextView intervalDays, warningText;
+    private TextView intervalDays, warningText, whenYouNeed, intervalText, daysText;
     private LinearLayout buttonOk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,15 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         String typeMedicine = it.getStringExtra("typeMedicine");
         String frequencyMedicine = it.getStringExtra("frequencyMedicine");
 
+        intervalText = findViewById(R.id.intervalText);
+        intervalText.setText(R.string.the_range_of_days_are);
+        daysText = findViewById(R.id.daysText);
+        daysText.setText(R.string.days);
         intervalDays = findViewById(R.id.intervalDays);
         calendarView = findViewById(R.id.calendarView);
         buttonConfirmFrequencyDate = findViewById(R.id.buttonConfirmFrequencyDate);
+        whenYouNeed = findViewById(R.id.whenYouNeed);
+        whenYouNeed.setText(R.string.when_you_need_to_take_the_next_dose);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

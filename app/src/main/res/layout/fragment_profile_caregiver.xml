@@ -16,7 +16,7 @@
         android:src="@drawable/layout_photo" />
 
     <TextView
-        android:id="@+id/currentDay"
+        android:id="@+id/youElderlys"
         android:layout_width="163dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -22,12 +22,15 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Broadcast.MyWork
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.InsertLogHelper;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ScheduleItem;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,10 +41,10 @@ public class ResetReminder extends AppCompatActivity {
     private Date date;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
-    private int idoso_id, frequencyDifferenceDays, cuidador_id = 0;
+    private int idoso_id, frequencyDifferenceDays, cuidador_id = 0, eachXhours;
     private EditText inputRemainingPills, inputWarningPills;
     private Button buttonNext, buttonSkip;
-    private TextView warningText;
+    private TextView warningText, whichReminder, howManyLeft, whenWarning;
     private LinearLayout buttonOk;
     private SharedPreferences sp;
 
@@ -57,6 +60,9 @@ public class ResetReminder extends AppCompatActivity {
         if(frequencyMedicine != null){
             if (frequencyMedicine.equals("everyDay")) {
                 everyday = "S";
+                if(it.getIntExtra("eachXhours", 0) != 0){
+                    eachXhours = it.getIntExtra("eachXhours", 0);
+                }
             }else if(frequencyMedicine.equals("everyOtherDay")){
                 everyday = "N";
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
@@ -72,7 +78,6 @@ public class ResetReminder extends AppCompatActivity {
 
         sp = getSharedPreferences("app", Context.MODE_PRIVATE);
         String typeUser = sp.getString("selectedUserType", "");
-        Log.d("", "Select" + typeUser);
         if(typeUser.equals("Idoso")){
             ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
             if(sp.getString("Guest", "").equals("Convidado")){
@@ -99,10 +104,25 @@ public class ResetReminder extends AppCompatActivity {
         }
 
         inputRemainingPills = findViewById(R.id.inputNameEdit);
-        inputWarningPills = findViewById(R.id.inputWarningPills);
-        buttonNext = findViewById(R.id.buttonNext);
-        buttonSkip = findViewById(R.id.buttonSkip);
+        inputRemainingPills.setHint(R.string.type_here);
 
+        inputWarningPills = findViewById(R.id.inputWarningPills);
+        inputWarningPills.setHint(R.string.type_here);
+
+        buttonNext = findViewById(R.id.buttonNext);
+        buttonNext.setText(R.string.next);
+
+        buttonSkip = findViewById(R.id.buttonSkip);
+        buttonSkip.setText(R.string.skip);
+
+        whichReminder = findViewById(R.id.whichReminder);
+        whichReminder.setText(R.string.Do_you_want_to_set_a_refill_reminder_for_your_medicine);
+
+        whenWarning = findViewById(R.id.whenWarning);
+        whenWarning.setText(R.string.How_many_pills_do_you_want_to_be_notified_with);
+
+        howManyLeft = findViewById(R.id.howManyLeft);
+        howManyLeft.setText(R.string.How_many_pills_are_left);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,24 +172,49 @@ public class ResetReminder extends AppCompatActivity {
         WorkManager workManager = WorkManager.getInstance(getApplicationContext());
         if(everyday.equals("S")) {
             try {
-                for (int i = 0; i < scheduleItems.size(); i++) {
-                    time = scheduleItems.get(i).getTime();
-                    quantity = scheduleItems.get(i).getQuantity();
-                    ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
-                            idoso_id, cuidador_id,
-                            medicine, typeMedicine,
-                            everyday, time,
-                            date, quantity,
-                            dayOfWeek, remainingPills,
-                            warningPills, currentPhotoPathOne,
-                            currentPhotoPathTwo));
-                    reminderDao.insertNewReminder();
+                if(eachXhours != 0){
+                    DateTimeFormatter formatter = null;
+                    time = scheduleItems.get(0).getTime();
+                    quantity = scheduleItems.get(0).getQuantity();
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        formatter = DateTimeFormatter.ofPattern("HH:mm");
+                        LocalTime timeReal = LocalTime.parse(time, formatter);
+                        for (int i = 0; i < 24; i += eachXhours) {
+                            LocalTime newTime = timeReal.plusHours(i);
+                            String timeString = newTime.format(formatter);
+
+                            ReminderDao reminderDaoTwo = new ReminderDao(getApplicationContext(), new Reminder(
+                                    idoso_id, cuidador_id,
+                                    medicine, typeMedicine,
+                                    everyday, timeString,
+                                    date, quantity,
+                                    dayOfWeek, remainingPills,
+                                    warningPills, currentPhotoPathOne,
+                                    currentPhotoPathTwo));
+                            reminderDaoTwo.insertNewReminder();
+                        }
+                    }
+                }else{
+                    for (int i = 0; i < scheduleItems.size(); i++) {
+                        time = scheduleItems.get(i).getTime();
+                        quantity = scheduleItems.get(i).getQuantity();
+                        ReminderDao reminderDao = new ReminderDao(getApplicationContext(), new Reminder(
+                                idoso_id, cuidador_id,
+                                medicine, typeMedicine,
+                                everyday, time,
+                                date, quantity,
+                                dayOfWeek, remainingPills,
+                                warningPills, currentPhotoPathOne,
+                                currentPhotoPathTwo));
+                        reminderDao.insertNewReminder();
+                    }
                 }
                 workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
+                InsertLogHelper.i("Success_register_reminder" , "Sucess on register for time: " + time);
                 Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 startActivity(it);
             }catch (Exception e){
-                Log.d("", "Erro: " + e);
+                InsertLogHelper.i("Error_register_reminder" , "Error: " + e);
                 Toast.makeText(this, "Não foi possível cadastrar o medicamento, tente novamente", Toast.LENGTH_SHORT).show();
             }
 
@@ -196,10 +241,11 @@ public class ResetReminder extends AppCompatActivity {
                     reminderDao.insertNewReminder();
                 }
                 workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
+                InsertLogHelper.i("Success_register_reminder" , "Sucess on register for time: " + time);
                 Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 startActivity(it);
             }catch (Exception e){
-                Log.d("", "Erro: " + e);
+                InsertLogHelper.i("Error_register_reminder" , "Error: " + e);
                 Toast.makeText(this, "Não foi possível cadastrar o medicamento, tente novamente", Toast.LENGTH_SHORT).show();
             }
         }else if(everyday.equals("N") && selectedButtonTexts != null){
@@ -219,10 +265,11 @@ public class ResetReminder extends AppCompatActivity {
                     reminderDao.insertNewReminder();
                 }
                 workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
+                InsertLogHelper.i("Success_register_reminder" , "Sucess on register for time: " + time);
                 Intent it = new Intent(ResetReminder.this, SucessSaveReminder.class);
                 startActivity(it);
             }catch (Exception e){
-                Log.d("", "Erro: " + e);
+                InsertLogHelper.i("Error_register_reminder" , "Error: " + e);
                 Toast.makeText(this, "Não foi possível cadastrar o medicamento, tente novamente", Toast.LENGTH_SHORT).show();
             }
         }

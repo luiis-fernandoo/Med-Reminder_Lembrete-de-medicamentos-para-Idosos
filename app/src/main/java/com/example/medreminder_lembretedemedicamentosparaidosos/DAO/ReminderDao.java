@@ -25,6 +25,7 @@ public class ReminderDao {
     private final FeedEntry.DBHelpers db;
     private HelperReminder helperReminder;
     private static final String TAG = "FilmLog";
+    private Context context;
 
     public ReminderDao(Context ctx, Reminder reminder) {
         this.reminder = reminder;
@@ -63,7 +64,7 @@ public class ReminderDao {
     public List<Reminder> getAllRemindersByElderly(int idoso_id){
         SQLiteDatabase db = this.db.getReadableDatabase();
         List<Reminder> reminders = new ArrayList<>();
-        String sql = "Select * From reminder Where idoso_id = ? And status = 0 ;";
+        String sql = "Select * From reminder Where idoso_id = ?;";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(idoso_id)});
 
         while (cursor.moveToNext()) {
@@ -107,7 +108,7 @@ public class ReminderDao {
     public List<Reminder> getAllRemindersByCaregiver(int cuidador_id){
         SQLiteDatabase db = this.db.getReadableDatabase();
         List<Reminder> reminders = new ArrayList<>();
-        String sql = "Select * From reminder Where cuidador_id = ? And status = 0 ;";
+        String sql = "Select * From reminder Where cuidador_id = ?;";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(cuidador_id)});
 
         while (cursor.moveToNext()) {
@@ -163,7 +164,7 @@ public class ReminderDao {
     public List<Reminder> getAllRemindersByHome(int idoso_id, String dayOfWeek){
         SQLiteDatabase db = this.db.getReadableDatabase();
         List<Reminder> reminders = new ArrayList<>();
-        String sql = "SELECT * FROM reminder WHERE idoso_id = ? AND (everyday = 'S' OR date(date) = date('now') OR day_of_week = ?) ORDER BY time ASC;";
+        String sql = "SELECT * FROM reminder WHERE idoso_id = ? AND (everyday = 'S' OR date(date) = date(datetime('now', 'localtime')) OR day_of_week = ?) ORDER BY time ASC;";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(idoso_id), dayOfWeek});
         while (cursor.moveToNext()) {
             Reminder specificReminder = new Reminder();
@@ -263,10 +264,33 @@ public class ReminderDao {
     }
 
     @SuppressLint("Range")
+    public Reminder getReminderById(int id){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "Select * From reminder Where _id = ? ;";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(id)});
+        Reminder reminder = new Reminder();
+
+        if(cursor.moveToFirst()){
+            reminder.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            reminder.setMedicamento_id(cursor.getString(cursor.getColumnIndex("medicamento_id")));
+            reminder.setIdoso_id(cursor.getInt(cursor.getColumnIndex("idoso_id")));
+            reminder.setType_medicine(cursor.getString(cursor.getColumnIndex("type_medicine")));
+            reminder.setQuantity(cursor.getString(cursor.getColumnIndex("quantity")));
+            reminder.setRemaining(cursor.getString(cursor.getColumnIndex("remaining")));
+            reminder.setPhoto_medicine_pill(cursor.getString(cursor.getColumnIndex("photo_medicine_pill")));
+            reminder.setPhoto_medicine_box(cursor.getString(cursor.getColumnIndex("photo_medicine_box")));
+        }
+
+        cursor.close();
+        db.close();
+        return reminder;
+    }
+
+    @SuppressLint("Range")
     public List<Reminder> getAllRemindersByElderlyForMedicine(int idoso_id){
         SQLiteDatabase db = this.db.getReadableDatabase();
         List<Reminder> reminders = new ArrayList<>();
-        String sql = "Select * From reminder Where idoso_id = ? And status = 0 GROUP BY medicamento_id ;";
+        String sql = "Select * From reminder Where idoso_id = ? GROUP BY medicamento_id ;";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(idoso_id)});
 
         while (cursor.moveToNext()) {
@@ -310,7 +334,7 @@ public class ReminderDao {
     public List<Reminder> getAllRemindersByCaregiverForMedicine(int cuidador_id){
         SQLiteDatabase db = this.db.getReadableDatabase();
         List<Reminder> reminders = new ArrayList<>();
-        String sql = "Select * From reminder Where cuidador_id = ? And status = 0 GROUP BY medicamento_id ;";
+        String sql = "Select * From reminder Where cuidador_id = ? GROUP BY medicamento_id ;";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(cuidador_id)});
 
         while (cursor.moveToNext()) {
@@ -354,7 +378,7 @@ public class ReminderDao {
     public List<Reminder> getAllRemindersByReminder(int idoso_id){
         SQLiteDatabase db = this.db.getReadableDatabase();
         List<Reminder> reminders = new ArrayList<>();
-        String sql = "SELECT * FROM reminder WHERE idoso_id = ? GROUP BY medicamento_id ORDER BY time ASC;";
+        String sql = "SELECT * FROM reminder WHERE idoso_id = ? ORDER BY time ASC;";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(idoso_id)});
         while (cursor.moveToNext()) {
             Reminder specificReminder = new Reminder();
@@ -397,7 +421,7 @@ public class ReminderDao {
     public List<Reminder> getAllRemindersForReminderByCaregiver(int cuidador_id){
         SQLiteDatabase db = this.db.getReadableDatabase();
         List<Reminder> reminders = new ArrayList<>();
-        String sql = "SELECT * FROM reminder WHERE cuidador_id = ? GROUP BY medicamento_id ORDER BY time ASC;";
+        String sql = "SELECT * FROM reminder WHERE cuidador_id = ? ORDER BY time ASC;";
         Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(cuidador_id)});
         while (cursor.moveToNext()) {
             Reminder specificReminder = new Reminder();
@@ -436,4 +460,137 @@ public class ReminderDao {
         return reminders;
     }
 
+    public boolean updateReminder(Reminder reminder){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("time", reminder.getTime());
+            values.put("quantity", reminder.getQuantity());
+            String whereClause = "medicamento_id = ?";
+            String[] whereArgs = {String.valueOf(reminder.getMedicamento_id())};
+
+            long resultado = db.update("reminder", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateReminderById(Reminder reminder){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("time", reminder.getTime());
+            values.put("quantity", reminder.getQuantity());
+
+            String whereClause = "_id = ?";
+            String[] whereArgs = {String.valueOf(reminder.get_id())};
+
+            long resultado = db.update("reminder", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean setRemaining(int remaining, int reminder_id){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("remaining", remaining);
+
+        int rowsAffected = db.update("reminder", values, "_id = ?", new String[]{String.valueOf(reminder_id)});
+        db.close();
+
+        return rowsAffected > 0;
+    }
+
+    @SuppressLint("Range")
+    public List<Reminder> getReminderByMedicamentoIdAndElderlyId(Reminder reminder){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        List<Reminder> reminders = new ArrayList<>();
+        String sql = "SELECT * FROM reminder WHERE idoso_id = ? AND medicamento_id = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(reminder.getIdoso_id()), reminder.getMedicamento_id()});
+        while (cursor.moveToNext()) {
+            Reminder specificReminder = new Reminder();
+
+            specificReminder.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            specificReminder.setIdoso_id(cursor.getInt(cursor.getColumnIndex("idoso_id")));
+            specificReminder.setMedicamento_id(cursor.getString(cursor.getColumnIndex("medicamento_id")));
+            specificReminder.setTime(cursor.getString(cursor.getColumnIndex("time")));
+
+            reminders.add(specificReminder);
+        }
+
+        cursor.close();
+        db.close();
+
+        return reminders;
+    }
+
+    @SuppressLint("Range")
+    public List<Reminder> getReminderByMedicamentoIdAndCaregiverId(Reminder reminder){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        List<Reminder> reminders = new ArrayList<>();
+        String sql = "SELECT * FROM reminder WHERE cuidador_id = ? AND medicamento_id = ?";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(reminder.getCuidador_id()), reminder.getMedicamento_id()});
+        while (cursor.moveToNext()) {
+            Reminder specificReminder = new Reminder();
+
+            specificReminder.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            specificReminder.setIdoso_id(cursor.getInt(cursor.getColumnIndex("idoso_id")));
+            specificReminder.setMedicamento_id(cursor.getString(cursor.getColumnIndex("medicamento_id")));
+            specificReminder.setTime(cursor.getString(cursor.getColumnIndex("time")));
+
+            reminders.add(specificReminder);
+        }
+
+        cursor.close();
+        db.close();
+
+        return reminders;
+    }
+
+    public boolean deleteReminderByMedicineId(String medicineId){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+            long resultado = dbLite.delete("reminder", "medicamento_id = ?", new String[]{String.valueOf(medicineId)});
+            MedicineDao medicineDao = new MedicineDao(context, new Medicine());
+            medicineDao.deleteMedicine(medicineId);
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela Caregiver: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteReminderByElderly(int idoso_id){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+            long resultado = dbLite.delete("reminder", "idoso_id = ?", new String[]{String.valueOf(idoso_id)});
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela Reminder: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteReminderByCaregiver(int cuidador_id){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+            long resultado = dbLite.delete("reminder", "cuidador_id = ?", new String[]{String.valueOf(cuidador_id)});
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela Reminder: " + e.getMessage());
+            return false;
+        }
+    }
 }

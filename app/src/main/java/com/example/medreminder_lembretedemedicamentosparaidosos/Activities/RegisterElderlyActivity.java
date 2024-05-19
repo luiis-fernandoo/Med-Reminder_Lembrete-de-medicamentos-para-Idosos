@@ -62,9 +62,17 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         ElderlyCaregiver caregiver = elderlyCaregiverDao.getElderlyCaregiver(emailCareviger);
 
         laterElderly = findViewById(R.id.laterElderly);
+        laterElderly.setText(R.string.register_later);
+
         buttonRegisterElderly = findViewById(R.id.buttonRegisterElderly);
+        buttonRegisterElderly.setText(R.string.register);
+
         nameRegisterElderly = findViewById(R.id.nameRegisterElderly);
+        nameRegisterElderly.setHint(R.string.name_elderly);
+
         ageRegisterElderly = findViewById(R.id.ageRegisterElderly);
+        ageRegisterElderly.setHint(R.string.age_elderly);
+
         imageElderly = findViewById(R.id.imageElderly);
 
         imageElderly.setOnClickListener(new View.OnClickListener() {

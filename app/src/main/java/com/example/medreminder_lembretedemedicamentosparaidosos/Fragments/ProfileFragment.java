@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,7 @@ public class ProfileFragment extends Fragment {
     private ElderlyCaregiver elderlyCaregiver;
     private LinearLayout buttonOk;
     private SharedPreferences sp;
-    private TextView nameProfile, ageProfile, textInfoMedicine, textInfoReminder;
+    private TextView nameProfile, ageProfile, textInfoMedicine, textInfoReminder,typeUser,youElderlys, nameEditPop, ageEditPop;
     private Button buttonLogout, buttonDeleteProfile;
     private ImageView imageProfile, imageEdit, iconAddElderly;
     private RecyclerView recycleElderly;
@@ -102,14 +101,21 @@ public class ProfileFragment extends Fragment {
 
         if(selectedUserType.equals("Idoso")) {
             View viewElderly = inflater.inflate(R.layout.fragment_profile_elderly, container, false);
+            typeUser = viewElderly.findViewById(R.id.typeUser);
+            typeUser.setText(R.string.elderly);
+
             buttonLogout = viewElderly.findViewById(R.id.buttonLogout);
+            buttonLogout.setText(R.string.exit);
+
             nameProfile = viewElderly.findViewById(R.id.nameProfile);
             ageProfile = viewElderly.findViewById(R.id.ageProfile);
             imageProfile = viewElderly.findViewById(R.id.imageProfile);
             imageEdit = viewElderly.findViewById(R.id.imageEdit);
             textInfoMedicine = viewElderly.findViewById(R.id.textInfoMedicine);
             textInfoReminder = viewElderly.findViewById(R.id.textInfoReminder);
+
             buttonDeleteProfile = viewElderly.findViewById(R.id.buttonDeleteProfile);
+            buttonDeleteProfile.setText(R.string.account_delete);
 
             ElderlyDao elderlyDao = new ElderlyDao(getActivity(), new Elderly());
             if(sp.getString("Guest", "").equals("Convidado")){
@@ -119,7 +125,7 @@ public class ProfileFragment extends Fragment {
                 elderly = elderlyDao.getElderlyByEmail(email);
             }
             nameProfile.setText(elderly.getName());
-            ageProfile.setText("Idade: " + elderly.getAge());
+            ageProfile.setText(requireContext().getString(R.string.age) + " " + elderly.getAge());
             if(elderly.getProfile_photo()!=null){
                 Glide.with(viewElderly.getContext())
                         .load(elderly.getProfile_photo())
@@ -157,20 +163,28 @@ public class ProfileFragment extends Fragment {
             View viewCaregiver = inflater.inflate(R.layout.fragment_profile_caregiver, container, false);
 
             buttonLogout = viewCaregiver.findViewById(R.id.buttonLogout);
+            buttonLogout.setText(R.string.exit);
+
             nameProfile = viewCaregiver.findViewById(R.id.nameProfile);
             ageProfile = viewCaregiver.findViewById(R.id.ageProfile);
             imageProfile = viewCaregiver.findViewById(R.id.imageProfile);
             imageEdit = viewCaregiver.findViewById(R.id.imageEdit);
+
             buttonDeleteProfile = viewCaregiver.findViewById(R.id.buttonDeleteProfile);
+            buttonDeleteProfile.setText(R.string.account_delete);
+
             iconAddElderly = viewCaregiver.findViewById(R.id.iconAddElderly);
             recycleElderly = viewCaregiver.findViewById(R.id.recycleElderly);
+
+            youElderlys = viewCaregiver.findViewById(R.id.youElderlys);
+            youElderlys.setText(R.string.your_elderly);
 
             sp = requireActivity().getSharedPreferences("app", Context.MODE_PRIVATE);
             ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getActivity(), new ElderlyCaregiver());
             elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(sp.getString("email", ""));
 
             nameProfile.setText(elderlyCaregiver.getName());
-            ageProfile.setText("Idade: " + elderlyCaregiver.getAge());
+            ageProfile.setText(requireContext().getString(R.string.age) + " " + elderlyCaregiver.getAge());
             if(elderlyCaregiver.getProfile_photo()!=null){
                 Glide.with(viewCaregiver.getContext())
                         .load(elderlyCaregiver.getProfile_photo())
@@ -228,10 +242,15 @@ public class ProfileFragment extends Fragment {
     public void popup_edit(PopupInterface popupInterface){
         LayoutInflater inflater = LayoutInflater.from(requireContext());
         View popupView = inflater.inflate(R.layout.pop_up_edit_profile, null);
+
         EditText inputNameEdit = popupView.findViewById(R.id.inputNameEdit);
-        EditText inputAgeEdit = popupView.findViewById(R.id.inputAgeEdit);
+        inputNameEdit.setHint(R.string.type_here);
         inputNameEdit.setText(popupInterface.getName());
+
+        EditText inputAgeEdit = popupView.findViewById(R.id.inputAgeEdit);
+        inputAgeEdit.setHint(R.string.type_here);
         inputAgeEdit.setText(popupInterface.getAge());
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
         alertDialogBuilder.setView(popupView);
 

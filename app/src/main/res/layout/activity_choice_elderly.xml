@@ -15,11 +15,11 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/choiceTheElderly"
         app:srcCompat="@drawable/layout_photo" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/choiceTheElderly"
         android:layout_width="365dp"
         android:layout_height="58dp"
         android:layout_marginStart="23dp"

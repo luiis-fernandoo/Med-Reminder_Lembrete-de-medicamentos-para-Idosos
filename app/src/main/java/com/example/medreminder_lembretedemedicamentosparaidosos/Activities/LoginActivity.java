@@ -47,10 +47,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         goRegister = findViewById(R.id.goRegister);
+        goRegister.setText(R.string.register);
+
         notRegister = findViewById(R.id.notRegister);
+        notRegister.setText(R.string.enter_without_registration);
+
         emailLogin = findViewById(R.id.emailLogin);
+
         passwordLogin = findViewById(R.id.passwordLogin);
+        passwordLogin.setHint(R.string.password);
+
         buttonLogin = findViewById(R.id.buttonLogin);
+        buttonLogin.setText(R.string.save);
 
         sp = getSharedPreferences("app", Context.MODE_PRIVATE);
 

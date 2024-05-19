@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,11 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.ChoiceElderlyActivity;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.MenuActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.SearchMedicineActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.HomeAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.HomeCaregiverAdapter;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.ReminderAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
@@ -53,6 +59,7 @@ public class ReminderFragment extends Fragment {
     private RecyclerView recycleReminder;
     private ElderlyCaregiver elderlyCaregiver;
     private ImageView iconAddMedicine;
+    private TextView all_you_reminders;
     public ReminderFragment() {
         // Required empty public constructor
     }
@@ -91,6 +98,8 @@ public class ReminderFragment extends Fragment {
 
         recycleReminder = view.findViewById(R.id.recycleReminder);
         iconAddMedicine = view.findViewById(R.id.iconAddMedicine);
+        all_you_reminders = view.findViewById(R.id.all_you_reminders);
+        all_you_reminders.setText(R.string.all_your_reminders);
 
         sp = requireContext().getSharedPreferences("app", Context.MODE_PRIVATE);
 
@@ -107,9 +116,10 @@ public class ReminderFragment extends Fragment {
             }
 
             if(reminders != null){
-                HomeAdapter homeAdapter = new HomeAdapter(reminders, requireContext(), sp);
+                MenuActivity menuActivity = (MenuActivity) getActivity();
+                ReminderAdapter reminderAdapter = new ReminderAdapter(reminders, requireContext(), sp, menuActivity);
                 recycleReminder.setLayoutManager(new LinearLayoutManager(requireContext()));
-                recycleReminder.setAdapter(homeAdapter);
+                recycleReminder.setAdapter(reminderAdapter);
             }
 
             iconAddMedicine.setOnClickListener(new View.OnClickListener() {
@@ -125,9 +135,10 @@ public class ReminderFragment extends Fragment {
             reminders = reminderDao.getAllRemindersForReminderByCaregiver(elderlyCaregiver.get_id());
 
             if(reminders != null){
-                HomeCaregiverAdapter homeCaregiverAdapter = new HomeCaregiverAdapter(reminders, requireContext(), sp);
+                MenuActivity menuActivity = (MenuActivity) getActivity();
+                ReminderAdapter reminderAdapter = new ReminderAdapter(reminders, requireContext(), sp, menuActivity);
                 recycleReminder.setLayoutManager(new LinearLayoutManager(requireContext()));
-                recycleReminder.setAdapter(homeCaregiverAdapter);
+                recycleReminder.setAdapter(reminderAdapter);
             }
 
             iconAddMedicine.setOnClickListener(new View.OnClickListener() {
@@ -142,4 +153,5 @@ public class ReminderFragment extends Fragment {
 
         return view;
     }
+
 }

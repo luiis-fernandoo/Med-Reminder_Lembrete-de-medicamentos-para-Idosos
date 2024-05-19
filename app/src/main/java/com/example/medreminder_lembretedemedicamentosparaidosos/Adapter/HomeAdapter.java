@@ -1,9 +1,7 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.SearchMedicineActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.MedicineDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Medicine;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
@@ -45,7 +42,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull HomeAdapter.MyViewHolder holder, int position) {
         if (position < reminders.size()) {
-            Log.d("", "Size: " + reminders.size());
             Reminder reminder = reminders.get(position);
             holder.bind(reminder, this.context);
         } else {
@@ -61,7 +57,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout clickToNext;
         ImageView imageBox;
-        TextView textNameMedicine, textTime, textDose;
+        TextView textNameMedicine, textTime, textDose, textStatus;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,7 +65,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             textNameMedicine = itemView.findViewById(R.id.textNameMedicine);
             textTime = itemView.findViewById(R.id.textTime);
             textDose = itemView.findViewById(R.id.textDose);
-            clickToNext = itemView.findViewById(R.id.clickToNext);
+            textStatus = itemView.findViewById(R.id.textStatus);
         }
 
         @SuppressLint("SetTextI18n")
@@ -77,19 +73,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             MedicineDao medicineDao = new MedicineDao(context, new Medicine(reminder.getMedicamento_id()));
             Medicine medicine = medicineDao.getMedicineByProcessNumber();
             textNameMedicine.setText(medicine.getProduct_name());
-            textDose.setText("Dose: " + reminder.getQuantity());
-            textTime.setText("Horário: " + reminder.getTime());
+            textDose.setText(context.getString(R.string.dose) + " " + reminder.getQuantity());
+            textTime.setText(context.getString(R.string.time) + " " + reminder.getTime());
             if(reminder.getPhoto_medicine_box()!=null){
                 Glide.with(itemView.getContext())
                         .load(reminder.getPhoto_medicine_box())
                         .into(imageBox);
             }
-            clickToNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("", "Oi");
-                }
-            });
+            textStatus.setText(context.getString(R.string.status) + " " + reminder.getStatus());
         }
     }
 }

@@ -5,12 +5,13 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="#00FFFFFF"
     android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/clickToNext"
-        android:layout_width="315dp"
-        android:layout_height="110dp"
+        android:layout_width="360dp"
+        android:layout_height="135dp"
         android:background="@drawable/bg_list"
         android:orientation="horizontal">
 
@@ -24,8 +25,8 @@
             android:src="@drawable/profile_photo_removebg_preview" />
 
         <LinearLayout
-            android:layout_width="202dp"
-            android:layout_height="78dp"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
@@ -38,7 +39,7 @@
                 android:text="Amoxilina monoidratada"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textDose"
@@ -47,7 +48,7 @@
                 android:layout_marginTop="3dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="Dose:"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textTime"
@@ -58,8 +59,21 @@
                 android:gravity="center"
                 android:text="Horário:"
                 android:textAlignment="viewStart"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center"
+                android:text="Status:"
+                android:textAlignment="viewStart"
+                android:textSize="16sp" />
+
         </LinearLayout>
+
 
     </LinearLayout>
 

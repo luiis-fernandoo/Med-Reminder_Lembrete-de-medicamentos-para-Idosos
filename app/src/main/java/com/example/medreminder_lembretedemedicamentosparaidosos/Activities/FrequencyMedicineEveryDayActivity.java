@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
 
     Button buttonOneTimePerDay, buttonTwoTimesPerDay, buttonThreeTimesPerDay, buttonMoreThanThreeTimesPerDay, buttonEarchXhours;
+    TextView howManyTimesYouTakeTheMedicine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +29,11 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
         buttonThreeTimesPerDay = findViewById(R.id.buttonThreeTimesPerDay);
         buttonMoreThanThreeTimesPerDay = findViewById(R.id.buttonMoreThanThreeTimesPerDay);
         buttonEarchXhours = findViewById(R.id.buttonEachXhours);
+        howManyTimesYouTakeTheMedicine = findViewById(R.id.howManyTimesYouTakeTheMedicine);
 
+        howManyTimesYouTakeTheMedicine.setText(R.string.How_often_do_you_take_this_medicine_per_day);
 
+        buttonOneTimePerDay.setText(R.string.one_time_per_day);
         buttonOneTimePerDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +46,7 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
             }
         });
 
+        buttonTwoTimesPerDay.setText(R.string.two_times_per_day);
         buttonTwoTimesPerDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +59,7 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
             }
         });
 
+        buttonThreeTimesPerDay.setText(R.string.three_times);
         buttonThreeTimesPerDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +72,7 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
             }
         });
 
+        buttonMoreThanThreeTimesPerDay.setText(R.string.more_than_three_times_per_day);
         buttonMoreThanThreeTimesPerDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +85,7 @@ public class FrequencyMedicineEveryDayActivity extends AppCompatActivity {
             }
         });
 
+        buttonEarchXhours.setText(R.string.each_hours);
         buttonEarchXhours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

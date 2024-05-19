@@ -31,18 +31,18 @@
         android:textColorHint="#750D78DB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/enterHowManyTimes"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/enterHowManyTimes"
         android:layout_width="344dp"
         android:layout_height="52dp"
         android:layout_marginStart="33dp"
         android:layout_marginTop="74dp"
         android:layout_marginEnd="34dp"
         android:fontFamily="sans-serif-black"
-        android:text="Digite de quantas em quantas horas você toma esse medicamento"
+        android:text="Digite quantas vezes você toma esse medicamento durante o dia"
         android:textAllCaps="true"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

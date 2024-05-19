@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
@@ -19,6 +20,7 @@ public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
 
      private Button buttonSunday, buttonMonday, buttonTuesday, buttonWednesday, buttonThursday, buttonFriday, buttonSaturday, buttonConfirmDays;
      private List<Button> selectedButtons = new ArrayList<>();
+     private TextView WhichDays;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +31,33 @@ public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
         String typeMedicine = it.getStringExtra("typeMedicine");
         String frequencyMedicine = it.getStringExtra("frequencyMedicine");
 
+        WhichDays = findViewById(R.id.WhichDays);
+        WhichDays.setText(R.string.On_which_days_will_you_take_the_medicine);
+
         buttonSunday = findViewById(R.id.buttonSunday);
+        buttonSaturday.setText(R.string.saturday);
+
         buttonMonday = findViewById(R.id.buttonMonday);
+        buttonMonday.setText(R.string.monday);
+
         buttonTuesday = findViewById(R.id.buttonTuesDay);
+        buttonTuesday.setText(R.string.tuesday);
+
         buttonWednesday = findViewById(R.id.buttonWednesday);
+        buttonWednesday.setText(R.string.wednesday);
+
         buttonThursday = findViewById(R.id.buttonThursday);
+        buttonThursday.setText(R.string.thursday);
+
         buttonFriday = findViewById(R.id.buttonFriday);
+        buttonFriday.setText(R.string.friday);
+
         buttonSaturday = findViewById(R.id.buttonSaturday);
+        buttonSaturday.setText(R.string.saturday);
+
         buttonConfirmDays = findViewById(R.id.buttonConfirmDays);
+        buttonConfirmDays.setText(R.string.confirm);
+
 
         buttonSunday.setOnClickListener(new View.OnClickListener() {
             @Override

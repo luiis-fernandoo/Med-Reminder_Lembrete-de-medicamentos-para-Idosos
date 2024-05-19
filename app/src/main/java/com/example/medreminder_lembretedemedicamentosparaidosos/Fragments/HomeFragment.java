@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     private ReminderDao reminderDao;
     private Elderly elderly, guestElderly;
     private ElderlyDao elderlyDao;
-    private TextView currentDay;
+    private TextView currentDay, textMedicinesForToday;
     private SharedPreferences sp;
     private List<Reminder> reminders;
     private Button buttonAddMedicine;
@@ -119,6 +119,7 @@ public class HomeFragment extends Fragment {
         }
 
         currentDay = view.findViewById(R.id.currentDay);
+        textMedicinesForToday = view.findViewById(R.id.textMedicinesForToday);
         recycleHome = view.findViewById(R.id.recycleReminder);
 
         SimpleDateFormat currentDayBar = new SimpleDateFormat("EEEE, dd 'de' MMMM", new Locale("pt", "BR"));
@@ -129,6 +130,7 @@ public class HomeFragment extends Fragment {
         String dayOfWeek = dayOfWeekFormat.format(calendar.getTime());
 
         currentDay.setText(formattedDate);
+        textMedicinesForToday.setText(R.string.medicines_today);
 
         sp = requireContext().getSharedPreferences("app", Context.MODE_PRIVATE);
 
@@ -152,8 +154,10 @@ public class HomeFragment extends Fragment {
                 View viewEmpty = inflater.inflate(R.layout.fragment_home_empty, container, false);
                 currentDay = viewEmpty.findViewById(R.id.currentDay);
                 currentDay.setText(formattedDate);
-
+                textMedicinesForToday = viewEmpty.findViewById(R.id.textMedicinesForToday);
+                textMedicinesForToday.setText(R.string.medicines_today);
                 buttonAddMedicine = viewEmpty.findViewById(R.id.buttonAddMedicine);
+                buttonAddMedicine.setText(R.string.add_medicine);
 
                 buttonAddMedicine.setOnClickListener(new View.OnClickListener() {
                     @Override

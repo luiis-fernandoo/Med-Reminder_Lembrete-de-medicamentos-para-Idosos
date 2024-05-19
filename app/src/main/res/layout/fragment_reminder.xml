@@ -16,6 +16,7 @@
         android:src="@drawable/layout_photo" />
 
     <TextView
+        android:id="@+id/all_you_reminders"
         android:layout_width="301dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"

@@ -50,7 +50,7 @@ import java.util.Date;
 public class RegisterAcitivity extends AppCompatActivity {
 
     private EditText emailRegister, nameRegister, passwordRegister;
-    private TextView typeUser;
+    private TextView typeUser, registerText;
     private Button buttonRegister;
     private FirebaseAuth firebaseAuth;
     private ImageView photo_profile;
@@ -67,10 +67,20 @@ public class RegisterAcitivity extends AppCompatActivity {
 
         emailRegister = findViewById(R.id.emailRegister);
         nameRegister = findViewById(R.id.nameRegister);
+        nameRegister.setHint(R.string.name);
+
         passwordRegister = findViewById(R.id.passwordRegister);
+        passwordRegister.setHint(R.string.password);
+
         buttonRegister = findViewById(R.id.buttonRegister);
+        buttonRegister.setText(R.string.register);
+
         typeUser = findViewById(R.id.currentDay);
+        typeUser.setText(R.string.select_user_type);
+
         photo_profile = findViewById(R.id.photo_profile);
+        registerText = findViewById(R.id.registerText);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         sp = getSharedPreferences("app", Context.MODE_PRIVATE);

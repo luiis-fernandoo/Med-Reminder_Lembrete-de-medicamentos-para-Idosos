@@ -37,7 +37,6 @@ public class DetailsMedicineActivity extends AppCompatActivity implements MyAsyn
         fabricante = findViewById(R.id.fabricante);
         prescricao = findViewById(R.id.prescricao);
 
-
         Intent it = getIntent();
         numProcesso = it.getStringExtra("numProcesso");
 
@@ -48,16 +47,34 @@ public class DetailsMedicineActivity extends AppCompatActivity implements MyAsyn
     @Override
     public void onTaskComplete(JSONObject result) throws JSONException {
         if (result != null) {
-            Log.d("", "Restrição: " + result.get("restricaoUso"));
             try {
+                Log.d("", "String"+ result.toString());
                 nomeProduto.setText(result.getString("nomeComercial"));
-                principioAtivo.setText("Princípio Ativo: "+result.getString("principioAtivo"));
-                classeTerapeutica.setText("Classe Terapêutica: "+result.getString("classesTerapeuticas"));
-                restricao.setText("Restrição de uso: " + result.getJSONArray("restricaoUso"));
-                conservacao.setText("Conservação: " + result.getJSONArray("conservacao"));
-                fabricante.setText("Fabricante: " + result.getJSONObject("fabricantesNacionais").getString("fabricante"));
-                razaoSocial.setText("Empresa - Razão Social: " + result.getJSONObject("empresa").getString("razaoSocial"));
-                prescricao.setText("Prescrição: " + result.getJSONArray("restricaoPrescricao"));
+                principioAtivo.setText(getApplicationContext().getString(R.string.active_principle) + ": " + result.getString("principioAtivo"));
+
+                JSONArray classesTerapeuticasArray = result.optJSONArray("classesTerapeuticas");
+                if (classesTerapeuticasArray != null && classesTerapeuticasArray.length() > 0) {
+                    String classeTerapeuticaString = classesTerapeuticasArray.getString(0);
+                    classeTerapeutica.setText(getApplicationContext().getString(R.string.therapeutic_class) + ": " + classeTerapeuticaString);
+                }
+
+                JSONArray jsonApresentacoes = result.optJSONArray("apresentacoes");
+                if (jsonApresentacoes != null && jsonApresentacoes.length() > 0) {
+                    String restricaoUso = jsonApresentacoes.getJSONObject(0).getJSONArray("restricaoUso").getString(0);
+                    String conservacaoString = jsonApresentacoes.getJSONObject(0).getJSONArray("conservacao").getString(0);
+                    String viasAdm = jsonApresentacoes.getJSONObject(0).getJSONArray("viasAdministracao").getString(0);
+                    String prescricaoString = jsonApresentacoes.getJSONObject(0).getJSONArray("restricaoPrescricao").getString(0);
+
+                    restricao.setText(getApplicationContext().getString(R.string.restriction) + ": " + restricaoUso);
+                    conservacao.setText(getApplicationContext().getString(R.string.conservation) + ": " + conservacaoString);
+                    fabricante.setText(getApplicationContext().getString(R.string.use) + ": " + viasAdm);
+                    prescricao.setText(getApplicationContext().getString(R.string.prescription) + ": " + prescricaoString);
+                }
+
+                JSONObject empresaObject = result.getJSONObject("empresa");
+                String razaoSocialString = empresaObject.getString("razaoSocial");
+                razaoSocial.setText(getApplicationContext().getString(R.string.company_corporate_name) + ": " + razaoSocialString);
+
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }

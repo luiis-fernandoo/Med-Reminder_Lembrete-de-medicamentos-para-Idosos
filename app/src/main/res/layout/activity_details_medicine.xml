@@ -48,10 +48,10 @@
 
     <TextView
         android:id="@+id/classeTerapeutica"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="48dp"
         android:text="Classe terapêutica:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView11"
@@ -59,10 +59,10 @@
 
     <TextView
         android:id="@+id/principioAtivo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="298dp"
+        android:layout_height="38dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="30dp"
         android:text="Princípio Ativo:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/classeTerapeutica"
@@ -70,10 +70,10 @@
 
     <TextView
         android:id="@+id/razaoSocial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:text="Empresa - Razão Social:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/principioAtivo"
@@ -81,21 +81,21 @@
 
     <TextView
         android:id="@+id/fabricante"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="298dp"
+        android:layout_height="22dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="44dp"
-        android:text="Fabricante:"
+        android:layout_marginTop="30dp"
+        android:text="Uso:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/razaoSocial"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/conservacao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="30dp"
         android:text="Conservação:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fabricante"
@@ -103,10 +103,10 @@
 
     <TextView
         android:id="@+id/restricao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="30dp"
         android:text="Restrição:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/conservacao"
@@ -114,10 +114,10 @@
 
     <TextView
         android:id="@+id/prescricao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="296dp"
+        android:layout_height="45dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="30dp"
         android:text="Prescrição:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restricao"

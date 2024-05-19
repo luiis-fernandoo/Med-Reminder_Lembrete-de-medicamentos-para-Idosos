@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.ChoiceElderlyAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
@@ -16,7 +16,6 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChoiceElderlyActivity extends AppCompatActivity {
@@ -25,12 +24,16 @@ public class ChoiceElderlyActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private String caregiver;
     private List<Elderly> elderlyList;
+    private TextView choiceTheElderly;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice_elderly);
 
         recycleElderly = findViewById(R.id.recycleElderly);
+        choiceTheElderly = findViewById(R.id.choiceTheElderly);
+
+        choiceTheElderly.setText(R.string.Choose_the_elderly_person_who_will_take_the_medicine);
 
         SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
 

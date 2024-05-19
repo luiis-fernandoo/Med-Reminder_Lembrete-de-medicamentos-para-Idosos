@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 public class TypeMedicineActivity extends AppCompatActivity {
 
     private Button buttonPill, buttonDrops, buttonDust;
+    private TextView chooseTheFarmaceutic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +23,16 @@ public class TypeMedicineActivity extends AppCompatActivity {
         String medicine = it.getStringExtra("medicine");
 
         buttonPill = findViewById(R.id.buttonPill);
+        buttonPill.setText(R.string.pill);
+
         buttonDrops = findViewById(R.id.buttonDrops);
+        buttonDrops.setText(R.string.drops);
+
         buttonDust = findViewById(R.id.buttonDust);
+        buttonDust.setText(R.string.dust);
+
+        chooseTheFarmaceutic = findViewById(R.id.chooseTheFarmaceutic);
+        chooseTheFarmaceutic.setText(R.string.Choose_the_pharmaceutical_type_of_your_medicine);
 
         buttonPill.setOnClickListener(new View.OnClickListener() {
             @Override

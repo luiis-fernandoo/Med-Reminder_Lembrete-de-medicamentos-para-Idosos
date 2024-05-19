@@ -3,6 +3,7 @@ package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,21 +57,26 @@ public class SetScheduleActivity extends AppCompatActivity {
 
         selectQuantity = findViewById(R.id.selectQuantity);
         quantity = findViewById(R.id.quantity);
+
         selectType = findViewById(R.id.selectType);
+
         selectHour = findViewById(R.id.selectHour);
+
         buttonNext = findViewById(R.id.buttonNext);
+        buttonNext.setText(R.string.next);
         textDose = findViewById(R.id.textDose);
+        textDose.setText(R.string.Select_the_time_of_the_first_dose);
 
 
         switch (typeMedicine) {
             case "pill":
-                selectType.setText("comprimido(s)");
+                selectType.setText(R.string.pill);
                 break;
             case "drops":
-                selectType.setText("Gotas(s)");
+                selectType.setText(R.string.drops);
                 break;
             case "dust":
-                selectType.setText("Sachê(s)");
+                selectType.setText(R.string.dust);
                 break;
         }
 
@@ -92,6 +98,7 @@ public class SetScheduleActivity extends AppCompatActivity {
         });
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 scheduleItems.add(new ScheduleItem(hourReminder, valueQuantity));
@@ -103,7 +110,7 @@ public class SetScheduleActivity extends AppCompatActivity {
                     intentSpecificDay(scheduleItems);
                 }else{
                     count ++;
-                    textDose.setText("Selecione o horário da "+ count + "° dose:");
+                    textDose.setText(getApplicationContext().getString(R.string.select_the_x_time) +" " + count + "° dose:");
                     selectHour.setText("00:00");
                 }
             }
@@ -142,8 +149,9 @@ public class SetScheduleActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                String formattedHour = String.format(Locale.getDefault(), "%02d", hourOfDay);
                 String formattedMinute = String.format(Locale.getDefault(), "%02d", minute);
-                hourReminder = hourOfDay + ":" + formattedMinute;
+                hourReminder = formattedHour + ":" + formattedMinute;
                 selectHour.setText(hourReminder);
             }
         }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), false);

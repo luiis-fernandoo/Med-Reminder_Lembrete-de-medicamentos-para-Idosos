@@ -18,7 +18,7 @@ public class AddMedicineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_medicine);
 
         addMedicine = findViewById(R.id.addMedicine);
-
+        addMedicine.setText(R.string.add_medicine);
         addMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

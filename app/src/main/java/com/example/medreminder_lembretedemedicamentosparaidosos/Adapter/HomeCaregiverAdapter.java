@@ -47,7 +47,6 @@ public class HomeCaregiverAdapter extends RecyclerView.Adapter<HomeCaregiverAdap
     @Override
     public void onBindViewHolder(@NonNull HomeCaregiverAdapter.MyViewHolder holder, int position) {
         if (position < reminders.size()) {
-            Log.d("", "Size: " + reminders.size());
             Reminder reminder = reminders.get(position);
             holder.bind(reminder, this.context);
         } else {
@@ -80,20 +79,14 @@ public class HomeCaregiverAdapter extends RecyclerView.Adapter<HomeCaregiverAdap
             Medicine medicine = medicineDao.getMedicineByProcessNumber();
             ElderlyDao elderlyDao = new ElderlyDao(context, new Elderly());
             Elderly elderly = elderlyDao.getElderlyById(reminder.getIdoso_id());
-            textElderly.setText("Idoso: " + elderly.getName());
+            textElderly.setText(context.getString(R.string.elderly) + " " + elderly.getName());
             textNameMedicine.setText(medicine.getProduct_name());
-            textTime.setText("Horário: " + reminder.getTime());
+            textTime.setText(context.getString(R.string.time) + " " + reminder.getTime());
             if(reminder.getPhoto_medicine_box()!=null){
                 Glide.with(itemView.getContext())
                         .load(reminder.getPhoto_medicine_box())
                         .into(imageBox);
             }
-            clickToNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("", "Oi");
-                }
-            });
         }
     }
 }

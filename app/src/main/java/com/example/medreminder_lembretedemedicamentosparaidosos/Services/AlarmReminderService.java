@@ -1,5 +1,6 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Services;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -7,28 +8,31 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.AlarmTransparentActivity;
+import com.bumptech.glide.Glide;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.MedicineDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.InsertLogHelper;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Medicine;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class AlarmReminderService extends Service {
 
@@ -36,8 +40,13 @@ public class AlarmReminderService extends Service {
     private static final String CHANNEL_NAME = "Channel Name";
     private static final String ACTION_STOP = "STOP";
     private static final int NOTIFICATION_ID = 1;
+    private TextView nameMedicine, nameElderly, typeMedicine, quantityMedicine;
+    private Button buttonConfirm, buttonCancel;
+    private ImageView imageMedicine;
 
     private ReminderDao reminderDao;
+    private MedicineDao medicineDao;
+    private ElderlyDao elderlyDao;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -56,9 +65,10 @@ public class AlarmReminderService extends Service {
         Notification notification = createNotification();
         Reminder reminder = new Reminder(reminderId);
         reminderDao = new ReminderDao(getApplicationContext(), reminder);
-        reminderDao.setStatusAlarm(1, reminder.get_id());
 
-        showAlertDialog();
+        showAlertDialog(reminder);
+
+        InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
 
         startForeground(NOTIFICATION_ID, notification);
 
@@ -75,7 +85,7 @@ public class AlarmReminderService extends Service {
 
     private void vibrate() {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(2000);
+        vibrator.vibrate(7000);
     }
 
     private void createNotificationChannel() {
@@ -103,22 +113,83 @@ public class AlarmReminderService extends Service {
         return builder.build();
     }
 
-    private void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Alarme!");
-        builder.setMessage("Hora de fazer algo.");
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+    @SuppressLint("SetTextI18n")
+    private void showAlertDialog(Reminder reminder) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_reminder_alarm, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        nameMedicine = popupView.findViewById(R.id.nameMedicine);
+        nameElderly = popupView.findViewById(R.id.nameElderly);
+        typeMedicine = popupView.findViewById(R.id.typeMedicine);
+        quantityMedicine = popupView.findViewById(R.id.quantityMedicine);
+        buttonConfirm = popupView.findViewById(R.id.buttonConfirm);
+        buttonCancel = popupView.findViewById(R.id.buttonCancel);
+        imageMedicine = popupView.findViewById(R.id.imageMedicine);
+
+        AlertDialog dialog = alertDialogBuilder.create();
+
+        reminder = reminderDao.getReminderById(reminder.get_id());
+
+        medicineDao = new MedicineDao(getApplicationContext(), new Medicine(reminder.getMedicamento_id()));
+        Medicine medicine = medicineDao.getMedicineByProcessNumber();
+
+        elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
+        Elderly elderly = elderlyDao.getElderlyById(reminder.getIdoso_id());
+
+        nameMedicine.setText(medicine.getProduct_name());
+        nameElderly.setText(getApplicationContext().getString(R.string.elderly) + ": " + elderly.getName());
+        if(reminder.getType_medicine().equals("pill")){
+            typeMedicine.setText("Tipo: " + getApplicationContext().getString(R.string.pill));
+        }else if(reminder.getType_medicine().equals("drops")){
+            typeMedicine.setText("Tipo: " + getApplicationContext().getString(R.string.drops));
+        }else if(reminder.getType_medicine().equals("dust")){
+            typeMedicine.setText("Tipo: " + getApplicationContext().getString(R.string.dust));
+        }
+        quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity());
+        if(reminder.getPhoto_medicine_box()!=null){
+            Glide.with(popupView.getContext())
+                    .load(reminder.getPhoto_medicine_box())
+                    .into(imageMedicine);
+        }else if(reminder.getPhoto_medicine_pill()==null){
+            Glide.with(popupView.getContext())
+                    .load(reminder.getPhoto_medicine_pill())
+                    .into(imageMedicine);
+        }
+
+        final Reminder finalReminder = reminder;
+        buttonConfirm.setText(R.string.confirm);
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View view) {
+                reminderDao.setStatusAlarm(10, finalReminder.get_id());
+                if(finalReminder.getRemaining() != null){
+                    int remaining = Integer.parseInt(finalReminder.getRemaining());
+                    int quantity = Integer.parseInt(finalReminder.getQuantity());
+                    remaining -= quantity;
+                    reminderDao.setRemaining(remaining, finalReminder.get_id());
+                }
                 dialog.dismiss();
             }
         });
-        AlertDialog dialog = builder.create();
+
+        buttonCancel.setText(R.string.cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reminderDao.setStatusAlarm(11, finalReminder.get_id());
+                dialog.dismiss();
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
         } else {
             dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         }
+
         dialog.show();
     }
 

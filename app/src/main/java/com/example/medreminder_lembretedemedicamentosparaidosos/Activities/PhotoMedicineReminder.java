@@ -33,11 +33,11 @@ public class PhotoMedicineReminder extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imagePhotoCapture, iconCameraPhoto;
-    private TextView textViewHeader;
+    private TextView textViewHeader, clickPackage;
     private String currentPhotoPath, medicine, typeMedicine, frequencyMedicine;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
-    private int frequencyDay, frequencyDifferenceDays;
+    private int frequencyDay, frequencyDifferenceDays, eachXhours;
     private Button buttonNext;
     private Activity activity;
 
@@ -54,6 +54,9 @@ public class PhotoMedicineReminder extends AppCompatActivity {
         if(frequencyMedicine != null){
             if (frequencyMedicine.equals("everyDay")) {
                 frequencyDay = it.getIntExtra("frequencyDay", 1);
+                if(it.getIntExtra("eachXhours", 0) != 0){
+                    eachXhours = it.getIntExtra("eachXhours", 0);
+                }
             }else if(frequencyMedicine.equals("everyOtherDay")){
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
             }else if(frequencyMedicine.equals("specificDay")){
@@ -65,8 +68,15 @@ public class PhotoMedicineReminder extends AppCompatActivity {
 
         imagePhotoCapture = findViewById(R.id.imagePhotoCapture);
         iconCameraPhoto = findViewById(R.id.iconCameraPhoto);
+
         textViewHeader = findViewById(R.id.textViewHeader);
+        textViewHeader.setText(R.string.Take_a_photo_of_the_packaging_EXAMPLE);
+
         buttonNext = findViewById(R.id.buttonNext);
+        buttonNext.setText(R.string.next);
+
+        clickPackage = findViewById(R.id.clickPackage);
+        clickPackage.setText(R.string.Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_box);
 
         iconCameraPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +103,9 @@ public class PhotoMedicineReminder extends AppCompatActivity {
                 if(frequencyMedicine != null){
                     if (frequencyMedicine.equals("everyDay")) {
                         it.putExtra("frequencyDay", frequencyDay);
+                        if(eachXhours != 0){
+                            it.putExtra("eachXhours", eachXhours);
+                        }
                     }else if(frequencyMedicine.equals("everyOtherDay")){
                         it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
                     }else if(frequencyMedicine.equals("specificDay")){
@@ -135,7 +148,7 @@ public class PhotoMedicineReminder extends AppCompatActivity {
 
                     // Exibe a imagem capturada no ImageView
                     imagePhotoCapture.setImageBitmap(imageBitmap);
-                    textViewHeader.setText("SUA FOTO DA CAIXA DO MEDICAMENTO");
+                    textViewHeader.setText(R.string.yourPackagePhoto);
                     saveImageToInternalStorage(imageBitmap);
                 } else {
                     Toast.makeText(this, "Falha ao capturar a imagem", Toast.LENGTH_SHORT).show();

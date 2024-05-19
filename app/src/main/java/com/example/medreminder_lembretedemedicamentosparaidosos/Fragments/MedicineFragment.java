@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.MedicineAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
@@ -52,6 +53,7 @@ public class MedicineFragment extends Fragment {
     private List<Medicine> medicines = new ArrayList<>();
     private String selectedUserType;
     private RecyclerView recycleMedicine;
+    private TextView textMedicines;
 
     public MedicineFragment() {
         // Required empty public constructor
@@ -90,6 +92,8 @@ public class MedicineFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_medicine, container, false);
 
         recycleMedicine = view.findViewById(R.id.recycleReminder);
+        textMedicines = view.findViewById(R.id.textMedicines);
+        textMedicines.setText(R.string.medicines);
 
         sp = requireContext().getSharedPreferences("app", Context.MODE_PRIVATE);
 

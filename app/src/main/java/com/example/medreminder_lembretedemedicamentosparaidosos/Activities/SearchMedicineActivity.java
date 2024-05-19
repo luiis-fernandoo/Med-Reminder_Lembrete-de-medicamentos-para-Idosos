@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Adapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.SearchAdapter;
@@ -25,6 +26,7 @@ public class SearchMedicineActivity extends AppCompatActivity implements MyAsync
 
     EditText editTextSearch;
     RecyclerView recycleViewMedicineItem;
+    TextView searchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,12 @@ public class SearchMedicineActivity extends AppCompatActivity implements MyAsync
         setContentView(R.layout.activity_search_medicine);
 
         editTextSearch = findViewById(R.id.editTextSearch);
+        editTextSearch.setHint(R.string.enter_the_name_of_the_medicine);
+
         recycleViewMedicineItem = findViewById(R.id.recycleViewMedicineItem);
+
+        searchText = findViewById(R.id.searchText);
+        searchText.setText(R.string.Search_for_medicines);
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override

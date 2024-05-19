@@ -20,7 +20,7 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
     private EditText inputMoreThanThreeTimes;
     private int result;
     private LinearLayout buttonOk;
-    private TextView warningText;
+    private TextView warningText, enterHowManyTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,13 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
         String frequencyMedicine = it.getStringExtra("frequencyMedicine");
 
         buttonNext = findViewById(R.id.buttonNext);
+        buttonNext.setText(R.string.next);
+
         inputMoreThanThreeTimes = findViewById(R.id.inputNameEdit);
+        inputMoreThanThreeTimes.setHint(R.string.type_here);
+
+        enterHowManyTimes = findViewById(R.id.enterHowManyTimes);
+        enterHowManyTimes.setText(R.string.Enter_how_many_times_you_take_this_medicine_per_day);
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override

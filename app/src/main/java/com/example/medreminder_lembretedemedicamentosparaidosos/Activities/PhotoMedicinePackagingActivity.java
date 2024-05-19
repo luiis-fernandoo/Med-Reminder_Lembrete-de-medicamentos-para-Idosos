@@ -28,11 +28,11 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 101;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView imagePhotoCapture, iconCameraPhoto;
-    private TextView textViewHeader;
+    private TextView textViewHeader, clickPackage, dontWant;
     private String currentPhotoPath, medicine, typeMedicine, frequencyMedicine, frequencyTimes, currentPhotoPathPrevius;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
-    private int frequencyDay, frequencyDifferenceDays;
+    private int frequencyDay, frequencyDifferenceDays, eachXhours;
     private Button buttonNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,9 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
         if(frequencyMedicine != null){
             if (frequencyMedicine.equals("everyDay")) {
                 frequencyDay = it.getIntExtra("frequencyDay", 1);
+                if (it.getIntExtra("eachXhours", 0) != 0) {
+                    eachXhours = it.getIntExtra("eachXhours", 0);
+                }
             }else if(frequencyMedicine.equals("everyOtherDay")){
                 frequencyDifferenceDays = it.getIntExtra("frequencyDifferenceDays", -1);
             }else if(frequencyMedicine.equals("specificDay")){
@@ -57,8 +60,18 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
 
         imagePhotoCapture = findViewById(R.id.imagePhotoCapture);
         iconCameraPhoto = findViewById(R.id.iconCameraPhoto);
+
         textViewHeader = findViewById(R.id.textViewHeader);
+        textViewHeader.setText(R.string.Take_a_photo_of_the_packaging_EXAMPLE);
+
         buttonNext = findViewById(R.id.buttonNext);
+        buttonNext.setText(R.string.next);
+
+        clickPackage = findViewById(R.id.clickPackage);
+        clickPackage.setText(R.string.Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging);
+
+        dontWant = findViewById(R.id.dontWant);
+        dontWant.setText(R.string.Dont_want_to_take_a_photo_of_the_medicine_Click_here);
 
         iconCameraPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +91,9 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
                 if(frequencyMedicine != null){
                     if (frequencyMedicine.equals("everyDay")) {
                         it.putExtra("frequencyDay", frequencyDay);
+                        if(eachXhours != 0){
+                            it.putExtra("eachXhours", eachXhours);
+                        }
                     }else if(frequencyMedicine.equals("everyOtherDay")){
                         it.putExtra("frequencyDifferenceDays", frequencyDifferenceDays);
                     }else if(frequencyMedicine.equals("specificDay")){
@@ -120,7 +136,7 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
 
                     // Exibe a imagem capturada no ImageView
                     imagePhotoCapture.setImageBitmap(imageBitmap);
-                    textViewHeader.setText("SUA FOTO DA EMBALAGEM DO MEDICAMENTO:");
+                    textViewHeader.setText(R.string.yourPackagePhoto);
                     saveImageToInternalStorage(imageBitmap);
                 } else {
                     Toast.makeText(this, "Falha ao capturar a imagem", Toast.LENGTH_SHORT).show();
@@ -131,20 +147,4 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
         }
     }
 
-    //    private void displayImage() {
-//        if (currentPhotoPath != null) {
-//            // Carrega a imagem do caminho do arquivo
-//            Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-//
-//            // Verifica se o bitmap foi carregado com sucesso
-//            if (bitmap != null) {
-//                // Define o bitmap no ImageView
-//                imagePhotoCapture.setImageBitmap(bitmap);
-//            } else {
-//                Toast.makeText(this, "Falha ao carregar a imagem", Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            Toast.makeText(this, "Caminho da imagem não encontrado", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 }

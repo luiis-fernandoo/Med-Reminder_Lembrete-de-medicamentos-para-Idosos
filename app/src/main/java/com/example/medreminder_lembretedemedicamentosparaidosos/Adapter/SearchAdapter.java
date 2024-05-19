@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.TypeMedicineActivity;
@@ -21,11 +23,14 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder>{
 
     private final Activity activity;
     private final JSONArray medicineList;
+    private TextView warningText;
+    private LinearLayout buttonOk;
 
     public SearchAdapter(Activity activity, JSONArray medicineList) {
         this.activity = activity;
@@ -74,13 +79,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
                 medicineTextId.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MedicineDao medicineDao = new MedicineDao(activity, new Medicine());
-                        if(medicineDao.insertNewReminder(medicine)){
-                            Intent it = new Intent(activity, TypeMedicineActivity.class);
-                            it.putExtra("medicine", numProcesso);
-                            activity.startActivity(it);
+                        Medicine medicineSelected = new Medicine(numProcesso);
+                        MedicineDao medicineDao = new MedicineDao(activity, medicineSelected);
+                        Medicine medicineVerify = medicineDao.getMedicineByProcessNumber();
+                        Log.d("", "Medicine: " + medicineVerify);
+                        if(medicineVerify.getProcess_number() != null){
+                            popup_warning(view);
                         }else{
-                            Toast.makeText(activity, "Não foi possível cadastrar medicamento", Toast.LENGTH_SHORT).show();
+                            if(medicineDao.insertNewReminder(medicine)){
+                                Intent it = new Intent(activity, TypeMedicineActivity.class);
+                                it.putExtra("medicine", numProcesso);
+                                activity.startActivity(it);
+                            }else{
+                                Toast.makeText(activity, "Não foi possível cadastrar medicamento", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
@@ -88,5 +100,26 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
                 e.printStackTrace();
             }
         }
+    }
+
+    public void popup_warning(View view){
+        LayoutInflater inflater = LayoutInflater.from(view.getContext());
+        View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
+
+        warningText = popupView.findViewById(R.id.warningText);
+        warningText.setText(R.string.popup_warning);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+        alertDialogBuilder.setView(popupView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonOk = popupView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

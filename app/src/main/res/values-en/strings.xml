@@ -1,0 +1,137 @@
+<resources>
+    <string name="app_name">Med Reminder</string>
+
+                        <!--  Home  -->
+    <string name="medicines_today">Medicines Today</string>
+    <string name="add_medicine">Add Medicine</string>
+    <string name="dose">Dose</string>
+    <string name="time">Time</string>
+    <string name="status">Status</string>
+    <string name="date">Date</string>
+
+
+    <!-- Medicine  -->
+    <string name="medicines">Medicines</string>
+
+                        <!--  Reminders  -->
+    <string name="all_your_reminders">All your reminders</string>
+    <string name="remaining">Remaining pills</string>
+    <string name="delete">Delete</string>
+    <string name="textWarning">Pressing delete will erase your entire treatment with this medicine and it will not be possible to reverse it. Do you want to confirm the deletion?</string>
+    <string name="edit">Edit</string>
+
+                        <!--  Profile  -->
+    <string name="elderly">Elderly</string>
+    <string name="age">Age</string>
+    <string name="exit">Exit</string>
+    <string name="account_delete">Account delete</string>
+    <string name="your_elderly">Your Elderly</string>
+    <string name="years_old">Years old</string>
+
+                        <!--  Login  -->
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_without_registration">Enter without registration</string>
+
+                        <!--  Register  -->
+    <string name="name">Name</string>
+    <string name="select_user_type">Select user type</string>
+    <string name="register">Register</string>
+
+                        <!--  Register Elderly  -->
+    <string name="name_elderly">Name elderly</string>
+    <string name="age_elderly">Age elderly</string>
+    <string name="register_later">Register later</string>
+
+                        <!--  Choice elderly  -->
+    <string name="Choose_the_elderly_person_who_will_take_the_medicine">Choose the elderly person who will take the medicine</string>
+
+                        <!--  details medicine  -->
+    <string name="therapeutic_class">Therapeutic class</string>
+    <string name="active_principle">Active principle</string>
+    <string name="company_corporate_name">Company corporate name</string>
+    <string name="use">Use</string>
+    <string name="conservation">Conservation</string>
+    <string name="restriction">Restriction</string>
+    <string name="prescription">Prescription</string>
+
+                        <!--  Each hours  -->
+    <string name="how_many_hours">Enter how many hours you take this medicine</string>
+    <string name="type_here">Type here..</string>
+    <string name="next">Next</string>
+
+                        <!--  frequency medicine  -->
+    <string name="How_often_do_you_take_this_medicine">How often do you take this medicine</string>
+    <string name="every_day">Every day</string>
+    <string name="every_other_day">Every another day</string>
+    <string name="specific_days">Specific days of the week</string>
+
+                        <!--  Every day  -->
+    <string name="How_often_do_you_take_this_medicine_per_day">How often do you take this medicine per day</string>
+    <string name="one_time_per_day">One time per day</string>
+    <string name="two_times_per_day">Two times per day</string>
+    <string name="three_times">Three times per day</string>
+    <string name="more_than_three_times_per_day">More than three times per day</string>
+    <string name="each_hours">Each hours</string>
+
+                        <!--  Every another day  -->
+    <string name="when_you_need_to_take_the_next_dose">When do you need to take the next dose?</string>
+    <string name="the_range_of_days_are">The range of days are:</string>
+    <string name="days">Days</string>
+
+                        <!--  Specific days  -->
+    <string name="On_which_days_will_you_take_the_medicine">On which day(s) will you take this medication?</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+
+                        <!--  Menu  -->
+    <string name="Home">Home</string>
+    <string name="Medicines">Medicines</string>
+    <string name="Reminders">Reminders</string>
+    <string name="Profile">Profile</string>
+
+                        <!--  more than three times  -->
+    <string name="Enter_how_many_times_you_take_this_medicine_per_day">Enter how many times you take this medicine per day</string>
+
+                        <!--  photo_medicine  -->
+    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging">Click on the camera in the center to take a photo of the medicine packaging</string>
+    <string name="Take_a_photo_of_the_packaging_EXAMPLE">Take a photo of the packaging EXAMPLE:</string>
+    <string name="Dont_want_to_take_a_photo_of_the_medicine_Click_here">Don\'t want to take a photo of the medicine? Click here!</string>
+    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_box">Click on the camera in the center to take a photo of the medicine box</string>
+    <string name="yourPackagePhoto">YOUR PACKAGE PHOTO:</string>
+                        <!--  reset reminder  -->
+    <string name="Do_you_want_to_set_a_refill_reminder_for_your_medicine">Do you want to set a refill reminder for your medicine?</string>
+    <string name="skip">Skip</string>
+    <string name="How_many_pills_are_left">How many pills are left?</string>
+    <string name="How_many_pills_do_you_want_to_be_notified_with">How many pills do you want to be notified with?</string>
+
+
+                        <!--  search_medicine  -->
+    <string name="Search_for_medicines">Search for medicines</string>
+    <string name="enter_the_name_of_the_medicine">Enter the name of the medicine</string>
+    <string name="popup_warning">You have already registered a medicine with this number, choose another one!</string>
+
+
+    <!--  set_schedule  -->
+    <string name="Select_the_time_of_the_first_dose">Select the time of the first dose</string>
+    <string name="select_the_x_time">Select the time of</string>
+    <string name="pill">Pill</string>
+    <string name="drops">Drops</string>
+    <string name="dust">Dust</string>
+    <string name="Choose_the_pharmaceutical_type_of_your_medicine">Choose the pharmaceutical type of your medicine</string>
+
+                        <!--  sucess_save_reminder  -->
+    <string name="Treatment_reminder_saved_successfully">Treatment reminder saved successfully!</string>
+
+                        <!--  reminder_alarm_popup  -->
+    <string name="quantity">Quantity</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+</resources>

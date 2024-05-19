@@ -1,5 +1,135 @@
 <resources>
     <string name="app_name">Med Reminder - Lembrete de medicamentos para Idosos</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+                        <!--  Home  -->
+    <string name="medicines_today">Medicamentos Hoje</string>
+    <string name="add_medicine">Adicionar medicamento</string>
+    <string name="dose">Dose</string>
+    <string name="time">Horário</string>
+    <string name="status">Status</string>
+    <string name="date">Data</string>
+
+                        <!-- Medicine  -->
+    <string name="medicines">Medicamentos</string>
+
+                        <!--  Reminders  -->
+    <string name="all_your_reminders">Todos seus lembretes</string>
+    <string name="remaining">Comprimidos restantes</string>
+    <string name="delete">Apagar</string>
+    <string name="textWarning">Apertar em excluir irá apagar todo seu tratamento com este medicamento e não será possível reverter. Deseja confirmar a exclusão?</string>
+    <string name="edit">Editar</string>
+
+                        <!--  Profile  -->
+    <string name="elderly">Idoso</string>
+    <string name="age">Idade</string>
+    <string name="exit">Sair</string>
+    <string name="account_delete">Apagar conta</string>
+    <string name="your_elderly">Seus idosos</string>
+    <string name="years_old">Anos</string>
+
+                        <!--  Login  -->
+    <string name="password">Senha</string>
+    <string name="sign_up">Fazer cadastro</string>
+    <string name="enter_without_registration">Entrar sem cadastro</string>
+
+                        <!--  Register  -->
+    <string name="name">Nome</string>
+    <string name="select_user_type">Selecionar tipo de usuário</string>
+    <string name="register">Registrar</string>
+
+                        <!--  Register Elderly  -->
+    <string name="name_elderly">Nome do idoso</string>
+    <string name="age_elderly">Idade do idoso</string>
+    <string name="register_later">Cadastrar mais tarde</string>
+                        <!--  Choice elderly  -->
+    <string name="Choose_the_elderly_person_who_will_take_the_medicine">Escolha o idoso que irá tomar o medicamento</string>
+
+                        <!--  details medicine  -->
+    <string name="therapeutic_class">Classe terapêutica</string>
+    <string name="active_principle">Princípio ativo</string>
+    <string name="company_corporate_name">Empresa-Razão Social</string>
+    <string name="use">Uso</string>
+    <string name="conservation">Conservação</string>
+    <string name="restriction">Restrição</string>
+    <string name="prescription">Prescrição</string>
+
+                        <!--  Each hours  -->
+    <string name="how_many_hours">Digite de quantas em quantas horas você toma esse medicamento</string>
+    <string name="type_here">Digite aqui..</string>
+    <string name="next">Próximo</string>
+
+                        <!--  frequency medicine  -->
+    <string name="How_often_do_you_take_this_medicine">Com que frequência você toma esse medicamento</string>
+    <string name="every_day">Todos os dias</string>
+    <string name="every_other_day">Em dias alternados</string>
+    <string name="specific_days">Dias específicos da semana</string>
+
+                        <!--  Every day  -->
+    <string name="How_often_do_you_take_this_medicine_per_day">Com que frequência você toma esse medicamento por dia</string>
+    <string name="one_time_per_day">1 vez por dia </string>
+    <string name="two_times_per_day">2 vezes por dia</string>
+    <string name="three_times">3 vezes por dia</string>
+    <string name="more_than_three_times_per_day">Mais de 3 vezes ao dia</string>
+    <string name="each_hours">A cada x horas</string>
+
+                        <!--  Every another day  -->
+    <string name="when_you_need_to_take_the_next_dose">Quando você precisa tomar a próxima dose?</string>
+    <string name="the_range_of_days_are">O intervalo de dias são:</string>
+    <string name="days">Dias</string>
+
+                        <!--  Specific days  -->
+    <string name="On_which_days_will_you_take_the_medicine">Em qual(s) dia(s) você irá tomar esse medicamento?</string>
+    <string name="sunday">Domingo</string>
+    <string name="monday">Segunda-feira</string>
+    <string name="tuesday">Terça-feira</string>
+    <string name="wednesday">Quarta-feira</string>
+    <string name="thursday">Quinta-feira</string>
+    <string name="friday">Sexta-feira</string>
+    <string name="saturday">Sábado</string>
+
+                        <!--  Menu  -->
+    <string name="Home">Início</string>
+    <string name="Medicines">Medicamentos</string>
+    <string name="Reminders">Lembretes</string>
+    <string name="Profile">Perfil</string>
+
+                        <!--  more than three times  -->
+    <string name="Enter_how_many_times_you_take_this_medicine_per_day">Digite quantas vezes você toma esse medicamento por dia</string>
+
+                        <!--  photo_medicine  -->
+    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging">Clique na câmera do centro para tirar a foto da embalagem do medicamento</string>
+    <string name="Take_a_photo_of_the_packaging_EXAMPLE">Tire a foto da embalagem EXEMPLO:</string>
+    <string name="Dont_want_to_take_a_photo_of_the_medicine_Click_here">Não quer tirar foto do medicamento? Clique aqui!</string>
+    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_box">Clique na câmera do centro para tirar a foto da caixa do medicamento</string>
+    <string name="yourPackagePhoto">SUA FOTO DA EMBALAGEM DO MEDICAMENTO:</string>
+
+                        <!--  reset reminder  -->
+    <string name="Do_you_want_to_set_a_refill_reminder_for_your_medicine">Deseja definir lembrete de reposição para o medicamento?</string>
+    <string name="skip">Pular</string>
+    <string name="How_many_pills_are_left">Quantos comprimidos ainda restam?</string>
+    <string name="How_many_pills_do_you_want_to_be_notified_with">Com quantos comprimidos você quer ser avisado?</string>
+
+
+                        <!--  search_medicine  -->
+    <string name="Search_for_medicines">Buscar medicamento</string>
+    <string name="enter_the_name_of_the_medicine">Digite o nome do medicamento</string>
+    <string name="popup_warning">Você já cadastrou um medicamento com esse número, escolha outro!</string>
+
+                        <!--  set_schedule  -->
+    <string name="Select_the_time_of_the_first_dose">Selecione o horário da primeira dose:</string>
+    <string name="select_the_x_time">Selecione o horário da</string>
+    <string name="pill">Comprimidos</string>
+    <string name="drops">Gotas</string>
+    <string name="dust">Pó</string>
+    <string name="Choose_the_pharmaceutical_type_of_your_medicine">Escolha o tipo farmacêutico do seu medicamento</string>
+
+                        <!--  sucess_save_reminder  -->
+    <string name="Treatment_reminder_saved_successfully">Lembrete do tratamento salvo com sucesso!</string>
+
+                        <!--  reminder_alarm_popup  -->
+    <string name="quantity">Quantidade</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salvar</string>
+
 </resources>

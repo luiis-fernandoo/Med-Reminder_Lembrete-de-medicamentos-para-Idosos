@@ -98,4 +98,16 @@ public class MedicineDao {
 
         return medicines;
     }
+
+    public boolean deleteMedicine(String processNumber){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+            long resultado = dbLite.delete("medicine", "number_process = ?", new String[]{processNumber});
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela Medicine: " + e.getMessage());
+            return false;
+        }
+    }
 }
