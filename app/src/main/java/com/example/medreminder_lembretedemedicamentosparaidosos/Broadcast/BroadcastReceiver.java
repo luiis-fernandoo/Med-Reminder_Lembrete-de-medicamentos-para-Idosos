@@ -3,10 +3,8 @@ package com.example.medreminder_lembretedemedicamentosparaidosos.Broadcast;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Services.AlarmReminderService;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Services.AlarmService;
 
 public class BroadcastReceiver extends android.content.BroadcastReceiver {
     @Override

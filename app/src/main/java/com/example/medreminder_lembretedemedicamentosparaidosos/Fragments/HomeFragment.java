@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.ChoiceElderlyActivity;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.MenuActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.SearchMedicineActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.HomeAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.HomeCaregiverAdapter;
@@ -147,7 +148,8 @@ public class HomeFragment extends Fragment {
             }
 
             if(reminders.size() != 0){
-                HomeAdapter homeAdapter = new HomeAdapter(reminders, requireContext(), sp);
+                MenuActivity menuActivity = (MenuActivity) getActivity();
+                HomeAdapter homeAdapter = new HomeAdapter(reminders, requireContext(), sp, menuActivity);
                 recycleHome.setLayoutManager(new LinearLayoutManager(requireContext()));
                 recycleHome.setAdapter(homeAdapter);
             }else{
@@ -173,7 +175,8 @@ public class HomeFragment extends Fragment {
             elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(sp.getString("email", ""));
             reminders = reminderDao.getAllRemindersForHomeByCaregiver(elderlyCaregiver.get_id(), dayOfWeek);
             if(reminders.size() != 0){
-                HomeCaregiverAdapter homeCaregiverAdapter = new HomeCaregiverAdapter(reminders, requireContext(), sp);
+                MenuActivity menuActivity = (MenuActivity) getActivity();
+                HomeCaregiverAdapter homeCaregiverAdapter = new HomeCaregiverAdapter(reminders, requireContext(), sp, menuActivity);
                 recycleHome.setLayoutManager(new LinearLayoutManager(requireContext()));
                 recycleHome.setAdapter(homeCaregiverAdapter);
             }else{

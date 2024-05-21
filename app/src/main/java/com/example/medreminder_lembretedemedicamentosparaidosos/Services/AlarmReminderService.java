@@ -64,16 +64,18 @@ public class AlarmReminderService extends Service {
         createNotificationChannel();
         Notification notification = createNotification();
         Reminder reminder = new Reminder(reminderId);
-        reminderDao = new ReminderDao(getApplicationContext(), reminder);
+        if(reminder.getStatus() == 1){
+            reminderDao = new ReminderDao(getApplicationContext(), reminder);
 
-        showAlertDialog(reminder);
+            showAlertDialog(reminder);
 
-        InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
+            InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
 
-        startForeground(NOTIFICATION_ID, notification);
+            startForeground(NOTIFICATION_ID, notification);
+
+        }
 
         return START_STICKY;
-
     }
 
     private void acquireWakeLock() {
@@ -85,7 +87,7 @@ public class AlarmReminderService extends Service {
 
     private void vibrate() {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(7000);
+        vibrator.vibrate(5000);
     }
 
     private void createNotificationChannel() {

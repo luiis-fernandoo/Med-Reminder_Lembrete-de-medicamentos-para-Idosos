@@ -215,7 +215,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
         View popupView = inflater.inflate(R.layout.popup_warnings_delete, null);
 
         textWarning = popupView.findViewById(R.id.textWarning);
-        textWarning.setText(R.string.textWarning);
+        textWarning.setText(R.string.textWarningDelete);
         androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
         alertDialogBuilder.setView(popupView);
 

@@ -148,7 +148,6 @@ public class ReminderDao {
         return reminders;
     }
 
-
     public boolean setStatusAlarm(int status, int reminder_id){
         SQLiteDatabase db = this.db.getWritableDatabase();
         ContentValues values = new ContentValues();

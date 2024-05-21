@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/clickToNext"
-        android:layout_width="326dp"
-        android:layout_height="118dp"
+        android:layout_width="377dp"
+        android:layout_height="221dp"
         android:background="@drawable/bg_list"
         android:orientation="horizontal">
 
@@ -21,11 +21,11 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/round_image"
-            android:src="@drawable/profile_photo_removebg_preview" />
+            android:src="@drawable/iconmedicine" />
 
         <LinearLayout
-            android:layout_width="212dp"
-            android:layout_height="83dp"
+            android:layout_width="254dp"
+            android:layout_height="187dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
@@ -59,6 +59,48 @@
                 android:text="Horário:"
                 android:textAlignment="viewStart"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textDose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center"
+                android:text="Dose:"
+                android:textAlignment="viewStart"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center"
+                android:text="Status:"
+                android:textAlignment="viewStart"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="124dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonCancelDose"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_button_delete"
+                    android:text="Cancelar dose"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

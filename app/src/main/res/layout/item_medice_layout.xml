@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/clickToNext"
-        android:layout_width="282dp"
-        android:layout_height="102dp"
+        android:layout_width="299dp"
+        android:layout_height="82dp"
         android:layout_marginLeft="25dp"
         android:background="@drawable/bg_list"
         android:orientation="horizontal">
@@ -19,9 +19,9 @@
             android:layout_width="62dp"
             android:layout_height="58dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/round_image"
-            android:src="@drawable/profile_photo_removebg_preview" />
+            android:src="@drawable/iconmedicine" />
 
         <LinearLayout
             android:layout_width="189dp"
@@ -49,7 +49,7 @@
         android:layout_width="52dp"
         android:layout_height="49dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         app:srcCompat="@drawable/lupa_detalhes" />
 
 

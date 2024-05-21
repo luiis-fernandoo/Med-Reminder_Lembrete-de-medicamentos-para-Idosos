@@ -8,6 +8,12 @@
     <string name="time">Time</string>
     <string name="status">Status</string>
     <string name="date">Date</string>
+    <string name="statusConfirmed">Dose already taken</string>
+    <string name="statusCanceled">Canceled dose</string>
+    <string name="statusSet">Set reminder</string>
+    <string name="statusToBeSet">Reminder not set yet</string>
+    <string name="textWarningCancel">Pressing confirm will cancel your dose of this medication for today and it will not be possible to reverse it. Do you want to confirm the cancellation?</string>
+
 
 
     <!-- Medicine  -->
@@ -17,7 +23,7 @@
     <string name="all_your_reminders">All your reminders</string>
     <string name="remaining">Remaining pills</string>
     <string name="delete">Delete</string>
-    <string name="textWarning">Pressing delete will erase your entire treatment with this medicine and it will not be possible to reverse it. Do you want to confirm the deletion?</string>
+    <string name="textWarningDelete">Pressing delete will erase your entire treatment with this medicine and it will not be possible to reverse it. Do you want to confirm the deletion?</string>
     <string name="edit">Edit</string>
 
                         <!--  Profile  -->

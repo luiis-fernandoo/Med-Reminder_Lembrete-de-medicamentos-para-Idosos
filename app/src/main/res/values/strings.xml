@@ -8,15 +8,20 @@
     <string name="time">Horário</string>
     <string name="status">Status</string>
     <string name="date">Data</string>
+    <string name="statusConfirmed">Dose já ingerida</string>
+    <string name="statusCanceled">Dose cancelada</string>
+    <string name="statusSet">Lembrete definido</string>
+    <string name="statusToBeSet">Lembrete não definido ainda</string>
+    <string name="textWarningCancel">Apertar em confirmar irá cancelar sua dose para hoje desse medicamento e não será possível reverter. Deseja confirmar o cancelamento?</string>
 
-                        <!-- Medicine  -->
+    <!-- Medicine  -->
     <string name="medicines">Medicamentos</string>
 
                         <!--  Reminders  -->
     <string name="all_your_reminders">Todos seus lembretes</string>
     <string name="remaining">Comprimidos restantes</string>
     <string name="delete">Apagar</string>
-    <string name="textWarning">Apertar em excluir irá apagar todo seu tratamento com este medicamento e não será possível reverter. Deseja confirmar a exclusão?</string>
+    <string name="textWarningDelete">Apertar em confirmar irá apagar todo seu tratamento com este medicamento e não será possível reverter. Deseja confirmar a exclusão?</string>
     <string name="edit">Editar</string>
 
                         <!--  Profile  -->
