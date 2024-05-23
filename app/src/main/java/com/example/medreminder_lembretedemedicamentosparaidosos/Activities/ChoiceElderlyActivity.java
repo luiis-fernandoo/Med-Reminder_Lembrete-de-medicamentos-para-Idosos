@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.ChoiceElderlyAdapter;
@@ -44,6 +47,19 @@ public class ChoiceElderlyActivity extends AppCompatActivity {
         ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
         elderlyList = elderlyDao.getElderlyByCareviger(elderlyCaregiver.get_id());
 
+        if(elderlyList.size() == 0){
+            setContentView(R.layout.activity_choice_elderly_empty);
+
+            Button buttonAddElderly = findViewById(R.id.buttonAddElderly);
+            buttonAddElderly.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent it = new Intent(ChoiceElderlyActivity.this, RegisterElderlyActivity.class);
+                    startActivity(it);
+                    finish();
+                }
+            });
+        }
         ChoiceElderlyAdapter choiceElderlyAdapter = new ChoiceElderlyAdapter(elderlyList, this, sp);
         recycleElderly.setLayoutManager(new LinearLayoutManager(this));
         recycleElderly.setAdapter(choiceElderlyAdapter);

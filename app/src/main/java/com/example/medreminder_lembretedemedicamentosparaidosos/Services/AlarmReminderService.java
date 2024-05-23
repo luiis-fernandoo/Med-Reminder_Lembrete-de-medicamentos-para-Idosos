@@ -9,9 +9,11 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +49,8 @@ public class AlarmReminderService extends Service {
     private ReminderDao reminderDao;
     private MedicineDao medicineDao;
     private ElderlyDao elderlyDao;
+    private Vibrator vibrator;
+    private MediaPlayer mediaPlayer;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -59,14 +63,18 @@ public class AlarmReminderService extends Service {
         }
 
         int reminderId = intent.getIntExtra("reminderId", -1);
-        vibrate();
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.clock_alarm);
 
         createNotificationChannel();
         Notification notification = createNotification();
-        Reminder reminder = new Reminder(reminderId);
-        if(reminder.getStatus() == 1){
-            reminderDao = new ReminderDao(getApplicationContext(), reminder);
+        reminderDao = new ReminderDao(getApplicationContext(), new Reminder(reminderId));
+        Reminder reminder = reminderDao.getReminderById(reminderId);
 
+        if(reminder.getStatus() == 1){
+            vibrate();
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
             showAlertDialog(reminder);
 
             InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
@@ -86,8 +94,15 @@ public class AlarmReminderService extends Service {
     }
 
     private void vibrate() {
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(5000);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        long[] pattern = {0, 1000, 1000}; // Começa imediatamente a vibrar por 1 segundo, depois pausa por 1 segundo
+        if (vibrator.hasVibrator()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0));
+            } else {
+                vibrator.vibrate(pattern, 0); // O segundo parâmetro é o índice (começando de 0) no padrão onde a vibração deve começar novamente (-1 para não repetir)
+            }
+        }
     }
 
     private void createNotificationChannel() {
@@ -121,6 +136,7 @@ public class AlarmReminderService extends Service {
         View popupView = inflater.inflate(R.layout.popup_reminder_alarm, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setView(popupView);
 
         nameMedicine = popupView.findViewById(R.id.nameMedicine);
@@ -132,8 +148,6 @@ public class AlarmReminderService extends Service {
         imageMedicine = popupView.findViewById(R.id.imageMedicine);
 
         AlertDialog dialog = alertDialogBuilder.create();
-
-        reminder = reminderDao.getReminderById(reminder.get_id());
 
         medicineDao = new MedicineDao(getApplicationContext(), new Medicine(reminder.getMedicamento_id()));
         Medicine medicine = medicineDao.getMedicineByProcessNumber();
@@ -150,7 +164,13 @@ public class AlarmReminderService extends Service {
         }else if(reminder.getType_medicine().equals("dust")){
             typeMedicine.setText("Tipo: " + getApplicationContext().getString(R.string.dust));
         }
-        quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity());
+        if(reminder.getType_medicine().equals("pill")){
+            quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity() + " comprimido(s)");
+        }else if(reminder.getType_medicine().equals("drops")){
+            quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity() + " gota(s)");
+        }else if(reminder.getType_medicine().equals("dust")){
+            quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity() + " mg(s)");
+        }
         if(reminder.getPhoto_medicine_box()!=null){
             Glide.with(popupView.getContext())
                     .load(reminder.getPhoto_medicine_box())
@@ -173,6 +193,14 @@ public class AlarmReminderService extends Service {
                     remaining -= quantity;
                     reminderDao.setRemaining(remaining, finalReminder.get_id());
                 }
+                if (vibrator != null) {
+                    vibrator.cancel();
+                }
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
                 dialog.dismiss();
             }
         });
@@ -182,6 +210,14 @@ public class AlarmReminderService extends Service {
             @Override
             public void onClick(View view) {
                 reminderDao.setStatusAlarm(11, finalReminder.get_id());
+                if (vibrator != null) {
+                    vibrator.cancel();
+                }
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
                 dialog.dismiss();
             }
         });

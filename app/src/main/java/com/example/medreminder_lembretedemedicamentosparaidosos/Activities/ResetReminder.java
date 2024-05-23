@@ -103,6 +103,12 @@ public class ResetReminder extends AppCompatActivity {
             cuidador_id = elderlyCaregiver.get_id();
         }
 
+        if(!typeMedicine.equals("pill")){
+            registerReminder();
+            Intent intent = new Intent(this, SucessSaveReminder.class);
+            startActivity(intent);
+        }
+
         inputRemainingPills = findViewById(R.id.inputNameEdit);
         inputRemainingPills.setHint(R.string.type_here);
 

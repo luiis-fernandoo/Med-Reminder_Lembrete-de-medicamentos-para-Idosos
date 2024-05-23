@@ -51,8 +51,9 @@
 
                         <!--  Choice elderly  -->
     <string name="Choose_the_elderly_person_who_will_take_the_medicine">Choose the elderly person who will take the medicine</string>
+    <string name="elderliesEmpty">You do not have seniors registered on the App, please register one to continue.</string>
 
-                        <!--  details medicine  -->
+    <!--  details medicine  -->
     <string name="therapeutic_class">Therapeutic class</string>
     <string name="active_principle">Active principle</string>
     <string name="company_corporate_name">Company corporate name</string>

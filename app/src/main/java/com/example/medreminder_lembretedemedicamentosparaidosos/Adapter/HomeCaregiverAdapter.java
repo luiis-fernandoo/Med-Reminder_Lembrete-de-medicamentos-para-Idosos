@@ -96,7 +96,13 @@ public class HomeCaregiverAdapter extends RecyclerView.Adapter<HomeCaregiverAdap
             textElderly.setText(context.getString(R.string.elderly) + " " + elderly.getName());
             textNameMedicine.setText(medicine.getProduct_name());
             textTime.setText(context.getString(R.string.time) + " " + reminder.getTime());
-            textDose.setText(context.getString(R.string.dose) + " " + reminder.getQuantity());
+            if(reminder.getType_medicine().equals("pill")){
+                textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " comprimido(s)");
+            }else if(reminder.getType_medicine().equals("drops")){
+                textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " gota(s)");
+            }else if(reminder.getType_medicine().equals("dust")){
+                textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " mg(s)");
+            }
             if(reminder.getStatus()==10) {
                 textStatus.setText(context.getString(R.string.status) + " " + context.getString(R.string.statusConfirmed));
             }else if(reminder.getStatus()==11) {

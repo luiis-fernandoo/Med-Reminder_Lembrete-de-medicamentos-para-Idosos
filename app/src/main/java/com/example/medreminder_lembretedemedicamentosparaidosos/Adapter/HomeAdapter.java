@@ -86,7 +86,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             MedicineDao medicineDao = new MedicineDao(context, new Medicine(reminder.getMedicamento_id()));
             Medicine medicine = medicineDao.getMedicineByProcessNumber();
             textNameMedicine.setText(medicine.getProduct_name());
-            textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity());
+            if(reminder.getType_medicine().equals("pill")){
+                textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " comprimido(s)");
+            }else if(reminder.getType_medicine().equals("drops")){
+                textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " gota(s)");
+            }else if(reminder.getType_medicine().equals("dust")){
+                textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " mg(s)");
+            }
             textTime.setText(context.getString(R.string.time) + ": " + reminder.getTime());
             if(reminder.getStatus()==10) {
                 textStatus.setText(context.getString(R.string.status) + ": " + context.getString(R.string.statusConfirmed));

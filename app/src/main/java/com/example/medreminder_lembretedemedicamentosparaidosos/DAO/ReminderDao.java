@@ -278,10 +278,13 @@ public class ReminderDao {
             reminder.setRemaining(cursor.getString(cursor.getColumnIndex("remaining")));
             reminder.setPhoto_medicine_pill(cursor.getString(cursor.getColumnIndex("photo_medicine_pill")));
             reminder.setPhoto_medicine_box(cursor.getString(cursor.getColumnIndex("photo_medicine_box")));
+            reminder.setStatus(cursor.getInt(cursor.getColumnIndex("status")));
+
         }
 
         cursor.close();
         db.close();
+
         return reminder;
     }
 

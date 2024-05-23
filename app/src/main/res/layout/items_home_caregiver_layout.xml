@@ -24,11 +24,23 @@
             android:src="@drawable/iconmedicine" />
 
         <LinearLayout
-            android:layout_width="254dp"
-            android:layout_height="187dp"
+            android:layout_width="257dp"
+            android:layout_height="196dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textNameMedicine"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Amoxilina monoidratada"
+                android:textAlignment="viewStart"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textElderly"
@@ -38,15 +50,6 @@
                 android:text="Idoso: "
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textNameMedicine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="Amoxilina monoidratada"
                 android:textSize="18sp" />
 
             <TextView

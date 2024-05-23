@@ -123,9 +123,18 @@ public class HomeFragment extends Fragment {
         textMedicinesForToday = view.findViewById(R.id.textMedicinesForToday);
         recycleHome = view.findViewById(R.id.recycleReminder);
 
-        SimpleDateFormat currentDayBar = new SimpleDateFormat("EEEE, dd 'de' MMMM", new Locale("pt", "BR"));
+        Locale currentLanguage = Locale.getDefault();
+        SimpleDateFormat currentDayBar;
+
+        if (currentLanguage.getLanguage().equals("pt")) {
+            currentDayBar = new SimpleDateFormat("EEEE, dd 'de' MMMM", new Locale("pt", "BR"));
+        } else {
+            currentDayBar = new SimpleDateFormat("EEEE, dd 'of' MMMM", Locale.ENGLISH);
+        }
+
         Date currentDate = new Date();
         String formattedDate = currentDayBar.format(currentDate);
+
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE", new Locale("pt", "BR"));
         String dayOfWeek = dayOfWeekFormat.format(calendar.getTime());

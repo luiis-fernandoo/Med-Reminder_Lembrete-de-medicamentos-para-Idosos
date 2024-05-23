@@ -1,6 +1,7 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Helpers;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,6 +17,8 @@ public class InsertLogHelper {
             logDirectory.mkdirs();
         }
         File logFile = new File(logDirectory, "log_med_reminder.txt");
+        Log.d("InsertLogHelper", "Log file path: " + logFile.getAbsolutePath());
+
         if (!logFile.exists()) {
             try {
                 logFile.createNewFile();

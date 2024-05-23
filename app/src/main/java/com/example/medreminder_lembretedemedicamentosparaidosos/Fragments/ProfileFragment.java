@@ -184,7 +184,11 @@ public class ProfileFragment extends Fragment {
             elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(sp.getString("email", ""));
 
             nameProfile.setText(elderlyCaregiver.getName());
-            ageProfile.setText(requireContext().getString(R.string.age) + " " + elderlyCaregiver.getAge());
+            if(elderlyCaregiver.getAge() != null){
+                ageProfile.setText(requireContext().getString(R.string.age) + ": " + elderlyCaregiver.getAge());
+            }else{
+                ageProfile.setText(requireContext().getString(R.string.age) + ": ");
+            }
             if(elderlyCaregiver.getProfile_photo()!=null){
                 Glide.with(viewCaregiver.getContext())
                         .load(elderlyCaregiver.getProfile_photo())

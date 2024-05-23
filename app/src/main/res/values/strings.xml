@@ -48,6 +48,7 @@
     <string name="register_later">Cadastrar mais tarde</string>
                         <!--  Choice elderly  -->
     <string name="Choose_the_elderly_person_who_will_take_the_medicine">Escolha o idoso que irá tomar o medicamento</string>
+    <string name="elderliesEmpty">Você não possui idosos cadastrados no App, por favor, cadastre um para continuar.</string>
 
                         <!--  details medicine  -->
     <string name="therapeutic_class">Classe terapêutica</string>

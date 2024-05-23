@@ -76,7 +76,7 @@ public class SetScheduleActivity extends AppCompatActivity {
                 selectType.setText(R.string.drops);
                 break;
             case "dust":
-                selectType.setText(R.string.dust);
+                selectType.setText("mg");
                 break;
         }
 
