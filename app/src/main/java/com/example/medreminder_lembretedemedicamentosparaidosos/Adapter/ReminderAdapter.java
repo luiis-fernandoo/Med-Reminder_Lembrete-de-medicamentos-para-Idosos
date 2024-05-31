@@ -176,6 +176,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
                 ReminderDao reminderDao = new ReminderDao(context, reminder);
                 if(reminder.getEveryday().equals("S")){
                     if (reminderDao.updateReminderById(reminder)) {
+                        reminderDao.setStatusAlarm(0, reminder.get_id());
                         Toast.makeText(context, "Lembrete atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
                         menuActivity.replaceFragment(new ReminderFragment());
@@ -184,6 +185,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
                     }
                 }else{
                     if (reminderDao.updateReminder(reminder)) {
+                        reminderDao.setStatusAlarm(0, reminder.get_id());
                         Toast.makeText(context, "Lembrete atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
                         menuActivity.replaceFragment(new ReminderFragment());

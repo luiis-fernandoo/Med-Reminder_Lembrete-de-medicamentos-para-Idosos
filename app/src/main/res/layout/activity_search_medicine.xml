@@ -4,55 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0D78DB"
     tools:context=".Activities.SearchMedicineActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="413dp"
-        android:layout_height="237dp"
-        android:src="@drawable/captura_de_tela_2024_03_18_152732"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-3dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/imageView6"
+        android:layout_width="470dp"
+        android:layout_height="807dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchText"
+        app:srcCompat="@drawable/layout_photo" />
 
     <TextView
         android:id="@+id/searchText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="149dp"
-        android:text="Buscar Medicamento"
-        android:textSize="24sp"
+        android:layout_width="264dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/fonts_google"
+        android:text="Buscar medicamento"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextSearch"
-        android:layout_width="335dp"
-        android:layout_height="64dp"
+        android:layout_width="238dp"
+        android:layout_height="50dp"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="19dp"
         android:background="@drawable/bg_list"
         android:fontFamily="sans-serif-black"
         android:gravity="center_vertical"
-        android:hint="Digite o nome do medicamento..."
+        android:hint="Digite aqui..."
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColor="#A9000000"
         android:textColorHint="#79000000"
         android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSearch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchText" />
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
     <LinearLayout
-        android:layout_width="337dp"
-        android:layout_height="285dp"
+        android:layout_width="357dp"
+        android:layout_height="444dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="15dp"
@@ -65,7 +67,31 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleViewMedicineItem"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="440dp" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="53dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/searchText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_lupa" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonSearch"
+        android:layout_width="102dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/shape_buttons_login"
+        android:text="Pesquisar"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

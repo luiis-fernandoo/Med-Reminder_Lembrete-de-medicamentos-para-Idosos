@@ -4,15 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailLogin, passwordLogin;
     private Button buttonLogin;
     private String selectedUserType;
+    private Dialog progressDialog;
     private SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +51,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         goRegister = findViewById(R.id.goRegister);
-        goRegister.setText(R.string.register);
-
         notRegister = findViewById(R.id.notRegister);
-        notRegister.setText(R.string.enter_without_registration);
-
         emailLogin = findViewById(R.id.emailLogin);
-
         passwordLogin = findViewById(R.id.passwordLogin);
-        passwordLogin.setHint(R.string.password);
-
         buttonLogin = findViewById(R.id.buttonLogin);
-        buttonLogin.setText(R.string.save);
+
+        progressDialog = new Dialog(this);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.dialog_loading);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        progressDialog.setCancelable(false);
 
         sp = getSharedPreferences("app", Context.MODE_PRIVATE);
 
@@ -101,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.show();
                 String email = emailLogin.getText().toString().trim();
                 String password = passwordLogin.getText().toString();
 
@@ -119,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(elderlyDao.VerifyLogin()){
                     saveEmailSharedPreferences(email, "Idoso");
                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                    progressDialog.dismiss();
                     startActivity(intent);
                     finish();
                 }else{
@@ -126,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                     ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), elderlyCaregiver);
                     if(elderlyCaregiverDao.VerifyLogin()){
                         saveEmailSharedPreferences(email, "Cuidador de idoso");
+                        progressDialog.dismiss();
                         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                         startActivity(intent);
                     }else{

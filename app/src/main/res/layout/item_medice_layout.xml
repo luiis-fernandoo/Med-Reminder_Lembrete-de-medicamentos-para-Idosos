@@ -10,7 +10,7 @@
         android:id="@+id/clickToNext"
         android:layout_width="299dp"
         android:layout_height="82dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/bg_list"
         android:orientation="horizontal">
 

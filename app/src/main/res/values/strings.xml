@@ -26,21 +26,26 @@
 
                         <!--  Profile  -->
     <string name="elderly">Idoso</string>
+    <string name="elderlyCaregiver">Cudiador de idoso</string>
     <string name="age">Idade</string>
     <string name="exit">Sair</string>
     <string name="account_delete">Apagar conta</string>
     <string name="your_elderly">Seus idosos</string>
     <string name="years_old">Anos</string>
+    <string name="select_profile_photo">Selecionar foto de perfil</string>
 
                         <!--  Login  -->
     <string name="password">Senha</string>
+    <string name="sign_in">Entrar</string>
     <string name="sign_up">Fazer cadastro</string>
     <string name="enter_without_registration">Entrar sem cadastro</string>
+    <string name="need_you_help">Precisa de ajuda?</string>
 
                         <!--  Register  -->
     <string name="name">Nome</string>
     <string name="select_user_type">Selecionar tipo de usuário</string>
     <string name="register">Registrar</string>
+    <string name="register_elderly">Registrar idoso</string>
 
                         <!--  Register Elderly  -->
     <string name="name_elderly">Nome do idoso</string>
@@ -56,7 +61,7 @@
     <string name="company_corporate_name">Empresa-Razão Social</string>
     <string name="use">Uso</string>
     <string name="conservation">Conservação</string>
-    <string name="restriction">Restrição</string>
+    <string name="destiny">Destinação</string>
     <string name="prescription">Prescrição</string>
 
                         <!--  Each hours  -->
@@ -137,5 +142,7 @@
     <string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
     <string name="save">Salvar</string>
+
+    <string name="textWarningDeleteAccount">Clicar em confirmar irá apagar sua conta em definitivo, tem certeza disso?</string>
 
 </resources>

@@ -29,9 +29,11 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.Regis
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.ChoiceElderlyAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Interface.PopupInterface;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 import java.util.List;
@@ -56,8 +58,8 @@ public class ProfileFragment extends Fragment {
     private ElderlyCaregiver elderlyCaregiver;
     private LinearLayout buttonOk;
     private SharedPreferences sp;
-    private TextView nameProfile, ageProfile, textInfoMedicine, textInfoReminder,typeUser,youElderlys, nameEditPop, ageEditPop;
-    private Button buttonLogout, buttonDeleteProfile;
+    private TextView nameProfile, ageProfile, textInfoMedicine, textInfoReminder,typeUser,youElderlys, nameEditPop, ageEditPop, textWarning;
+    private Button buttonLogout, buttonDeleteProfile, buttonConfirm, buttonCancel;
     private ImageView imageProfile, imageEdit, iconAddElderly;
     private RecyclerView recycleElderly;
     private String selectedUserType;
@@ -142,12 +144,7 @@ public class ProfileFragment extends Fragment {
             buttonDeleteProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(elderlyDao.deleteElderly(elderly.get_id())){
-                        logoutUser();
-                        Toast.makeText(getActivity(), "Usuário apagado com sucesso", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(getActivity(), "Erro ao apagar usuário", Toast.LENGTH_SHORT).show();
-                    }
+                    popupWarningDeleteAccount("idoso");
                 }
             });
 
@@ -212,12 +209,7 @@ public class ProfileFragment extends Fragment {
             buttonDeleteProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(elderlyCaregiverDao.deleteCaregiver(elderlyCaregiver.get_id())){
-                        logoutUser();
-                        Toast.makeText(getActivity(), "Usuário apagado com sucesso", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(getActivity(), "Erro ao apagar usuário", Toast.LENGTH_SHORT).show();
-                    }
+                    popupWarningDeleteAccount("Cuidador");
                 }
             });
 
@@ -319,5 +311,54 @@ public class ProfileFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void popupWarningDeleteAccount(String userType){
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        View popupView = inflater.inflate(R.layout.popup_warnings_delete, null);
+
+        textWarning = popupView.findViewById(R.id.textWarning);
+        textWarning.setText(R.string.textWarningDeleteAccount);
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonConfirm = popupView.findViewById(R.id.buttonConfirm);
+        buttonConfirm.setText(R.string.confirm);
+
+        buttonCancel = popupView.findViewById(R.id.buttonCancel);
+        buttonCancel.setText(R.string.cancel);
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(userType.equals("Cuidador")){
+                    ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(requireContext(), new ElderlyCaregiver());
+                    if(elderlyCaregiverDao.deleteCaregiver(elderlyCaregiver.get_id())){
+                        logoutUser();
+                        Toast.makeText(getActivity(), "Usuário apagado com sucesso", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getActivity(), "Erro ao apagar usuário", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    ElderlyDao elderlyDao = new ElderlyDao(requireContext(), new Elderly());
+                    if(elderlyDao.deleteElderly(elderly.get_id())){
+                        logoutUser();
+                        Toast.makeText(getActivity(), "Usuário apagado com sucesso", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getActivity(), "Erro ao apagar usuário", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                alertDialog.dismiss();
+            }
+        });
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

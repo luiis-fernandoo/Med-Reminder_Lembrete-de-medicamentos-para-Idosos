@@ -137,7 +137,9 @@ public class ResetReminder extends AppCompatActivity {
 
                 int remaining = Integer.parseInt(remainingPills);
                 int warning = Integer.parseInt(warningPills);
-                if(remaining < 1 || warning < 0){
+                if(remainingPills.equals("") || warningPills.equals("")) {
+                    popup_warning(view);
+                }else if(remaining < 1 || warning < 0){
                     popup_warning(view);
                 }else{
                     registerReminder();
@@ -158,7 +160,7 @@ public class ResetReminder extends AppCompatActivity {
         View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
 
         warningText = popupView.findViewById(R.id.warningText);
-        warningText.setText("Valor inserido invalido!");
+        warningText.setText("Insira um valor válido");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(popupView);
 

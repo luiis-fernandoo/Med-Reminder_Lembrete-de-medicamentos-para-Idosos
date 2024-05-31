@@ -33,13 +33,17 @@
     <string name="account_delete">Account delete</string>
     <string name="your_elderly">Your Elderly</string>
     <string name="years_old">Years old</string>
+    <string name="select_profile_photo">Select profile photo</string>
+    <string name="elderlyCaregiver">Elderly caregiver</string>
 
-                        <!--  Login  -->
+    <!--  Login  -->
     <string name="password">Password</string>
     <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
     <string name="enter_without_registration">Enter without registration</string>
+    <string name="need_you_help">Need help?</string>
 
-                        <!--  Register  -->
+    <!--  Register  -->
     <string name="name">Name</string>
     <string name="select_user_type">Select user type</string>
     <string name="register">Register</string>
@@ -48,6 +52,7 @@
     <string name="name_elderly">Name elderly</string>
     <string name="age_elderly">Age elderly</string>
     <string name="register_later">Register later</string>
+    <string name="register_elderly">Register Elderly</string>
 
                         <!--  Choice elderly  -->
     <string name="Choose_the_elderly_person_who_will_take_the_medicine">Choose the elderly person who will take the medicine</string>
@@ -59,7 +64,7 @@
     <string name="company_corporate_name">Company corporate name</string>
     <string name="use">Use</string>
     <string name="conservation">Conservation</string>
-    <string name="restriction">Restriction</string>
+    <string name="destiny">Destiny</string>
     <string name="prescription">Prescription</string>
 
                         <!--  Each hours  -->
@@ -140,5 +145,8 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+
+    <string name="textWarningDeleteAccount">Click confirm to permanently delete your account, are you sure?</string>
+
 
 </resources>

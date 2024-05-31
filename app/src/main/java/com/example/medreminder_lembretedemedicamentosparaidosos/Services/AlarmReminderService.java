@@ -123,7 +123,7 @@ public class AlarmReminderService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
         builder.setContentTitle("Lembrete de remédio")
                 .setContentText("Está na hora de tomar o seu remédio!")
-                .setSmallIcon(R.drawable.icon_camera)
+                .setSmallIcon(R.drawable.logo_app)
                 .addAction(R.drawable.bg_list, "OK", stopPendingIntent)
                 .setAutoCancel(true);
 
@@ -178,6 +178,10 @@ public class AlarmReminderService extends Service {
         }else if(reminder.getPhoto_medicine_pill()==null){
             Glide.with(popupView.getContext())
                     .load(reminder.getPhoto_medicine_pill())
+                    .into(imageMedicine);
+        }else{
+            Glide.with(popupView.getContext())
+                    .load(R.drawable.hospital_medicine_pills_pack_by_vexels)
                     .into(imageMedicine);
         }
 

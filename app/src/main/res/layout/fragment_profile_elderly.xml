@@ -29,12 +29,12 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageProfile"
-        android:layout_width="142dp"
-        android:layout_height="129dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="140dp"
+        android:layout_width="83dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="165dp"
         android:background="@drawable/round_image"
         android:src="@drawable/profile_photo_removebg_preview" />
 

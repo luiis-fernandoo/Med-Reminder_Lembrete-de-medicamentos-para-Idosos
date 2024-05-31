@@ -41,6 +41,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.work:work-runtime:2.7.0")
+    implementation ("androidx.core:core:1.7.0")
+    //terceiros:
+    implementation("com.github.ybq:Android-SpinKit:1.4.0")
+    implementation("me.grantland:autofittextview:0.2.+")
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics")
@@ -49,6 +53,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.0.0")
     //Gluid para foto
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     //Okhtp
     implementation("com.squareup.okhttp3:okhttp:3.14.9")
     //recycle

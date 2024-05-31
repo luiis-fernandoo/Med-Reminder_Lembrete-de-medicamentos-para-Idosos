@@ -21,9 +21,10 @@ public class ElderlyDao {
     private final FeedEntry.DBHelpers db;
     private HelperElderly helperElderly;
     private static final String TAG = "FilmLog";
-    private Context context;
+    private Context ctx;
 
     public ElderlyDao(Context ctx, Elderly elderly) {
+        this.ctx = ctx;
         this.elderly = elderly;
         this.db = new FeedEntry.DBHelpers(ctx);
     }
@@ -175,7 +176,7 @@ public class ElderlyDao {
         try {
             SQLiteDatabase dbLite = this.db.getWritableDatabase();
             long resultado = dbLite.delete("elderly", "_id = ?", new String[]{String.valueOf(idoso_id)});
-            ReminderDao reminderDao = new ReminderDao(context, new Reminder());
+            ReminderDao reminderDao = new ReminderDao(this.ctx, new Reminder());
             reminderDao.deleteReminderByElderly(idoso_id);
             db.close();
             return resultado != -1;
@@ -190,7 +191,7 @@ public class ElderlyDao {
             SQLiteDatabase dbLite = this.db.getWritableDatabase();
 
             long resultado = dbLite.delete("elderly", "cuidador_id = ?", new String[]{String.valueOf(cuidador_id)});
-            ReminderDao reminderDao = new ReminderDao(context, new Reminder());
+            ReminderDao reminderDao = new ReminderDao(this.ctx, new Reminder());
             reminderDao.deleteReminderByCaregiver(cuidador_id);
             db.close();
             return resultado != -1;

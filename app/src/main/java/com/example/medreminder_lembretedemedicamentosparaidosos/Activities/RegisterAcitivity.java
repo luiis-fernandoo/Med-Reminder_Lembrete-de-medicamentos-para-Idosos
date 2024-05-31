@@ -5,11 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +19,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,17 +51,20 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class RegisterAcitivity extends AppCompatActivity {
 
     private EditText emailRegister, nameRegister, passwordRegister;
     private TextView typeUser, registerText;
     private Button buttonRegister;
     private FirebaseAuth firebaseAuth;
-    private ImageView photo_profile;
+    private CircleImageView photo_profile;
     private static final int REQUEST_IMAGE_PICK = 2;
     private String selectedUserType, currentPhotoPath;
     private Uri selectedImageUri;
     private SharedPreferences sp;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,21 +73,19 @@ public class RegisterAcitivity extends AppCompatActivity {
 
         emailRegister = findViewById(R.id.emailRegister);
         nameRegister = findViewById(R.id.nameRegister);
-        nameRegister.setHint(R.string.name);
-
         passwordRegister = findViewById(R.id.passwordRegister);
-        passwordRegister.setHint(R.string.password);
-
         buttonRegister = findViewById(R.id.buttonRegister);
-        buttonRegister.setText(R.string.register);
-
-        typeUser = findViewById(R.id.currentDay);
-        typeUser.setText(R.string.select_user_type);
-
+        typeUser = findViewById(R.id.typeUser);
         photo_profile = findViewById(R.id.photo_profile);
         registerText = findViewById(R.id.registerText);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        progressDialog = new Dialog(this);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setContentView(R.layout.dialog_loading);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        progressDialog.setCancelable(false);
 
         sp = getSharedPreferences("app", Context.MODE_PRIVATE);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +113,7 @@ public class RegisterAcitivity extends AppCompatActivity {
     }
 
     public void registerFirebase(View view){
+        progressDialog.show();
         String email = emailRegister.getText().toString().trim();
         String password = passwordRegister.getText().toString().trim();
         String name = nameRegister.getText().toString().trim();
@@ -149,8 +154,9 @@ public class RegisterAcitivity extends AppCompatActivity {
                                 Elderly elderly = new Elderly(name, email, currentPhotoPath, password);
                                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                                 if(elderlyDao.insertNewElderly()){
+                                    progressDialog.dismiss();
                                     Toast.makeText(RegisterAcitivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
-                                    Intent it = new Intent(RegisterAcitivity.this, AddMedicineActivity.class);
+                                    Intent it = new Intent(RegisterAcitivity.this, MenuActivity.class);
                                     startActivity(it);
                                     finish();
                                 }
@@ -204,7 +210,11 @@ public class RegisterAcitivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedUserType = options[position];
-                typeUser.setText(selectedUserType);
+                if(selectedUserType.equals("Idoso")) {
+                    typeUser.setText(R.string.elderly);
+                }else{
+                    typeUser.setText(R.string.elderlyCaregiver);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

@@ -17,9 +17,10 @@ public class ElderlyCaregiverDao {
     private final FeedEntry.DBHelpers db;
     private HelperElderlyCaregiver helperElderlyCaregiver;
     private static final String TAG = "FilmLog";
-    private Context context;
+    private Context ctx;
 
     public ElderlyCaregiverDao(Context ctx, ElderlyCaregiver elderlyCaregiver) {
+        this.ctx = ctx;
         this.elderlyCaregiver = elderlyCaregiver;
         this.db = new FeedEntry.DBHelpers(ctx);
     }
@@ -79,7 +80,7 @@ public class ElderlyCaregiverDao {
         try {
             SQLiteDatabase dbLite = this.db.getWritableDatabase();
             long resultado = dbLite.delete("elderlyCaregiver", "_id = ?", new String[]{String.valueOf(cuidador_id)});
-            ElderlyDao elderlyDao = new ElderlyDao(context, new Elderly());
+            ElderlyDao elderlyDao = new ElderlyDao(this.ctx, new Elderly());
             elderlyDao.deleteElderlyByCaregiver(cuidador_id);
             db.close();
             return resultado != -1;

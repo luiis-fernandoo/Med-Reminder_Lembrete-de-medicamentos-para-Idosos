@@ -7,16 +7,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,11 +41,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class RegisterElderlyActivity extends AppCompatActivity {
 
     private TextView laterElderly, warningText;
     private Button buttonRegisterElderly;
-    private ImageView imageElderly;
+    private CircleImageView imageElderly;
     private EditText nameRegisterElderly, ageRegisterElderly;
     private Uri selectedImageUri;
     private String currentPhotoPath, text;
@@ -75,6 +80,8 @@ public class RegisterElderlyActivity extends AppCompatActivity {
 
         imageElderly = findViewById(R.id.imageElderly);
 
+
+
         imageElderly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,6 +103,8 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         buttonRegisterElderly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Elderly elderly = new Elderly(nameRegisterElderly.getText(), "Null", currentPhotoPath, "Null", ageRegisterElderly.getText(), caregiver.get_id());
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                 if(elderlyDao.verifyElderlyExists(String.valueOf(nameRegisterElderly.getText()), caregiver.get_id())){
@@ -184,7 +193,7 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         editor.putString("chosenElderly", String.valueOf(nameRegisterElderly.getText()));
         editor.apply();
         if(isFirstTime == 1){
-            Intent it = new Intent(RegisterElderlyActivity.this, AddMedicineActivity.class);
+            Intent it = new Intent(RegisterElderlyActivity.this, MenuActivity.class);
             startActivity(it);
         }else{
 
