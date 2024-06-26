@@ -21,12 +21,9 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.MenuA
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.MedicineDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.HomeFragment;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.ReminderFragment;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Medicine;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -68,11 +65,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout clickToNext;
-        ImageView imageBox;
+        ImageView imageBox, imagePill;
         TextView textNameMedicine, textTime, textDose, textStatus;
         Button buttonCancelDose;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            imagePill = itemView.findViewById(R.id.imagePill);
             imageBox = itemView.findViewById(R.id.imageBox);
             textNameMedicine = itemView.findViewById(R.id.textNameMedicine);
             textTime = itemView.findViewById(R.id.textTime);
@@ -109,10 +107,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                     popupWarningCancel(reminder);
                 }
             });
+
             if(reminder.getPhoto_medicine_box()!=null){
                 Glide.with(itemView.getContext())
                         .load(reminder.getPhoto_medicine_box())
                         .into(imageBox);
+            }
+            if(reminder.getPhoto_medicine_pill()!=null){
+                Glide.with(itemView.getContext())
+                        .load(reminder.getPhoto_medicine_pill())
+                        .into(imagePill);
             }
         }
     }

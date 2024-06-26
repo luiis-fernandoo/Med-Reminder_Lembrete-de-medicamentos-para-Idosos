@@ -43,7 +43,7 @@ public class ResetReminder extends AppCompatActivity {
     private ArrayList<ScheduleItem> scheduleItems;
     private int idoso_id, frequencyDifferenceDays, cuidador_id = 0, eachXhours;
     private EditText inputRemainingPills, inputWarningPills;
-    private Button buttonNext, buttonSkip;
+    private Button buttonNext, buttonSkip, buttonHelp;
     private TextView warningText, whichReminder, howManyLeft, whenWarning;
     private LinearLayout buttonOk;
     private SharedPreferences sp;
@@ -110,10 +110,8 @@ public class ResetReminder extends AppCompatActivity {
         }
 
         inputRemainingPills = findViewById(R.id.inputNameEdit);
-        inputRemainingPills.setHint(R.string.type_here);
 
         inputWarningPills = findViewById(R.id.inputWarningPills);
-        inputWarningPills.setHint(R.string.type_here);
 
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setText(R.string.next);
@@ -151,6 +149,14 @@ public class ResetReminder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerReminder();
+            }
+        });
+
+        buttonHelp = findViewById(R.id.buttonHelp);
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
             }
         });
     }
@@ -281,5 +287,27 @@ public class ResetReminder extends AppCompatActivity {
                 Toast.makeText(this, "Não foi possível cadastrar o medicamento, tente novamente", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpReset);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

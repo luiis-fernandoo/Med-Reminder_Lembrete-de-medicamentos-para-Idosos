@@ -3,54 +3,117 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/clickToNext"
-        android:layout_width="299dp"
-        android:layout_height="82dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/bg_list"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_quad_statiscs"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imageBox"
-            android:layout_width="62dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/round_image"
-            android:src="@drawable/iconmedicine" />
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageBox"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_image"
+                android:src="@drawable/medicamento_home_2" />
+
+            <ImageView
+                android:id="@+id/imagePill"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/pill_type" />
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="189dp"
-            android:layout_height="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textNameMedicine"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="Amoxilina monoidratada"
+                android:layout_height="30dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="Dipirona Monohidratada"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
+                android:textColor="#B00027FF"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/remainingPills"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginTop="5dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="Comprimidos restantes: 0"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/qtdForWarning"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginTop="5dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="Quantidade para aviso: 0"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonRepository"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_button_confirm"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="Adicionar reposição"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonDetails"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_buttons_login"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="Ver detalhes de medicamento"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/details"
-        android:layout_width="52dp"
-        android:layout_height="49dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        app:srcCompat="@drawable/lupa_detalhes" />
 
 
 </LinearLayout>

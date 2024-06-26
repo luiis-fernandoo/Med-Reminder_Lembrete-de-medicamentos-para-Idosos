@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
 
-     private Button buttonSunday, buttonMonday, buttonTuesday, buttonWednesday, buttonThursday, buttonFriday, buttonSaturday, buttonConfirmDays;
+     private Button buttonHelp, buttonSunday, buttonMonday, buttonTuesday, buttonWednesday, buttonThursday, buttonFriday, buttonSaturday, buttonConfirmDays;
      private List<Button> selectedButtons = new ArrayList<>();
      private TextView WhichDays;
     @Override
@@ -32,32 +33,15 @@ public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
         String frequencyMedicine = it.getStringExtra("frequencyMedicine");
 
         WhichDays = findViewById(R.id.WhichDays);
-        WhichDays.setText(R.string.On_which_days_will_you_take_the_medicine);
-
         buttonSunday = findViewById(R.id.buttonSunday);
-        buttonSaturday.setText(R.string.saturday);
-
         buttonMonday = findViewById(R.id.buttonMonday);
-        buttonMonday.setText(R.string.monday);
-
         buttonTuesday = findViewById(R.id.buttonTuesDay);
-        buttonTuesday.setText(R.string.tuesday);
-
         buttonWednesday = findViewById(R.id.buttonWednesday);
-        buttonWednesday.setText(R.string.wednesday);
-
         buttonThursday = findViewById(R.id.buttonThursday);
-        buttonThursday.setText(R.string.thursday);
-
         buttonFriday = findViewById(R.id.buttonFriday);
-        buttonFriday.setText(R.string.friday);
-
         buttonSaturday = findViewById(R.id.buttonSaturday);
-        buttonSaturday.setText(R.string.saturday);
-
         buttonConfirmDays = findViewById(R.id.buttonConfirmDays);
-        buttonConfirmDays.setText(R.string.confirm);
-
+        buttonHelp = findViewById(R.id.buttonHelp);
 
         buttonSunday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +109,12 @@ public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
             }
         });
 
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
     }
 
     private void toggleButtonSelection(Button button) {
@@ -132,10 +122,34 @@ public class FrequencyMedicineSpecificDaysActivity extends AppCompatActivity {
         button.setSelected(!isSelected);
         if (isSelected) {
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.button_type_medicine));
+            button.setTextColor(ContextCompat.getColor(this, R.color.red_end));
             selectedButtons.remove(button);
         } else {
             selectedButtons.add(button);
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.button_selector));
+            button.setTextColor(ContextCompat.getColor(this, R.color.white));
         }
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpSpecific);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

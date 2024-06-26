@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_background_login"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
     tools:context=".Activities.LoginActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="101dp"
+        android:layout_height="51dp"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/oswald_medium"
+        android:text="Login"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="328dp"
         android:layout_height="415dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="72dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:background="@drawable/bg_quad_login"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/buttonHelp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.333">
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <EditText
             android:id="@+id/emailLogin"
@@ -64,19 +78,19 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
             android:background="@drawable/shape_buttons_login"
-            android:fontFamily="@font/aladin"
+            android:fontFamily="@font/baloo_chettan"
             android:text="@string/sign_in"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/goRegister"
-            android:layout_width="159dp"
-            android:layout_height="35dp"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/shape_button_confirm"
-            android:fontFamily="@font/fonts_google"
+            android:fontFamily="@font/baloo_chettan"
             android:gravity="center"
             android:text="@string/sign_up"
             android:textAlignment="center"
@@ -85,50 +99,35 @@
 
         <TextView
             android:id="@+id/notRegister"
-            android:layout_width="200dp"
-            android:layout_height="35dp"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="30dp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/shape_button_exit"
-            android:fontFamily="@font/fonts_google"
+            android:fontFamily="@font/baloo_chettan"
             android:gravity="center"
             android:text="@string/enter_without_registration"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="118dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="179dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="179dp"
-        android:fontFamily="@font/oswald_medium"
-        android:text="Login"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#FFFFFF"
-        android:textSize="38dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonHelp"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="226dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/shape_button_delete"
+        android:fontFamily="@font/baloo_chettan"
         android:text="@string/need_you_help"
         android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

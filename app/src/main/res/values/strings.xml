@@ -13,26 +13,33 @@
     <string name="statusSet">Lembrete definido</string>
     <string name="statusToBeSet">Lembrete não definido ainda</string>
     <string name="textWarningCancel">Apertar em confirmar irá cancelar sua dose para hoje desse medicamento e não será possível reverter. Deseja confirmar o cancelamento?</string>
+    <string name="textHelpHome">Nesta página contém todos os medicamentos que você terá que tomar no dia de hoje. Caso tenha cadastrado um tratamento e ele não esteja aqui, o mesmo não está agendado para hoje.</string>
 
     <!-- Medicine  -->
     <string name="medicines">Medicamentos</string>
+    <string name="quantity_for_notice">Quantidade para aviso</string>
+    <string name="remaining_pills">Comprimidos restantes</string>
+    <string name="is_running_out">está acabando, caso tenha comprado mais pilulas, informe no botão "reposição"</string>
+    <string name="textHelpMedicine">Nesta página estão todos os medicamentos que você cadastrou. Caso o medicamento seja comprimido, você pode controlar sua quantidade, sendo avisando quando perto de acabar.</string>
 
-                        <!--  Reminders  -->
+    <!--  Reminders  -->
     <string name="all_your_reminders">Todos seus lembretes</string>
     <string name="remaining">Comprimidos restantes</string>
     <string name="delete">Apagar</string>
     <string name="textWarningDelete">Apertar em confirmar irá apagar todo seu tratamento com este medicamento e não será possível reverter. Deseja confirmar a exclusão?</string>
     <string name="edit">Editar</string>
+    <string name="textHelpReminders">Nesta página estão todos os lembretes que irão tocar diariamente/semanalmene/em dia específico durante seu tratamento. Por aqui é possível editar horário e quantidade, bem como apagar um horário de uso.</string>
 
-                        <!--  Profile  -->
+    <!--  Profile  -->
     <string name="elderly">Idoso</string>
-    <string name="elderlyCaregiver">Cudiador de idoso</string>
+    <string name="elderlyCaregiver">Cuidador de idoso</string>
     <string name="age">Idade</string>
     <string name="exit">Sair</string>
     <string name="account_delete">Apagar conta</string>
     <string name="your_elderly">Seus idosos</string>
     <string name="years_old">Anos</string>
     <string name="select_profile_photo">Selecionar foto de perfil</string>
+    <string name="deleteElderly">Tem certeza que deseja excluir este idoso?</string>
 
                         <!--  Login  -->
     <string name="password">Senha</string>
@@ -63,32 +70,38 @@
     <string name="conservation">Conservação</string>
     <string name="destiny">Destinação</string>
     <string name="prescription">Prescrição</string>
+    <string name="type_medicine">Tipo de medicamento</string>
 
                         <!--  Each hours  -->
     <string name="how_many_hours">Digite de quantas em quantas horas você toma esse medicamento</string>
     <string name="type_here">Digite aqui..</string>
     <string name="next">Próximo</string>
+    <string name="textHelpEachXHours">Entre quantas horas você repete a dose desse tratamento? Digite no campo branco e aperte em próximo.</string>
 
-                        <!--  frequency medicine  -->
+
+    <!--  frequency medicine  -->
     <string name="How_often_do_you_take_this_medicine">Com que frequência você toma esse medicamento</string>
     <string name="every_day">Todos os dias</string>
     <string name="every_other_day">Em dias alternados</string>
     <string name="specific_days">Dias específicos da semana</string>
+    <string name="textHelpFrequency">Escolha a opção que corresponde ao seu caso. Você repete a dose todos os dias, em intervalos de dias (um dia sim, um dia não) ou em dias específicos (toda segunda, quarta e sexta)?</string>
 
-                        <!--  Every day  -->
+    <!--  Every day  -->
     <string name="How_often_do_you_take_this_medicine_per_day">Com que frequência você toma esse medicamento por dia</string>
     <string name="one_time_per_day">1 vez por dia </string>
     <string name="two_times_per_day">2 vezes por dia</string>
     <string name="three_times">3 vezes por dia</string>
     <string name="more_than_three_times_per_day">Mais de 3 vezes ao dia</string>
     <string name="each_hours">A cada x horas</string>
+    <string name="textHelpEveryDay">Você toma este medicamento quantas vezes durante o dia? 1 vez, 2 vezes, mais de 3 vezes ou a cada x horas (8 em 8 horas)</string>
 
-                        <!--  Every another day  -->
+    <!--  Every another day  -->
     <string name="when_you_need_to_take_the_next_dose">Quando você precisa tomar a próxima dose?</string>
     <string name="the_range_of_days_are">O intervalo de dias são:</string>
     <string name="days">Dias</string>
+    <string name="textHelpAnotherDay">Você toma este medicamento quantas vezes durante o dia? 1 vez, 2 vezes, mais de 3 vezes ou a cada x horas (8 em 8 horas)</string>
 
-                        <!--  Specific days  -->
+    <!--  Specific days  -->
     <string name="On_which_days_will_you_take_the_medicine">Em qual(s) dia(s) você irá tomar esse medicamento?</string>
     <string name="sunday">Domingo</string>
     <string name="monday">Segunda-feira</string>
@@ -97,8 +110,10 @@
     <string name="thursday">Quinta-feira</string>
     <string name="friday">Sexta-feira</string>
     <string name="saturday">Sábado</string>
+    <string name="textHelpSpecific">Quais dias da semana você utiliza esse medicamento? Clique no dia que corresponde ao seu caso, ele irá trocar de cor. Você pode selecionar mais de um dia e quando terminar, clique em próximo.</string>
 
-                        <!--  Menu  -->
+
+    <!--  Menu  -->
     <string name="Home">Início</string>
     <string name="Medicines">Medicamentos</string>
     <string name="Reminders">Lembretes</string>
@@ -106,35 +121,46 @@
 
                         <!--  more than three times  -->
     <string name="Enter_how_many_times_you_take_this_medicine_per_day">Digite quantas vezes você toma esse medicamento por dia</string>
+    <string name="textHelpMoreThan">Digite no campo branco quantas vezes você toma esse medicamento por dia.</string>
 
-                        <!--  photo_medicine  -->
-    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging">Clique na câmera do centro para tirar a foto da embalagem do medicamento</string>
-    <string name="Take_a_photo_of_the_packaging_EXAMPLE">Tire a foto da embalagem EXEMPLO:</string>
+
+    <!--  photo_medicine  -->
+    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging">Foto do medicamento</string>
+    <string name="Take_a_photo_of_the_packaging_EXAMPLE">Tire a foto clicando na embalagem EXEMPLO:</string>
+    <string name="Take_a_photo_of_the_pill_EXAMPLE">Tire a foto clicando na pílula EXEMPLO:</string>
     <string name="Dont_want_to_take_a_photo_of_the_medicine_Click_here">Não quer tirar foto do medicamento? Clique aqui!</string>
-    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_box">Clique na câmera do centro para tirar a foto da caixa do medicamento</string>
+    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_box">Foto do medicamento</string>
     <string name="yourPackagePhoto">SUA FOTO DA EMBALAGEM DO MEDICAMENTO:</string>
+    <string name="textHelpPhotoPill">Clique na foto de exemplo e tire uma foto da embalagem do seu medicamento. Por exemplo: foto dos comprimidos.</string>
+    <string name="textHelpPhotoMedicine">Clique na foto de exemplo e tire uma foto da caixa do seu medicamento.</string>
 
-                        <!--  reset reminder  -->
+
+    <!--  reset reminder  -->
     <string name="Do_you_want_to_set_a_refill_reminder_for_your_medicine">Deseja definir lembrete de reposição para o medicamento?</string>
     <string name="skip">Pular</string>
     <string name="How_many_pills_are_left">Quantos comprimidos ainda restam?</string>
     <string name="How_many_pills_do_you_want_to_be_notified_with">Com quantos comprimidos você quer ser avisado?</string>
+    <string name="textHelpReset">Se você quer ser avisada quando seu medicamento estiver acabando, você pode inserir quantas pílulas ainda possui e com quantas você quer  ser avisada. Caso não queira, clique em pular.</string>
 
 
-                        <!--  search_medicine  -->
+    <!--  search_medicine  -->
     <string name="Search_for_medicines">Buscar medicamento</string>
     <string name="enter_the_name_of_the_medicine">Digite o nome do medicamento</string>
     <string name="popup_warning">Você já cadastrou um medicamento com esse número, escolha outro!</string>
 
                         <!--  set_schedule  -->
-    <string name="Select_the_time_of_the_first_dose">Selecione o horário da primeira dose:</string>
+    <string name="set_shedule">Definir horário</string>
+    <string name="Select_the_time_of_the_first_dose">Selecione o horário do tratamento:</string>
     <string name="select_the_x_time">Selecione o horário da</string>
+    <string name="selectQuantity">Selecione a quantidade</string>
     <string name="pill">Comprimidos</string>
     <string name="drops">Gotas</string>
     <string name="dust">Pó</string>
-    <string name="Choose_the_pharmaceutical_type_of_your_medicine">Escolha o tipo farmacêutico do seu medicamento</string>
+    <string name="Choose_the_pharmaceutical_type_of_your_medicine">Qual o seu tipo de medicamento?</string>
+    <string name="textHelpSchedule">Nesta página você deve clicar no horário, ele irá abrir o relógio do seu android e você deve definir o horário que deve tomar o medicamento. Lembre-se de se atentar em selecionar o turno do horário (AM/PM). Você também deve selecionar a quantidade da dose (1 comprimido/30 gotas) clicando em selecionar quantidade.</string>
 
-                        <!--  sucess_save_reminder  -->
+
+    <!--  sucess_save_reminder  -->
     <string name="Treatment_reminder_saved_successfully">Lembrete do tratamento salvo com sucesso!</string>
 
                         <!--  reminder_alarm_popup  -->
@@ -144,5 +170,10 @@
     <string name="save">Salvar</string>
 
     <string name="textWarningDeleteAccount">Clicar em confirmar irá apagar sua conta em definitivo, tem certeza disso?</string>
+
+    <string name="Statistics">Estatísticas</string>
+    <string name="total_number_medicines_registered">Total de tratamentos</string>
+    <string name="total_number_of_reminders">Total de lembretes</string>
+    <string name="textHelpType">Qual tipo do seu medicamento? São comprimidos? São em gotas? Ou em pó? Selecione o botão que corresponde ao seu caso</string>
 
 </resources>

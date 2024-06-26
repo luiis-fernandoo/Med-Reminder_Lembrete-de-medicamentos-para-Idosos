@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.ChoiceElderlyActivity;
@@ -59,9 +60,10 @@ public class HomeFragment extends Fragment {
     private TextView currentDay, textMedicinesForToday;
     private SharedPreferences sp;
     private List<Reminder> reminders;
-    private Button buttonAddMedicine;
+    private Button buttonAddMedicine, buttonHelp;
     private String selectedUserType;
     private RecyclerView recycleHome;
+    private LinearLayout linearAddMedicine;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -122,6 +124,8 @@ public class HomeFragment extends Fragment {
         currentDay = view.findViewById(R.id.currentDay);
         textMedicinesForToday = view.findViewById(R.id.textMedicinesForToday);
         recycleHome = view.findViewById(R.id.recycleReminder);
+        buttonHelp = view.findViewById(R.id.buttonHelp);
+        buttonAddMedicine = view.findViewById(R.id.buttonAddMedicine);
 
         Locale currentLanguage = Locale.getDefault();
         SimpleDateFormat currentDayBar;
@@ -165,10 +169,9 @@ public class HomeFragment extends Fragment {
                 View viewEmpty = inflater.inflate(R.layout.fragment_home_empty, container, false);
                 currentDay = viewEmpty.findViewById(R.id.currentDay);
                 currentDay.setText(formattedDate);
-                textMedicinesForToday = viewEmpty.findViewById(R.id.textMedicinesForToday);
-                textMedicinesForToday.setText(R.string.medicines_today);
                 buttonAddMedicine = viewEmpty.findViewById(R.id.buttonAddMedicine);
                 buttonAddMedicine.setText(R.string.add_medicine);
+                buttonHelp = viewEmpty.findViewById(R.id.buttonHelp);
 
                 buttonAddMedicine.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -177,8 +180,23 @@ public class HomeFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+
+                buttonHelp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupHelp();
+                    }
+                });
+
                 return viewEmpty;
             }
+            buttonAddMedicine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), SearchMedicineActivity.class);
+                    startActivity(intent);
+                }
+            });
         }else{
             ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(requireContext(), new ElderlyCaregiver());
             elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(sp.getString("email", ""));
@@ -192,6 +210,7 @@ public class HomeFragment extends Fragment {
                 View viewEmpty = inflater.inflate(R.layout.fragment_home_empty, container, false);
                 currentDay = viewEmpty.findViewById(R.id.currentDay);
                 currentDay.setText(formattedDate);
+                buttonHelp = viewEmpty.findViewById(R.id.buttonHelp);
 
                 buttonAddMedicine = viewEmpty.findViewById(R.id.buttonAddMedicine);
 
@@ -202,10 +221,56 @@ public class HomeFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+
+                buttonHelp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupHelp();
+                    }
+                });
+
                 return viewEmpty;
             }
+            buttonAddMedicine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ChoiceElderlyActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
+
+
+
         return view;
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpHome);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

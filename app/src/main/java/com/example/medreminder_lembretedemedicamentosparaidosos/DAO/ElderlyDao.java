@@ -172,6 +172,7 @@ public class ElderlyDao {
         return elderly;
     }
 
+
     public boolean deleteElderly(int idoso_id){
         try {
             SQLiteDatabase dbLite = this.db.getWritableDatabase();
@@ -216,6 +217,25 @@ public class ElderlyDao {
             return resultado != -1;
         }catch (Exception e){
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePhoto(Elderly elderly, String photo){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("photo_profile", photo);
+            String whereClause = "_id = ?";
+            String[] whereArgs = {String.valueOf(elderly.get_id())};
+
+            long resultado = db.update("elderly", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d("Error", e.getMessage());
             return false;
         }
     }

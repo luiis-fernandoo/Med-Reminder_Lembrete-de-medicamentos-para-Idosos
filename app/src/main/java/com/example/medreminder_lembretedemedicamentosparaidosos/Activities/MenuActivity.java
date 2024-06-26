@@ -23,7 +23,16 @@ public class MenuActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenu);
 
-        replaceFragment(new HomeFragment());
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            String message = getIntent().getStringExtra("notification");
+            if (message.equals("Notification_message")) {
+                replaceFragment(new MedicineFragment());
+            }else{
+                replaceFragment(new HomeFragment());
+            }
+        }else{
+            replaceFragment(new HomeFragment());
+        }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if(item.getItemId()== R.id.home){

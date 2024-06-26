@@ -13,20 +13,26 @@
     <string name="statusSet">Set reminder</string>
     <string name="statusToBeSet">Reminder not set yet</string>
     <string name="textWarningCancel">Pressing confirm will cancel your dose of this medication for today and it will not be possible to reverse it. Do you want to confirm the cancellation?</string>
-
-
+    <string name="textHelpHome">This page contains all the medicines you will need to take today. If you have registered a treatment and it is not here, it is not scheduled for today.</string>
 
     <!-- Medicine  -->
     <string name="medicines">Medicines</string>
+    <string name="quantity_for_notice">Quantity for notice</string>
+    <string name="remaining_pills">Remaining pills</string>
+    <string name="is_running_out">is running out, if you have purchased more pills, report it using the "replacement" button</string>
+    <string name="textHelpMedicine">This page contains all the medicines you have registered. If the medicine is a tablet, you can control its quantity, being notified when it is close to running out.</string>
 
-                        <!--  Reminders  -->
+
+    <!--  Reminders  -->
     <string name="all_your_reminders">All your reminders</string>
     <string name="remaining">Remaining pills</string>
     <string name="delete">Delete</string>
     <string name="textWarningDelete">Pressing delete will erase your entire treatment with this medicine and it will not be possible to reverse it. Do you want to confirm the deletion?</string>
     <string name="edit">Edit</string>
+    <string name="textHelpReminders">On this page are all the reminders that will ring daily/weekly/on a specific day during your treatment. Here you can edit time and quantity, as well as delete a usage time.</string>
+    <string name="deleteElderly">You sure do you want delete this elderly?</string>
 
-                        <!--  Profile  -->
+    <!--  Profile  -->
     <string name="elderly">Elderly</string>
     <string name="age">Age</string>
     <string name="exit">Exit</string>
@@ -66,18 +72,20 @@
     <string name="conservation">Conservation</string>
     <string name="destiny">Destiny</string>
     <string name="prescription">Prescription</string>
+    <string name="type_medicine">Type medicine</string>
 
                         <!--  Each hours  -->
     <string name="how_many_hours">Enter how many hours you take this medicine</string>
     <string name="type_here">Type here..</string>
     <string name="next">Next</string>
+    <string name="textHelpEachXHours">How many hours do you repeat the dose of this treatment? Type in the white field and press next.</string>
 
-                        <!--  frequency medicine  -->
+    <!--  frequency medicine  -->
     <string name="How_often_do_you_take_this_medicine">How often do you take this medicine</string>
     <string name="every_day">Every day</string>
     <string name="every_other_day">Every another day</string>
     <string name="specific_days">Specific days of the week</string>
-
+    <string name="textHelpFrequency">Choose the option that corresponds to your case. Do you repeat the dose every day, at intervals of days (every other day) or on specific days (every Monday, Wednesday and Friday)?</string>
                         <!--  Every day  -->
     <string name="How_often_do_you_take_this_medicine_per_day">How often do you take this medicine per day</string>
     <string name="one_time_per_day">One time per day</string>
@@ -85,13 +93,15 @@
     <string name="three_times">Three times per day</string>
     <string name="more_than_three_times_per_day">More than three times per day</string>
     <string name="each_hours">Each hours</string>
+    <string name="textHelpEveryDay">How many times do you take this medicine during the day? 1 time, 2 times, more than 3 times or every x hours (8 every 8 hours)</string>
 
-                        <!--  Every another day  -->
+    <!--  Every another day  -->
     <string name="when_you_need_to_take_the_next_dose">When do you need to take the next dose?</string>
     <string name="the_range_of_days_are">The range of days are:</string>
     <string name="days">Days</string>
+    <string name="textHelpAnotherDay">How many times do you take this medicine during the day? 1 time, 2 times, more than 3 times or every x hours (8 every 8 hours)</string>
 
-                        <!--  Specific days  -->
+    <!--  Specific days  -->
     <string name="On_which_days_will_you_take_the_medicine">On which day(s) will you take this medication?</string>
     <string name="sunday">Sunday</string>
     <string name="monday">Monday</string>
@@ -100,8 +110,10 @@
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
+    <string name="textHelpSpecific">What days of the week do you use this medicine? Click on the day that corresponds to your case, it will change color. You can select more than one day and when you are done, click next.</string>
 
-                        <!--  Menu  -->
+
+    <!--  Menu  -->
     <string name="Home">Home</string>
     <string name="Medicines">Medicines</string>
     <string name="Reminders">Reminders</string>
@@ -109,34 +121,42 @@
 
                         <!--  more than three times  -->
     <string name="Enter_how_many_times_you_take_this_medicine_per_day">Enter how many times you take this medicine per day</string>
+    <string name="textHelpMoreThan">Enter in the white field how many times you take this medicine per day.</string>
 
-                        <!--  photo_medicine  -->
-    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging">Click on the camera in the center to take a photo of the medicine packaging</string>
+    <!--  photo_medicine  -->
+    <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging">Foto do medicamento</string>
     <string name="Take_a_photo_of_the_packaging_EXAMPLE">Take a photo of the packaging EXAMPLE:</string>
+    <string name="Take_a_photo_of_the_pill_EXAMPLE">Take a photo of the pill EXAMPLE:</string>
     <string name="Dont_want_to_take_a_photo_of_the_medicine_Click_here">Don\'t want to take a photo of the medicine? Click here!</string>
     <string name="Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_box">Click on the camera in the center to take a photo of the medicine box</string>
     <string name="yourPackagePhoto">YOUR PACKAGE PHOTO:</string>
-                        <!--  reset reminder  -->
+    <string name="textHelpPhotoPill">Click on the example photo and take a photo of your medicine packaging. For example: photo of the pills.</string>
+    <string name="textHelpPhotoMedicine">Click on the example photo and take a photo of your medicine box.</string>
+
+    <!--  reset reminder  -->
     <string name="Do_you_want_to_set_a_refill_reminder_for_your_medicine">Do you want to set a refill reminder for your medicine?</string>
     <string name="skip">Skip</string>
     <string name="How_many_pills_are_left">How many pills are left?</string>
     <string name="How_many_pills_do_you_want_to_be_notified_with">How many pills do you want to be notified with?</string>
+    <string name="textHelpReset">If you want to be notified when your medicine is running low, you can enter how many pills you still have and how many you want to be notified with. If you dont want to, click skip.</string>
 
 
-                        <!--  search_medicine  -->
+    <!--  search_medicine  -->
     <string name="Search_for_medicines">Search for medicines</string>
     <string name="enter_the_name_of_the_medicine">Enter the name of the medicine</string>
     <string name="popup_warning">You have already registered a medicine with this number, choose another one!</string>
 
 
     <!--  set_schedule  -->
+    <string name="set_shedule">Set schedule</string>
     <string name="Select_the_time_of_the_first_dose">Select the time of the first dose</string>
     <string name="select_the_x_time">Select the time of</string>
+    <string name="selectQuantity">Select the quantity</string>
     <string name="pill">Pill</string>
     <string name="drops">Drops</string>
     <string name="dust">Dust</string>
-    <string name="Choose_the_pharmaceutical_type_of_your_medicine">Choose the pharmaceutical type of your medicine</string>
-
+    <string name="Choose_the_pharmaceutical_type_of_your_medicine">What your medicine type?</string>
+    <string name="textHelpSchedule">On this page you must click on the time, it will open your android clock and you must define the time you should take the medicine. Remember to pay attention to selecting the time shift (AM/PM). You must also select the dose quantity (1 tablet/30 drops) by clicking select quantity.</string>
                         <!--  sucess_save_reminder  -->
     <string name="Treatment_reminder_saved_successfully">Treatment reminder saved successfully!</string>
 
@@ -148,5 +168,9 @@
 
     <string name="textWarningDeleteAccount">Click confirm to permanently delete your account, are you sure?</string>
 
+    <string name="Statistics">Statistics</string>
+    <string name="total_number_medicines_registered">Total number of treatment</string>
+    <string name="total_number_of_reminders">Total number of reminders</string>
+    <string name="textHelpType">What type of medicine are you taking? Are they pills? Are they in drops? or powder? Select the button that corresponds to your case</string>
 
 </resources>

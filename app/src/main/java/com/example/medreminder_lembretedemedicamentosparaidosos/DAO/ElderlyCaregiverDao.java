@@ -108,4 +108,23 @@ public class ElderlyCaregiverDao {
             return false;
         }
     }
+
+    public boolean updatePhoto(ElderlyCaregiver elderlyCaregiver, String photo){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("photo_profile", photo);
+            String whereClause = "_id = ?";
+            String[] whereArgs = {String.valueOf(elderlyCaregiver.get_id())};
+
+            long resultado = db.update("elderlyCaregiver", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d("Error", e.getMessage());
+            return false;
+        }
+    }
 }

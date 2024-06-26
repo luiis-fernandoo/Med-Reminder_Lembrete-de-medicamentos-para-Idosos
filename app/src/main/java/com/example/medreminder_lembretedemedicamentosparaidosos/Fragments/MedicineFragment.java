@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.MenuActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.MedicineAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
@@ -42,6 +44,7 @@ public class MedicineFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button buttonHelp;
     private ElderlyCaregiver elderlyCaregiver;
     private ReminderDao reminderDao;
     private MedicineDao medicineDao;
@@ -94,6 +97,14 @@ public class MedicineFragment extends Fragment {
         recycleMedicine = view.findViewById(R.id.recycleReminder);
         textMedicines = view.findViewById(R.id.textMedicines);
         textMedicines.setText(R.string.medicines);
+        buttonHelp = view.findViewById(R.id.buttonHelp);
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
 
         sp = requireContext().getSharedPreferences("app", Context.MODE_PRIVATE);
 
@@ -124,7 +135,8 @@ public class MedicineFragment extends Fragment {
             }
 
             if(medicines != null){
-                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp);
+                MenuActivity menuActivity = (MenuActivity) getActivity();
+                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp, menuActivity);
                 recycleMedicine.setLayoutManager(new LinearLayoutManager(requireContext()));
                 recycleMedicine.setAdapter(medicineAdapter);
             }
@@ -141,11 +153,34 @@ public class MedicineFragment extends Fragment {
             }
 
             if(medicines != null){
-                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp);
+                MenuActivity menuActivity = (MenuActivity) getActivity();
+                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp, menuActivity);
                 recycleMedicine.setLayoutManager(new LinearLayoutManager(requireContext()));
                 recycleMedicine.setAdapter(medicineAdapter);
             }
         }
         return view;
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpMedicine);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

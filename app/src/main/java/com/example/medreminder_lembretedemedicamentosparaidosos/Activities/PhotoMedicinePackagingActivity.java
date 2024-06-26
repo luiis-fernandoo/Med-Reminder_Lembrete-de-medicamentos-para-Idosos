@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,13 +29,14 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 101;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView imagePhotoCapture, iconCameraPhoto;
+    private ImageView imagePhotoCapture;
+    private LinearLayout iconCameraPhoto;
     private TextView textViewHeader, clickPackage, dontWant;
     private String currentPhotoPath, medicine, typeMedicine, frequencyMedicine, frequencyTimes, currentPhotoPathPrevius;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
     private int frequencyDay, frequencyDifferenceDays, eachXhours;
-    private Button buttonNext;
+    private Button buttonNext, buttonHelp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,16 +65,13 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
         iconCameraPhoto = findViewById(R.id.iconCameraPhoto);
 
         textViewHeader = findViewById(R.id.textViewHeader);
-        textViewHeader.setText(R.string.Take_a_photo_of_the_packaging_EXAMPLE);
+        textViewHeader.setText(R.string.Take_a_photo_of_the_pill_EXAMPLE);
 
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setText(R.string.next);
 
         clickPackage = findViewById(R.id.clickPackage);
         clickPackage.setText(R.string.Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_packaging);
-
-        dontWant = findViewById(R.id.dontWant);
-        dontWant.setText(R.string.Dont_want_to_take_a_photo_of_the_medicine_Click_here);
 
         iconCameraPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +104,14 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
                 it.putExtra("currentPhotoPathOne", currentPhotoPathPrevius);
                 it.putExtra("currentPhotoPathTwo", currentPhotoPath);
                 startActivity(it);
+            }
+        });
+
+        buttonHelp = findViewById(R.id.buttonHelp);
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
             }
         });
     }
@@ -147,4 +155,25 @@ public class PhotoMedicinePackagingActivity extends AppCompatActivity {
         }
     }
 
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpPhotoPill);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+    }
 }

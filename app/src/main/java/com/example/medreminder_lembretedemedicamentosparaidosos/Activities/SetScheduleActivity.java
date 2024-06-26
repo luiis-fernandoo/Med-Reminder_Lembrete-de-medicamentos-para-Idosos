@@ -29,10 +29,9 @@ import java.util.Locale;
 public class SetScheduleActivity extends AppCompatActivity {
 
     private TextView selectType, quantity, selectHour,textDose, warningText;
-    private ImageView selectQuantity;
     private String valueQuantity = String.valueOf(1), hourReminder, typeMedicine, medicine, frequencyMedicine;
-    private LinearLayout buttonOk;
-    private Button buttonNext;
+    private LinearLayout buttonOk, selectQuantity;
+    private Button buttonNext, buttonHelp;
     private ArrayList<String> selectedButtonTexts;
     private int count = 1, frequencyDay, frequencyDifferenceDays, eachXhours;
 
@@ -55,18 +54,13 @@ public class SetScheduleActivity extends AppCompatActivity {
             selectedButtonTexts = it.getStringArrayListExtra("selectedButtonTexts");
         }
 
+        buttonHelp = findViewById(R.id.buttonHelp);
         selectQuantity = findViewById(R.id.selectQuantity);
         quantity = findViewById(R.id.quantity);
-
         selectType = findViewById(R.id.selectType);
-
         selectHour = findViewById(R.id.selectHour);
-
         buttonNext = findViewById(R.id.buttonNext);
-        buttonNext.setText(R.string.next);
         textDose = findViewById(R.id.textDose);
-        textDose.setText(R.string.Select_the_time_of_the_first_dose);
-
 
         switch (typeMedicine) {
             case "pill":
@@ -110,12 +104,18 @@ public class SetScheduleActivity extends AppCompatActivity {
                     intentSpecificDay(scheduleItems);
                 }else{
                     count ++;
-                    textDose.setText(getApplicationContext().getString(R.string.select_the_x_time) +" " + count + "° dose:");
+                    textDose.setText(count + "° " + getString(R.string.dose));
                     selectHour.setText("00:00");
                 }
             }
         });
 
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
     }
 
     public void popup_quantity(View view){
@@ -146,7 +146,7 @@ public class SetScheduleActivity extends AppCompatActivity {
     }
 
     public void selectHourClock(){
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                 String formattedHour = String.format(Locale.getDefault(), "%02d", hourOfDay);
@@ -154,8 +154,9 @@ public class SetScheduleActivity extends AppCompatActivity {
                 hourReminder = formattedHour + ":" + formattedMinute;
                 selectHour.setText(hourReminder);
             }
-        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), false);
+        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
 
+        timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
     }
 
@@ -214,4 +215,25 @@ public class SetScheduleActivity extends AppCompatActivity {
         });
     }
 
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpSchedule);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+    }
 }

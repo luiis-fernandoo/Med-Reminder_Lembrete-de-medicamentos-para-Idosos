@@ -1,5 +1,6 @@
 package com.example.medreminder_lembretedemedicamentosparaidosos.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -7,8 +8,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +28,8 @@ public class DetailsMedicineActivity extends AppCompatActivity implements MyAsyn
 
     private String numProcesso;
     private Dialog progressDialog;
-    private TextView nomeProduto, classeTerapeutica, principioAtivo, razaoSocial, conservacao, destiny, fabricante, prescricao;
+    private LinearLayout buttonOk;
+    private TextView nomeProduto, warningText, classeTerapeutica, principioAtivo, razaoSocial, conservacao, destiny, fabricante, prescricao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +54,20 @@ public class DetailsMedicineActivity extends AppCompatActivity implements MyAsyn
         numProcesso = it.getStringExtra("numProcesso");
         progressDialog.show();
         search(numProcesso);
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    popup_warning();
+                }
+            }
+        }, 30000);
     }
     @SuppressLint("SetTextI18n")
     @Override
     public void onTaskComplete(JSONObject result) throws JSONException {
-        if (result != null) {
+        if (result != null && !result.has("error")) {
             progressDialog.dismiss();
             try {
                 nomeProduto.setText(result.getString("nomeComercial"));
@@ -85,10 +99,7 @@ public class DetailsMedicineActivity extends AppCompatActivity implements MyAsyn
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-        }else{
-            Toast.makeText(this, "Não há medicamentos com esse número, tente outro!", Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
@@ -105,5 +116,29 @@ public class DetailsMedicineActivity extends AppCompatActivity implements MyAsyn
                 }
             }
         }).start();
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void popup_warning(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_warnings_layout, null);
+
+        warningText = popupView.findViewById(R.id.warningText);
+        warningText.setText("Serviço da anvisa fora do ar, por favor, tente mais tarde!");
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonOk = popupView.findViewById(R.id.button_ok);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent it = new Intent(DetailsMedicineActivity.this, MenuActivity.class);
+                startActivity(it);
+            }
+        });
     }
 }

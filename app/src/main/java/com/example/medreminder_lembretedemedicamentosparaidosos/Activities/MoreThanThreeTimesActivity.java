@@ -16,7 +16,7 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 public class MoreThanThreeTimesActivity extends AppCompatActivity {
 
-    private Button buttonNext;
+    private Button buttonNext, buttonHelp;
     private EditText inputMoreThanThreeTimes;
     private int result;
     private LinearLayout buttonOk;
@@ -32,6 +32,7 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
         String typeMedicine = it.getStringExtra("typeMedicine");
         String frequencyMedicine = it.getStringExtra("frequencyMedicine");
 
+        buttonHelp = findViewById(R.id.buttonHelp);
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setText(R.string.next);
 
@@ -57,6 +58,13 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
                 }
             }
         });
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
     }
 
     public void popup_warning(View view){
@@ -75,6 +83,28 @@ public class MoreThanThreeTimesActivity extends AppCompatActivity {
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpMoreThan);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 alertDialog.dismiss();
             }
         });

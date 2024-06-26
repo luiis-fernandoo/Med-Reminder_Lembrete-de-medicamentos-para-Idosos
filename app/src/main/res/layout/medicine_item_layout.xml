@@ -5,8 +5,9 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/linearId"
         android:layout_width="wrap_content"
-        android:layout_height="99dp"
+        android:layout_height="81dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -26,7 +27,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:src="@drawable/hospital_medicine_pills_pack_by_vexels" />
+            android:src="@drawable/medicamento_icon_3" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,23 +43,27 @@
             <TextView
                 android:id="@+id/medicineTextId"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/oswald_medium"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/baloo_chettan"
                 android:text="textView"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/secondInform"
                 android:layout_width="match_parent"
-                android:layout_height="31dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/fonts_google"
-                android:text="TextView"
-                android:textSize="12sp" />
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/aldrich"
+                android:text="MEDQUIMICA INDUSTRIA FARMACEUTICA LTDA"
+                android:textColor="#000000"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 

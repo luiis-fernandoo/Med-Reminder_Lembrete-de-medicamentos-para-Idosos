@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:background="#F6EAEA"
         android:forceHasOverlappingRendering="true"
-        app:backgroundTint="#413AA3"
+        app:backgroundTint="#0D78DB"
         app:itemIconTint="@color/branco"
         app:itemPaddingBottom="18dp"
         app:itemPaddingTop="18dp"

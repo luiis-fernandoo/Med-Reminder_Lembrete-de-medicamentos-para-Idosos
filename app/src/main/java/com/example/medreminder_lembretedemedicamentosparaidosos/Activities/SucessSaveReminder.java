@@ -9,14 +9,17 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 public class SucessSaveReminder extends AppCompatActivity {
 
     private Button buttonNext;
     private TextView successSave;
+    private ImageView imageSucess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,9 @@ public class SucessSaveReminder extends AppCompatActivity {
 
         successSave = findViewById(R.id.successSave);
         successSave.setText(R.string.Treatment_reminder_saved_successfully);
+
+        imageSucess = findViewById(R.id.imageSucess);
+        Glide.with(this).asGif().load(R.drawable.cadeira_de_balanco).into(imageSucess);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {

@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.IBinder;
@@ -27,14 +28,20 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.MenuActivity;
+import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.MedicineDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.InsertLogHelper;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Elderly;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Models.ElderlyCaregiver;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Medicine;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Models.Reminder;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class AlarmReminderService extends Service {
 
@@ -51,10 +58,23 @@ public class AlarmReminderService extends Service {
     private ElderlyDao elderlyDao;
     private Vibrator vibrator;
     private MediaPlayer mediaPlayer;
+    private Queue<Reminder> reminderQueue;
+    private boolean isPopupOpen = false;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         acquireWakeLock();
+
+        reminderQueue = new LinkedList<>();
+
+        SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
+        String savedEmail = sp.getString("email", "");
+        String guest = sp.getString("Guest", "");
+
+        ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
+        Elderly elderly = elderlyDao.getElderlyByEmail(savedEmail);
+        ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), new ElderlyCaregiver());
+        ElderlyCaregiver elderlyCaregiver = elderlyCaregiverDao.getElderlyCaregiver(savedEmail);
 
         if (intent != null && ACTION_STOP.equals(intent.getAction())) {
             stopForeground(true);
@@ -64,23 +84,72 @@ public class AlarmReminderService extends Service {
 
         int reminderId = intent.getIntExtra("reminderId", -1);
 
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+            mediaPlayer = null;
+        }
         mediaPlayer = MediaPlayer.create(this, R.raw.clock_alarm);
 
         createNotificationChannel();
-        Notification notification = createNotification();
         reminderDao = new ReminderDao(getApplicationContext(), new Reminder(reminderId));
         Reminder reminder = reminderDao.getReminderById(reminderId);
+        MedicineDao medicineDao = new MedicineDao(getApplicationContext(), new Medicine(reminder.getMedicamento_id()));
+        Medicine medicine = medicineDao.getMedicineByProcessNumber();
+        Notification notification = createNotification(medicine);
 
-        if(reminder.getStatus() == 1){
-            vibrate();
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
-            showAlertDialog(reminder);
+        if(reminder.getCuidador_id() > 0){
+            if(reminder.getCuidador_id() == elderlyCaregiver.get_id()) {
+                if (reminder.getStatus() == 1) {
+                    vibrate();
+                    mediaPlayer.setLooping(true);
+                    mediaPlayer.start();
+                    reminderQueue.add(reminder);
+                    processNextReminder();
 
-            InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
+                    InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
 
-            startForeground(NOTIFICATION_ID, notification);
+                    if(reminder.getWarning() != null && reminder.getRemaining() != null){
+                        if (Integer.parseInt(reminder.getWarning()) >= Integer.parseInt(reminder.getRemaining())) {
+                            startForeground(NOTIFICATION_ID, notification);
+                        }
+                    }
+                }
+            }
+        }else{
+            if(reminder.getIdoso_id() == elderly.get_id()) {
+                if (reminder.getStatus() == 1) {
+                    vibrate();
+                    mediaPlayer.setLooping(true);
+                    mediaPlayer.start();
+                    reminderQueue.add(reminder);
+                    processNextReminder();
 
+                    InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
+
+                    if (Integer.parseInt(reminder.getWarning()) >= Integer.parseInt(reminder.getRemaining())) {
+                        startForeground(NOTIFICATION_ID, notification);
+                    }
+                }
+            }else if(!guest.equals("")){
+                if (reminder.getStatus() == 1) {
+                    vibrate();
+                    mediaPlayer.setLooping(true);
+                    mediaPlayer.start();
+                    reminderQueue.add(reminder);
+                    processNextReminder();
+
+                    InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
+
+                    if(reminder.getWarning() != null && reminder.getRemaining() != null){
+                        if (Integer.parseInt(reminder.getWarning()) >= Integer.parseInt(reminder.getRemaining())) {
+                            startForeground(NOTIFICATION_ID, notification);
+                        }
+                    }
+                }
+            }
         }
 
         return START_STICKY;
@@ -95,12 +164,12 @@ public class AlarmReminderService extends Service {
 
     private void vibrate() {
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        long[] pattern = {0, 1000, 1000}; // Começa imediatamente a vibrar por 1 segundo, depois pausa por 1 segundo
+        long[] pattern = {0, 1000, 1000};
         if (vibrator.hasVibrator()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0));
             } else {
-                vibrator.vibrate(pattern, 0); // O segundo parâmetro é o índice (começando de 0) no padrão onde a vibração deve começar novamente (-1 para não repetir)
+                vibrator.vibrate(pattern, 0);
             }
         }
     }
@@ -115,15 +184,21 @@ public class AlarmReminderService extends Service {
         }
     }
 
-    private Notification createNotification() {
+    private Notification createNotification(Medicine medicine) {
         Intent stopIntent = new Intent(this, AlarmReminderService.class);
         stopIntent.setAction(ACTION_STOP);
+
+        Intent notificationIntent = new Intent(this, MenuActivity.class);
+        notificationIntent.putExtra("notification", "Notification_message");
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
         PendingIntent stopPendingIntent = PendingIntent.getService(this, 0, stopIntent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-        builder.setContentTitle("Lembrete de remédio")
-                .setContentText("Está na hora de tomar o seu remédio!")
+        builder.setContentTitle("Aviso para reposição")
+                .setContentText("O seu medicamento: " + medicine.getProduct_name() + " está acabando!")
                 .setSmallIcon(R.drawable.logo_app)
+                .setContentIntent(contentIntent)
                 .addAction(R.drawable.bg_list, "OK", stopPendingIntent)
                 .setAutoCancel(true);
 
@@ -132,6 +207,8 @@ public class AlarmReminderService extends Service {
 
     @SuppressLint("SetTextI18n")
     private void showAlertDialog(Reminder reminder) {
+        isPopupOpen = true;
+        Log.d("", "Reminder: " + reminder.getMedicamento_id());
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_reminder_alarm, null);
 
@@ -171,18 +248,16 @@ public class AlarmReminderService extends Service {
         }else if(reminder.getType_medicine().equals("dust")){
             quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity() + " mg(s)");
         }
-        if(reminder.getPhoto_medicine_box()!=null){
-            Glide.with(popupView.getContext())
-                    .load(reminder.getPhoto_medicine_box())
-                    .into(imageMedicine);
-        }else if(reminder.getPhoto_medicine_pill()==null){
+        if(reminder.getPhoto_medicine_pill()!=null){
             Glide.with(popupView.getContext())
                     .load(reminder.getPhoto_medicine_pill())
                     .into(imageMedicine);
-        }else{
+            imageMedicine.setBackgroundDrawable(null);
+        }else if(reminder.getPhoto_medicine_box()!=null){
             Glide.with(popupView.getContext())
-                    .load(R.drawable.hospital_medicine_pills_pack_by_vexels)
+                    .load(reminder.getPhoto_medicine_box())
                     .into(imageMedicine);
+            imageMedicine.setBackgroundDrawable(null);
         }
 
         final Reminder finalReminder = reminder;
@@ -205,6 +280,8 @@ public class AlarmReminderService extends Service {
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
+                isPopupOpen = false;
+                processNextReminder();
                 dialog.dismiss();
             }
         });
@@ -222,6 +299,9 @@ public class AlarmReminderService extends Service {
                     mediaPlayer.release();
                     mediaPlayer = null;
                 }
+
+                isPopupOpen = false;
+                processNextReminder();
                 dialog.dismiss();
             }
         });
@@ -239,5 +319,16 @@ public class AlarmReminderService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private void processNextReminder() {
+        if (!isPopupOpen && !reminderQueue.isEmpty()) {
+            showAlertDialog(reminderQueue.poll());
+        }else if(reminderQueue.isEmpty()){
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+        }
     }
 }

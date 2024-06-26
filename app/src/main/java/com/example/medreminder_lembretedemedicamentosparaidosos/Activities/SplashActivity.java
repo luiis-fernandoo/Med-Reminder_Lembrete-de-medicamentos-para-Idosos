@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.ImageView;
 
-import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.HomeFragment;
-import com.example.medreminder_lembretedemedicamentosparaidosos.Helpers.FeedEntry;
+import com.bumptech.glide.Glide;
 import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 import java.util.Timer;
@@ -16,12 +16,17 @@ import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private ImageView gifPrimary, gifSecondary;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-//        FeedEntry.DBHelpers dbHelper = new FeedEntry.DBHelpers(this);
-//        dbHelper.deleteDatabase(this);
+
+         gifPrimary = findViewById(R.id.gifPrimary);
+         gifSecondary = findViewById(R.id.gifSecondary);
+
+        Glide.with(this).asGif().load(R.drawable.ajudando).into(gifPrimary);
+        Glide.with(this).asGif().load(R.drawable.trabalho_em_progresso).into(gifSecondary);
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -46,6 +51,6 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             }
-        }, 2000);
+        }, 4000);
     }
 }

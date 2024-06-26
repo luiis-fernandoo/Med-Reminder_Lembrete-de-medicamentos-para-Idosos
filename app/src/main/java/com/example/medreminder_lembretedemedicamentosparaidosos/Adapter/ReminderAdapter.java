@@ -24,9 +24,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.bumptech.glide.Glide;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.MenuActivity;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Broadcast.MyWorker;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.MedicineDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Fragments.ReminderFragment;
@@ -46,7 +49,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
     private LinearLayout buttonOk;
     private TextView editTime, textWarning, textRemaining;
     private MenuActivity menuActivity;
-    private Button buttonConfirm, buttonCancel;
+    private Button buttonConfirm, buttonCancel, buttonOK;
     private EditText inputRemaining;
 
     private int layout;
@@ -82,13 +85,14 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout clickToNext;
-        ImageView imageBox;
+        ImageView imageBox, imagePill;
         TextView textNameMedicine, textTime, textDose, textDate;
         Button buttonEdit, buttonDeleteReminder;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageBox = itemView.findViewById(R.id.imageBox);
+            imagePill = itemView.findViewById(R.id.imagePill);
             textNameMedicine = itemView.findViewById(R.id.textNameMedicine);
             textTime = itemView.findViewById(R.id.textTime);
             textDose = itemView.findViewById(R.id.textDose);
@@ -117,6 +121,11 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
                 Glide.with(itemView.getContext())
                         .load(reminder.getPhoto_medicine_box())
                         .into(imageBox);
+            }
+            if(reminder.getPhoto_medicine_pill()!=null){
+                Glide.with(itemView.getContext())
+                        .load(reminder.getPhoto_medicine_pill())
+                        .into(imagePill);
             }
 
             buttonEdit.setText(R.string.edit);
@@ -172,11 +181,13 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
                 reminder.setQuantity(quantity);
                 String time = editTime.getText().toString();
                 reminder.setTime(time);
+                WorkManager workManager = WorkManager.getInstance(context);
 
                 ReminderDao reminderDao = new ReminderDao(context, reminder);
                 if(reminder.getEveryday().equals("S")){
                     if (reminderDao.updateReminderById(reminder)) {
                         reminderDao.setStatusAlarm(0, reminder.get_id());
+                        workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
                         Toast.makeText(context, "Lembrete atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
                         menuActivity.replaceFragment(new ReminderFragment());
@@ -186,6 +197,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
                 }else{
                     if (reminderDao.updateReminder(reminder)) {
                         reminderDao.setStatusAlarm(0, reminder.get_id());
+                        workManager.enqueue(new OneTimeWorkRequest.Builder(MyWorker.class).build());
                         Toast.makeText(context, "Lembrete atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
                         menuActivity.replaceFragment(new ReminderFragment());
@@ -199,7 +211,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
     }
 
     public void selectHourClock(){
-        TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                 String formattedHour = String.format(Locale.getDefault(), "%02d", hourOfDay);
@@ -207,8 +219,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
                 String hourReminder = formattedHour + ":" + formattedMinute;
                 editTime.setText(hourReminder);
             }
-        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), false);
+        }, Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), true);
 
+        timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
     }
 
@@ -234,7 +247,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
             @Override
             public void onClick(View view) {
                 ReminderDao reminderDao = new ReminderDao(context, reminder);
-                if (reminderDao.deleteReminderByMedicineId(reminder.getMedicamento_id())) {
+                if (reminderDao.deleteReminderByReminderId(reminder)) {
                     Toast.makeText(context, "Lembrete deletado com sucesso!", Toast.LENGTH_SHORT).show();
                     menuActivity.replaceFragment(new ReminderFragment());
                 }else {
@@ -250,4 +263,5 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.MyView
             }
         });
     }
+
 }

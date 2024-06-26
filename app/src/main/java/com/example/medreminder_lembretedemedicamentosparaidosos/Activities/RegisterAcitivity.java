@@ -150,7 +150,7 @@ public class RegisterAcitivity extends AppCompatActivity {
                             saveEmailSharedPreferences(email, selectedUserType);
                             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(task1 -> {});
-                            if(TextUtils.equals(typeUser.getText().toString().trim(),"Idoso")){
+                            if(TextUtils.equals(typeUser.getText().toString().trim(),"Idoso") || TextUtils.equals(typeUser.getText().toString().trim(),"Elderly")){
                                 Elderly elderly = new Elderly(name, email, currentPhotoPath, password);
                                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                                 if(elderlyDao.insertNewElderly()){

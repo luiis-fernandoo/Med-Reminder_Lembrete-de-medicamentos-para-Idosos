@@ -103,8 +103,6 @@ public class RegisterElderlyActivity extends AppCompatActivity {
         buttonRegisterElderly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 Elderly elderly = new Elderly(nameRegisterElderly.getText(), "Null", currentPhotoPath, "Null", ageRegisterElderly.getText(), caregiver.get_id());
                 ElderlyDao elderlyDao = new ElderlyDao(getApplicationContext(), elderly);
                 if(elderlyDao.verifyElderlyExists(String.valueOf(nameRegisterElderly.getText()), caregiver.get_id())){
@@ -196,7 +194,8 @@ public class RegisterElderlyActivity extends AppCompatActivity {
             Intent it = new Intent(RegisterElderlyActivity.this, MenuActivity.class);
             startActivity(it);
         }else{
-
+            Intent it = new Intent(RegisterElderlyActivity.this, MenuActivity.class);
+            startActivity(it);
         }
     }
 

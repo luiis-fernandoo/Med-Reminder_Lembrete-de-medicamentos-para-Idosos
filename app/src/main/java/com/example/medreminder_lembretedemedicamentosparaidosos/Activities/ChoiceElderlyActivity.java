@@ -60,7 +60,8 @@ public class ChoiceElderlyActivity extends AppCompatActivity {
                 }
             });
         }
-        ChoiceElderlyAdapter choiceElderlyAdapter = new ChoiceElderlyAdapter(elderlyList, this, sp);
+
+        ChoiceElderlyAdapter choiceElderlyAdapter = new ChoiceElderlyAdapter(elderlyList, this, sp, new MenuActivity());
         recycleElderly.setLayoutManager(new LinearLayoutManager(this));
         recycleElderly.setAdapter(choiceElderlyAdapter);
     }

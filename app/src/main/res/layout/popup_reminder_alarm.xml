@@ -10,91 +10,99 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="220dp"
-        android:background="@drawable/bg_list_alert"
+        android:layout_height="240dp"
+        android:background="@drawable/bg_list_alarm"
         android:orientation="vertical">
 
-        <me.grantland.widget.AutofitTextView
+        <TextView
             android:id="@+id/nameMedicine"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="1dp"
+            android:layout_marginStart="1dp"
             android:layout_marginTop="2dp"
-            android:layout_marginRight="1dp"
-            android:background="#DB0D0D"
-            android:fontFamily="@font/oswald_medium"
-            android:text="Medicamento"
+            android:layout_marginEnd="1dp"
+            android:autoSizeTextType="uniform"
+            android:background="#B00027FF"
+            android:fontFamily="@font/baloo_chettan"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Medicamento de fulano da dona sla quem raaaapaz"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            autofit:minTextSize="8sp" />
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="255dp"
+                android:layout_width="280dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/nameElderly"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/oswald_medium"
-                    android:text="Idoso "
+                    android:layout_height="35dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/aldrich"
+                    android:text="Idoso"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="#B00027FF"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/quantityMedicine"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/oswald_medium"
+                    android:layout_height="35dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/aldrich"
                     android:text="Dose: 2 comprimido(s)"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textColor="#B00027FF"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/typeMedicine"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/oswald_medium"
+                    android:layout_height="35dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/aldrich"
                     android:text="Comprimidos"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="#B00027FF"
                     android:textSize="20sp" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageMedicine"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/drug" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/medicamento_home_2" />
 
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
@@ -103,13 +111,13 @@
                     android:id="@+id/buttonConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="2.5dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2.5dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_button_confirm"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/baloo_chettan"
                     android:gravity="center"
                     android:text="Confirmar dose"
                     android:textAlignment="center"
@@ -122,13 +130,13 @@
                     android:id="@+id/buttonCancel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="2.5dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2.5dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_button_delete"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/baloo_chettan"
                     android:gravity="center"
                     android:text="Cancelar dose"
                     android:textAlignment="center"

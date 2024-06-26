@@ -254,6 +254,11 @@ public class ReminderDao {
 
         if(cursor.moveToFirst()){
             reminder.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
+            reminder.setRemaining(cursor.getString(cursor.getColumnIndex("remaining")));
+            reminder.setEveryday(cursor.getString(cursor.getColumnIndex("everyday")));
+            reminder.setWarning(cursor.getString(cursor.getColumnIndex("warning")));
+            reminder.setType_medicine(cursor.getString(cursor.getColumnIndex("type_medicine")));
+            reminder.setPhoto_medicine_pill(cursor.getString(cursor.getColumnIndex("photo_medicine_pill")));
             reminder.setPhoto_medicine_box(cursor.getString(cursor.getColumnIndex("photo_medicine_box")));
         }
 
@@ -273,9 +278,11 @@ public class ReminderDao {
             reminder.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
             reminder.setMedicamento_id(cursor.getString(cursor.getColumnIndex("medicamento_id")));
             reminder.setIdoso_id(cursor.getInt(cursor.getColumnIndex("idoso_id")));
+            reminder.setCuidador_id(cursor.getInt(cursor.getColumnIndex("cuidador_id")));
             reminder.setType_medicine(cursor.getString(cursor.getColumnIndex("type_medicine")));
             reminder.setQuantity(cursor.getString(cursor.getColumnIndex("quantity")));
             reminder.setRemaining(cursor.getString(cursor.getColumnIndex("remaining")));
+            reminder.setWarning(cursor.getString(cursor.getColumnIndex("warning")));
             reminder.setPhoto_medicine_pill(cursor.getString(cursor.getColumnIndex("photo_medicine_pill")));
             reminder.setPhoto_medicine_box(cursor.getString(cursor.getColumnIndex("photo_medicine_box")));
             reminder.setStatus(cursor.getInt(cursor.getColumnIndex("status")));
@@ -501,6 +508,45 @@ public class ReminderDao {
         }
     }
 
+    public boolean updateReminderRemaining(Reminder reminder){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("remaining", reminder.getRemaining());
+            values.put("warning", reminder.getWarning());
+            String whereClause = "medicamento_id = ?";
+            String[] whereArgs = {String.valueOf(reminder.getMedicamento_id())};
+
+            long resultado = db.update("reminder", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateReminderRemainingById(Reminder reminder){
+        SQLiteDatabase db = this.db.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put("remaining", reminder.getRemaining());
+            values.put("warning", reminder.getWarning());
+
+            String whereClause = "_id = ?";
+            String[] whereArgs = {String.valueOf(reminder.get_id())};
+
+            long resultado = db.update("reminder", values, whereClause, whereArgs);
+            db.close();
+
+            return resultado != -1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean setRemaining(int remaining, int reminder_id){
         SQLiteDatabase db = this.db.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -572,6 +618,20 @@ public class ReminderDao {
         }
     }
 
+    public boolean deleteReminderByReminderId(Reminder reminder){
+        try {
+            SQLiteDatabase dbLite = this.db.getWritableDatabase();
+            long resultado = dbLite.delete("reminder", "_id = ?", new String[]{String.valueOf(reminder.get_id())});
+            MedicineDao medicineDao = new MedicineDao(context, new Medicine());
+            medicineDao.deleteMedicine(reminder.getMedicamento_id());
+            db.close();
+            return resultado != -1;
+        } catch (Exception e) {
+            Log.e("Delete", "Erro ao deletar na tabela Reminder: " + e.getMessage());
+            return false;
+        }
+    }
+
     public boolean deleteReminderByElderly(int idoso_id){
         try {
             SQLiteDatabase dbLite = this.db.getWritableDatabase();
@@ -594,5 +654,40 @@ public class ReminderDao {
             Log.e("Delete", "Erro ao deletar na tabela Reminder: " + e.getMessage());
             return false;
         }
+    }
+
+    @SuppressLint("Range")
+    public String getQtdTreatment(int _id){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "select count(DISTINCT medicamento_id) from reminder where idoso_id = ? ;";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(_id)});
+        String result = "false";
+
+        if(cursor.moveToFirst()){
+            result = cursor.getString(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return result;
+    }
+
+
+    @SuppressLint("Range")
+    public String getQtdReminders(int _id){
+        SQLiteDatabase db = this.db.getReadableDatabase();
+        String sql = "select count(*) from reminder where idoso_id = ? ;";
+        Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(_id)});
+        String result = "false";
+
+        if(cursor.moveToFirst()){
+            result = cursor.getString(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return result;
     }
 }

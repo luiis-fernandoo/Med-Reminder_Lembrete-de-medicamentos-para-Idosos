@@ -45,7 +45,6 @@ public class SearchMedicineActivity extends AppCompatActivity implements MyAsync
         setContentView(R.layout.activity_search_medicine);
 
         editTextSearch = findViewById(R.id.editTextSearch);
-        editTextSearch.setHint(R.string.enter_the_name_of_the_medicine);
         buttonSearch = findViewById(R.id.buttonSearch);
 
         recycleViewMedicineItem = findViewById(R.id.recycleViewMedicineItem);
@@ -80,13 +79,13 @@ public class SearchMedicineActivity extends AppCompatActivity implements MyAsync
     }
     @Override
     public void onTaskComplete(JSONObject result) throws JSONException {
-        progressDialog.dismiss();
+
         if (result != null) {
             if(result.has("content")){
                 try {
                     JSONArray results = result.getJSONArray("content");
                     if (results.length() > 0) {
-
+                        progressDialog.dismiss();
                         SearchAdapter searchAdapter = new SearchAdapter(this, results);
                         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 1);
                         recycleViewMedicineItem.removeAllViews();

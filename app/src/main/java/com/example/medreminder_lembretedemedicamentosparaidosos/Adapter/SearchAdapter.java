@@ -64,10 +64,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView medicineTextId, secondInform;
+        LinearLayout linearId;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             medicineTextId = itemView.findViewById(R.id.medicineTextId);
             secondInform = itemView.findViewById(R.id.secondInform);
+            linearId = itemView.findViewById(R.id.linearId);
         }
 
         public void bind(JSONObject medicine) {
@@ -77,7 +79,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
                 String razaoSocial = medicine.getString("razaoSocial");
                 medicineTextId.setText(nomeProduto);
                 secondInform.setText(razaoSocial);
-                medicineTextId.setOnClickListener(new View.OnClickListener() {
+                linearId.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Medicine medicineSelected = new Medicine(numProcesso);

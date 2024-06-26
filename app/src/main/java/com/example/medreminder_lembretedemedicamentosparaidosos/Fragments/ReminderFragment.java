@@ -25,6 +25,7 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.Searc
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.HomeAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.HomeCaregiverAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.ReminderAdapter;
+import com.example.medreminder_lembretedemedicamentosparaidosos.Adapter.ReminderCaregiverAdapter;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ReminderDao;
@@ -59,6 +60,7 @@ public class ReminderFragment extends Fragment {
     private RecyclerView recycleReminder;
     private ElderlyCaregiver elderlyCaregiver;
     private ImageView iconAddMedicine;
+    private Button buttonAddMedicine, buttonHelp;
     private TextView all_you_reminders;
     public ReminderFragment() {
         // Required empty public constructor
@@ -98,8 +100,10 @@ public class ReminderFragment extends Fragment {
 
         recycleReminder = view.findViewById(R.id.recycleReminder);
         iconAddMedicine = view.findViewById(R.id.iconAddMedicine);
+        buttonAddMedicine = view.findViewById(R.id.buttonAddMedicine);
         all_you_reminders = view.findViewById(R.id.all_you_reminders);
         all_you_reminders.setText(R.string.all_your_reminders);
+        buttonHelp = view.findViewById(R.id.buttonHelp);
 
         sp = requireContext().getSharedPreferences("app", Context.MODE_PRIVATE);
 
@@ -122,7 +126,7 @@ public class ReminderFragment extends Fragment {
                 recycleReminder.setAdapter(reminderAdapter);
             }
 
-            iconAddMedicine.setOnClickListener(new View.OnClickListener() {
+            buttonAddMedicine.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(requireContext(), SearchMedicineActivity.class);
@@ -136,12 +140,12 @@ public class ReminderFragment extends Fragment {
 
             if(reminders != null){
                 MenuActivity menuActivity = (MenuActivity) getActivity();
-                ReminderAdapter reminderAdapter = new ReminderAdapter(reminders, requireContext(), sp, menuActivity);
+                ReminderCaregiverAdapter reminderCaregiverAdapter = new ReminderCaregiverAdapter(reminders, requireContext(), sp, menuActivity);
                 recycleReminder.setLayoutManager(new LinearLayoutManager(requireContext()));
-                recycleReminder.setAdapter(reminderAdapter);
+                recycleReminder.setAdapter(reminderCaregiverAdapter);
             }
 
-            iconAddMedicine.setOnClickListener(new View.OnClickListener() {
+            buttonAddMedicine.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(requireContext(), ChoiceElderlyActivity.class);
@@ -150,8 +154,35 @@ public class ReminderFragment extends Fragment {
             });
         }
 
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
 
         return view;
     }
 
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpReminders);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+    }
 }

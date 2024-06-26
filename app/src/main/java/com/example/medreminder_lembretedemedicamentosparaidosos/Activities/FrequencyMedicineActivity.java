@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,8 +14,8 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 
 public class FrequencyMedicineActivity extends AppCompatActivity {
 
-    private Button buttonFrequencyEveryDay, buttonFrequencyEveryOtherDay, buttonFrequencySpecificDay;
     private TextView howFrequency;
+    private Button buttonFrequencyEveryDay, buttonFrequencyEveryOtherDay, buttonFrequencySpecificDay, buttonHelp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,35 @@ public class FrequencyMedicineActivity extends AppCompatActivity {
                 it.putExtra("typeMedicine", typeMedicine);
                 it.putExtra("frequencyMedicine", "specificDay");
                 startActivity(it);
+            }
+        });
+        buttonHelp = findViewById(R.id.buttonHelp);
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpFrequency);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
             }
         });
     }

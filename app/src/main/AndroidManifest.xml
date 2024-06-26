@@ -108,6 +108,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".Broadcast.BroadCastWorker" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

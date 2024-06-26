@@ -2,5 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aladin</item>
+        <item>@font/aldrich</item>
+        <item>@font/baloo_chettan</item>
+        <item>@font/biryani_semibold</item>
     </array>
 </resources>

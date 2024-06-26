@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    tools:context=".Activities.SplashActivity">
+
+    <ImageView
+        android:id="@+id/gifPrimary"
+        android:layout_width="157dp"
+        android:layout_height="152dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/gifSecondary"
+        android:layout_width="101dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:contentDescription="TODO" />
+</LinearLayout>

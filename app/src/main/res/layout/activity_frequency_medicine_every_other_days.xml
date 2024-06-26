@@ -1,105 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.FrequencyMedicineEveryOtherDaysActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Activities.FrequencyMedicineEveryOtherDaysActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="413dp"
-        android:layout_height="237dp"
-        android:src="@drawable/captura_de_tela_2024_03_18_152732"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-3dp"
-        tools:ignore="MissingConstraints" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/whenYouNeed"
-        android:layout_width="279dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="84dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Quando você precisa tomar a próxima dose?"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="237dp"
+                android:src="@drawable/captura_de_tela_2024_03_18_152732"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="-3dp" />
+        </LinearLayout>
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="308dp"
-        android:layout_height="307dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="52dp"
-        android:background="@drawable/button_type_medicine"
-        android:focusedMonthDateColor="#FFFFFF"
-        android:selectedWeekBackgroundColor="#4D15E4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/whenYouNeed"
-        tools:ignore="MissingConstraints" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonConfirmFrequencyDate"
-        android:layout_width="315dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="48dp"
-        android:background="@drawable/shape_buttons"
-        android:text="Próximo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intervalText"
-        tools:ignore="MissingConstraints" />
+            <TextView
+                android:id="@+id/whenYouNeed"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="20dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="@string/when_you_need_to_take_the_next_dose"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#B00027FF"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <TextView
-        android:id="@+id/intervalText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="sans-serif-black"
-        android:text="O intervalo de dias são:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="307dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/bg_quad_statiscs"
+                android:focusedMonthDateColor="#FFFFFF"
+                android:selectedWeekBackgroundColor="#B00027FF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/whenYouNeed"
+                tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/intervalDays"
-        android:layout_width="42dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/bg_list"
-        android:fontFamily="sans-serif-black"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/daysText"
-        app:layout_constraintHorizontal_bias="0.365"
-        app:layout_constraintStart_toEndOf="@+id/intervalText"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/daysText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="100dp"
-        android:fontFamily="sans-serif-black"
-        android:text="dias"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+                <TextView
+                    android:id="@+id/intervalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/baloo_chettan"
+                    android:gravity="center"
+                    android:text="O intervalo de dias são:"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/intervalDays"
+                    android:layout_width="42dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:autoSizeTextType="uniform"
+                    android:background="@drawable/bg_list"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/daysText"
+                    app:layout_constraintHorizontal_bias="0.365"
+                    app:layout_constraintStart_toEndOf="@+id/intervalText"
+                    app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+
+                <TextView
+                    android:id="@+id/daysText"
+                    android:layout_width="44dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/baloo_chettan"
+                    android:gravity="center"
+                    android:text="dias"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonHelp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_button_delete"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="@string/need_you_help"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonConfirmFrequencyDate"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_buttons"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="Próximo"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/intervalText"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

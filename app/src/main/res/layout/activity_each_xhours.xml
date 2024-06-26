@@ -1,67 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activities.EachXhoursActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="413dp"
-        android:layout_height="237dp"
-        android:src="@drawable/captura_de_tela_2024_03_18_152732"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-3dp"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/inputNameEdit"
-        android:layout_width="121dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="145dp"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="145dp"
-        android:background="@drawable/bg_list"
-        android:fontFamily="sans-serif-black"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:src="@drawable/captura_de_tela_2024_03_18_152732"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-3dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="410dp"
         android:gravity="center"
-        android:hint="Digite aqui..."
-        android:inputType="number"
-        android:textColor="#000000"
-        android:textColorHint="#750D78DB"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterHowManyTimes"
-        tools:ignore="MissingConstraints" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/enterHowManyTimes"
-        android:layout_width="344dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="74dp"
-        android:layout_marginEnd="34dp"
-        android:fontFamily="sans-serif-black"
-        android:text=" Digite de quantas em quantas horas você toma esse medicamento"
-        android:textAllCaps="true"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        <TextView
+            android:id="@+id/enterHowManyTimes"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/baloo_chettan"
+            android:text="Digite quantas vezes você toma esse medicamento durante o dia"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#B00027FF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonNext"
-        android:layout_width="315dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="48dp"
-        android:background="@drawable/shape_buttons"
-        android:text="Próximo"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputNameEdit" />
+        <EditText
+            android:id="@+id/inputEachHour"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_list_transparent"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:hint="Digite aqui..."
+            android:inputType="number"
+            android:textColor="#000000"
+            android:textColorHint="#750D78DB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enterHowManyTimes"
+            tools:ignore="MissingConstraints" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonHelp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="40dp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/shape_button_delete"
+            android:fontFamily="@font/baloo_chettan"
+            android:text="@string/need_you_help"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonNext"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/shape_buttons"
+            android:fontFamily="@font/baloo_chettan"
+            android:text="Próximo"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputNameEdit" />
+    </LinearLayout>
+
+</LinearLayout>

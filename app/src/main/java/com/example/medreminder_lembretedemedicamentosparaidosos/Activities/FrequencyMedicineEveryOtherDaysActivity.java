@@ -26,7 +26,7 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
     private String selectedDateFormatted;
     private int differenceInDays;
     CalendarView calendarView;
-    Button buttonConfirmFrequencyDate;
+    Button buttonConfirmFrequencyDate, buttonHelp;
     private TextView intervalDays, warningText, whenYouNeed, intervalText, daysText;
     private LinearLayout buttonOk;
     @Override
@@ -48,6 +48,7 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         buttonConfirmFrequencyDate = findViewById(R.id.buttonConfirmFrequencyDate);
         whenYouNeed = findViewById(R.id.whenYouNeed);
         whenYouNeed.setText(R.string.when_you_need_to_take_the_next_dose);
+        buttonHelp = findViewById(R.id.buttonHelp);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -77,6 +78,13 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
                 }
             }
         });
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
+            }
+        });
     }
 
     public void popup_warning(View view){
@@ -96,6 +104,28 @@ public class FrequencyMedicineEveryOtherDaysActivity extends AppCompatActivity {
         buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpAnotherDay);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 alertDialog.dismiss();
             }
         });

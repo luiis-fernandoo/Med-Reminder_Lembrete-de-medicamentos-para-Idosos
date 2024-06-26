@@ -10,23 +10,43 @@
 
     <LinearLayout
         android:id="@+id/clickToNext"
-        android:layout_width="367dp"
+        android:layout_width="match_parent"
         android:layout_height="163dp"
-        android:background="@drawable/bg_list"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_quad_statiscs"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imageBox"
-            android:layout_width="67dp"
-            android:layout_height="68dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/round_image"
-            android:src="@drawable/iconmedicine" />
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageBox"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/round_image"
+                android:src="@drawable/medicamento_home_2" />
+
+            <ImageView
+                android:id="@+id/imagePill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/pill_type" />
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="265dp"
-            android:layout_height="138dp"
+            android:layout_width="match_parent"
+            android:layout_height="155dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
@@ -34,12 +54,15 @@
             <TextView
                 android:id="@+id/textNameMedicine"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
+                android:layout_height="30dp"
+                android:layout_marginEnd="5dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/baloo_chettan"
+                android:gravity="center_vertical"
                 android:text="Amoxilina monoidratada"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
-                android:textColor="#000000"
+                android:textColor="#B00027FF"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -81,26 +104,28 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonEdit"
-                    android:layout_width="74dp"
-                    android:layout_height="30dp"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/shape_button_exit"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/baloo_chettan"
                     android:text="Editar"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonDeleteReminder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/shape_button_delete"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/baloo_chettan"
                     android:text="Apagar"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>

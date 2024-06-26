@@ -71,13 +71,14 @@ public class HomeCaregiverAdapter extends RecyclerView.Adapter<HomeCaregiverAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout clickToNext;
-        ImageView imageBox;
+        ImageView imageBox, imagePill;
         TextView textNameMedicine, textTime, textElderly, textDose, textStatus;
         Button buttonCancelDose;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageBox = itemView.findViewById(R.id.imageBox);
+            imagePill = itemView.findViewById(R.id.imagePill);
             textNameMedicine = itemView.findViewById(R.id.textNameMedicine);
             textTime = itemView.findViewById(R.id.textTime);
             textElderly = itemView.findViewById(R.id.textElderly);
@@ -93,9 +94,9 @@ public class HomeCaregiverAdapter extends RecyclerView.Adapter<HomeCaregiverAdap
             Medicine medicine = medicineDao.getMedicineByProcessNumber();
             ElderlyDao elderlyDao = new ElderlyDao(context, new Elderly());
             Elderly elderly = elderlyDao.getElderlyById(reminder.getIdoso_id());
-            textElderly.setText(context.getString(R.string.elderly) + " " + elderly.getName());
+            textElderly.setText(context.getString(R.string.elderly) + ": " + elderly.getName());
             textNameMedicine.setText(medicine.getProduct_name());
-            textTime.setText(context.getString(R.string.time) + " " + reminder.getTime());
+            textTime.setText(context.getString(R.string.time) + ": " + reminder.getTime());
             if(reminder.getType_medicine().equals("pill")){
                 textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " comprimido(s)");
             }else if(reminder.getType_medicine().equals("drops")){
@@ -104,11 +105,11 @@ public class HomeCaregiverAdapter extends RecyclerView.Adapter<HomeCaregiverAdap
                 textDose.setText(context.getString(R.string.dose) + ": " + reminder.getQuantity() + " mg(s)");
             }
             if(reminder.getStatus()==10) {
-                textStatus.setText(context.getString(R.string.status) + " " + context.getString(R.string.statusConfirmed));
+                textStatus.setText(context.getString(R.string.status) + ": " + context.getString(R.string.statusConfirmed));
             }else if(reminder.getStatus()==11) {
-                textStatus.setText(context.getString(R.string.status) + " " + context.getString(R.string.statusCanceled));
+                textStatus.setText(context.getString(R.string.status) + ": " + context.getString(R.string.statusCanceled));
             }else if(reminder.getStatus()==1) {
-                textStatus.setText(context.getString(R.string.status) + " " + context.getString(R.string.statusSet));
+                textStatus.setText(context.getString(R.string.status) + ": " + context.getString(R.string.statusSet));
             }else if(reminder.getStatus()==0){
                 textStatus.setText(context.getString(R.string.status) + ": " + context.getString(R.string.statusToBeSet));
             }
@@ -123,6 +124,11 @@ public class HomeCaregiverAdapter extends RecyclerView.Adapter<HomeCaregiverAdap
                 Glide.with(itemView.getContext())
                         .load(reminder.getPhoto_medicine_box())
                         .into(imageBox);
+            }
+            if(reminder.getPhoto_medicine_pill()!=null){
+                Glide.with(itemView.getContext())
+                        .load(reminder.getPhoto_medicine_pill())
+                        .into(imagePill);
             }
         }
     }

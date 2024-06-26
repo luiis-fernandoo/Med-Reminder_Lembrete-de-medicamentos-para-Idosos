@@ -13,9 +13,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,13 +34,14 @@ public class PhotoMedicineReminder extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView imagePhotoCapture, iconCameraPhoto;
+    private ImageView imagePhotoCapture;
+    private LinearLayout iconCameraPhoto;
     private TextView textViewHeader, clickPackage;
     private String currentPhotoPath, medicine, typeMedicine, frequencyMedicine;
     private ArrayList<String> selectedButtonTexts;
     private ArrayList<ScheduleItem> scheduleItems;
     private int frequencyDay, frequencyDifferenceDays, eachXhours;
-    private Button buttonNext;
+    private Button buttonNext, buttonHelp;
     private Activity activity;
 
     @Override
@@ -65,7 +68,6 @@ public class PhotoMedicineReminder extends AppCompatActivity {
         }
         scheduleItems = it.getParcelableArrayListExtra("timeAndQuantity");
 
-
         imagePhotoCapture = findViewById(R.id.imagePhotoCapture);
         iconCameraPhoto = findViewById(R.id.iconCameraPhoto);
 
@@ -76,7 +78,6 @@ public class PhotoMedicineReminder extends AppCompatActivity {
         buttonNext.setText(R.string.next);
 
         clickPackage = findViewById(R.id.clickPackage);
-        clickPackage.setText(R.string.Click_on_the_camera_in_the_center_to_take_a_photo_of_the_medicine_box);
 
         iconCameraPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +116,15 @@ public class PhotoMedicineReminder extends AppCompatActivity {
                 it.putExtra("timeAndQuantity", scheduleItems);
                 it.putExtra("currentPhotoPath", currentPhotoPath);
                 startActivity(it);
+            }
+        });
+
+        buttonHelp = findViewById(R.id.buttonHelp);
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
             }
         });
     }
@@ -159,40 +169,41 @@ public class PhotoMedicineReminder extends AppCompatActivity {
         }
     }
 
-//    private void displayImage() {
-//        if (currentPhotoPath != null) {
-//            // Carrega a imagem do caminho do arquivo
-//            Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-//
-//            // Verifica se o bitmap foi carregado com sucesso
-//            if (bitmap != null) {
-//                // Define o bitmap no ImageView
-//                imagePhotoCapture.setImageBitmap(bitmap);
-//            } else {
-//                Toast.makeText(this, "Falha ao carregar a imagem", Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            Toast.makeText(this, "Caminho da imagem não encontrado", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_CAMERA_PERMISSION: {
-                // Se a solicitação de permissão foi cancelada, os arrays de resultados estarão vazios.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // A permissão foi concedida. Agora você pode abrir a câmera
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, 1);
                 } else {
-                    // A permissão foi negada. Mostre uma mensagem ao usuário explicando que ele não pode usar a câmera sem conceder a permissão.
                     Toast.makeText(this, "Permissão de câmera necessária para usar a câmera", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
-            // Outras verificações de 'case' para outras permissões que este aplicativo pode solicitar
         }
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpPhotoMedicine);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

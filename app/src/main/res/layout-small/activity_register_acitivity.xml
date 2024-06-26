@@ -1,134 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_background_login"
-    tools:context=".Activities.RegisterAcitivity">
-
-    <TextView
-        android:id="@+id/registerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="147dp"
-        android:fontFamily="@font/aladin"
-        android:text="@string/register"
-        android:textAllCaps="true"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    android:fillViewport="true">
+        
     <LinearLayout
-        android:layout_width="356dp"
-        android:layout_height="550dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="109dp"
-        android:background="@drawable/bg_quad_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_background_login"
+        android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerText"
-        app:layout_constraintVertical_bias="0.238"
-        tools:ignore="MissingConstraints">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/photo_profile"
-            android:layout_width="106dp"
-            android:layout_height="92dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/round_image"
-            android:src="@drawable/profile_photo_removebg_preview" />
-
+        tools:context=".Activities.RegisterAcitivity"
+        tools:ignore="MissingDefaultResource">
+    
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/registerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/select_profile_photo" />
-
-        <EditText
-            android:id="@+id/emailRegister"
-            android:layout_width="270dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/bg_list"
-            android:ems="10"
-            android:fontFamily="@font/inconsolata_light"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
-            android:textAlignment="center"
-            android:textColorHint="#000000"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/nameRegister"
-            android:layout_width="270dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/bg_list"
-            android:ems="10"
-            android:fontFamily="@font/inconsolata_light"
-            android:hint="@string/name"
-            android:inputType="text"
-            android:textAlignment="center"
-            android:textColorHint="#000000"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/passwordRegister"
-            android:layout_width="270dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/bg_list"
-            android:ems="10"
-            android:fontFamily="@font/inconsolata_light"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textAlignment="center"
-            android:textColorHint="#000000"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/typeUser"
-            android:layout_width="270dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/shape_button_exit"
-            android:fontFamily="@font/aladin"
-            android:gravity="center"
-            android:text="@string/select_user_type"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonRegister"
-            android:layout_width="272dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/shape_buttons_login"
             android:fontFamily="@font/aladin"
             android:text="@string/register"
+            android:textAllCaps="true"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+        <LinearLayout
+            android:layout_width="356dp"
+            android:layout_height="550dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_quad_login"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerText"
+            tools:ignore="MissingConstraints">
+    
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/photo_profile"
+                android:layout_width="106dp"
+                android:layout_height="92dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/round_image"
+                android:src="@drawable/profile_photo_removebg_preview" />
+    
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="@string/select_profile_photo"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+    
+            <EditText
+                android:id="@+id/emailRegister"
+                android:layout_width="270dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_list"
+                android:ems="10"
+                android:fontFamily="@font/inconsolata_light"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:textAlignment="center"
+                android:textColorHint="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+    
+            <EditText
+                android:id="@+id/nameRegister"
+                android:layout_width="270dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_list"
+                android:ems="10"
+                android:fontFamily="@font/inconsolata_light"
+                android:hint="@string/name"
+                android:inputType="text"
+                android:textAlignment="center"
+                android:textColorHint="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+    
+            <EditText
+                android:id="@+id/passwordRegister"
+                android:layout_width="270dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_list"
+                android:ems="10"
+                android:fontFamily="@font/inconsolata_light"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textAlignment="center"
+                android:textColorHint="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+    
+            <TextView
+                android:id="@+id/typeUser"
+                android:layout_width="270dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:autoSizeTextType="uniform"
+                android:background="@drawable/shape_button_exit"
+                android:fontFamily="@font/baloo_chettan"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:text="@string/select_user_type"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+    
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonRegister"
+                android:layout_width="272dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_buttons_login"
+                android:fontFamily="@font/baloo_chettan"
+                android:text="@string/register"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+    
+        </LinearLayout>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonHelp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/shape_button_delete"
+            android:fontFamily="@font/baloo_chettan"
+            android:text="@string/need_you_help"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    
     </LinearLayout>
+    
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
