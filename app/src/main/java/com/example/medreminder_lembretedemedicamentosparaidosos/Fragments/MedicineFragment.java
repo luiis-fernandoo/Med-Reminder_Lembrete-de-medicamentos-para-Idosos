@@ -136,7 +136,7 @@ public class MedicineFragment extends Fragment {
 
             if(medicines != null){
                 MenuActivity menuActivity = (MenuActivity) getActivity();
-                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp, menuActivity);
+                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp, menuActivity, reminders);
                 recycleMedicine.setLayoutManager(new LinearLayoutManager(requireContext()));
                 recycleMedicine.setAdapter(medicineAdapter);
             }
@@ -154,7 +154,7 @@ public class MedicineFragment extends Fragment {
 
             if(medicines != null){
                 MenuActivity menuActivity = (MenuActivity) getActivity();
-                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp, menuActivity);
+                MedicineAdapter medicineAdapter = new MedicineAdapter(medicines, requireContext(), sp, menuActivity, reminders);
                 recycleMedicine.setLayoutManager(new LinearLayoutManager(requireContext()));
                 recycleMedicine.setAdapter(medicineAdapter);
             }

@@ -33,6 +33,7 @@ import com.example.medreminder_lembretedemedicamentosparaidosos.R;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyViewHolder> {
     private Context context;
@@ -41,11 +42,13 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
     private Button buttonOK;
     private TextView textWarning;
     private SharedPreferences sp;
-    public MedicineAdapter(List<Medicine> medicines, Context context, SharedPreferences sp, MenuActivity menuActivity) {
+    private List<Reminder> reminders;
+    public MedicineAdapter(List<Medicine> medicines, Context context, SharedPreferences sp, MenuActivity menuActivity, List<Reminder> reminders) {
         this.medicines = medicines;
         this.context = context;
         this.sp = sp;
         this.menuActivity = menuActivity;
+        this.reminders = reminders;
     }
 
     @NonNull
@@ -90,51 +93,57 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyView
 
         @SuppressLint("SetTextI18n")
         public void bind(Medicine medicine, Context context) {
-            ReminderDao reminderDao = new ReminderDao(context, new Reminder());
-            Reminder reminder = reminderDao.getPhotoByMedicine(medicine.getProcess_number());
-            textNameMedicine.setText(medicine.getProduct_name());
-            if(reminder.getType_medicine().equals("pill")){
-                if(reminder.getRemaining()!= null){
-                    if(Integer.parseInt(reminder.getRemaining()) <= Integer.parseInt(reminder.getWarning())){
-                        popupWarningRemaining(medicine);
-                    }
-                    if(reminder.getWarning()!= null){
-                        qtdForWarning.setText(context.getString(R.string.quantity_for_notice)+": " + reminder.getWarning());
-                    }
-                    if(reminder.getRemaining()!= null){
-                        remainingPills.setText(context.getString(R.string.remaining_pills)+": " + reminder.getRemaining());
-                    }
-                }
-            }else{
-                remainingPills.setText("Sem dados.");
-                qtdForWarning.setText("Não é possível contabilizar.");
-            }
+            for (int i = 0; i < reminders.size(); i++){
+                if(Objects.equals(reminders.get(i).getMedicamento_id(), medicine.getProcess_number())){
+                    ReminderDao reminderDao = new ReminderDao(context, new Reminder());
+                    Reminder reminder = reminderDao.getReminderById(reminders.get(i).get_id());
 
-            if(reminder.getPhoto_medicine_box()!=null){
-                Glide.with(itemView.getContext())
-                        .load(reminder.getPhoto_medicine_box())
-                        .into(imageBox);
-            }
-            if(reminder.getPhoto_medicine_pill()!=null){
-                Glide.with(itemView.getContext())
-                        .load(reminder.getPhoto_medicine_pill())
-                        .into(imagePill);
-            }
-            buttonDetails.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent it = new Intent(context, DetailsMedicineActivity.class);
-                    it.putExtra("numProcesso", medicine.getProcess_number());
-                    context.startActivity(it);
-                }
-            });
+                    textNameMedicine.setText(medicine.getProduct_name());
+                    if(reminder.getType_medicine().equals("pill")){
+                        if(reminder.getRemaining()!= null){
+                            if(Integer.parseInt(reminder.getRemaining()) <= Integer.parseInt(reminder.getWarning())){
+                                popupWarningRemaining(medicine);
+                            }
+                            if(reminder.getWarning()!= null){
+                                qtdForWarning.setText(context.getString(R.string.quantity_for_notice)+": " + reminder.getWarning());
+                            }
+                            if(reminder.getRemaining()!= null){
+                                remainingPills.setText(context.getString(R.string.remaining_pills)+": " + reminder.getRemaining());
+                            }
+                        }
+                    }else{
+                        remainingPills.setText("Sem dados.");
+                        qtdForWarning.setText("Não é possível contabilizar.");
+                    }
 
-            buttonRepository.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    popup_edit(reminder);
+                    if(reminder.getPhoto_medicine_box()!=null){
+                        Glide.with(itemView.getContext())
+                                .load(reminder.getPhoto_medicine_box())
+                                .into(imageBox);
+                    }
+                    if(reminder.getPhoto_medicine_pill()!=null){
+                        Glide.with(itemView.getContext())
+                                .load(reminder.getPhoto_medicine_pill())
+                                .into(imagePill);
+                    }
+                    buttonDetails.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent it = new Intent(context, DetailsMedicineActivity.class);
+                            it.putExtra("numProcesso", medicine.getProcess_number());
+                            context.startActivity(it);
+                        }
+                    });
+
+
+                    buttonRepository.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            popup_edit(reminder);
+                        }
+                    });
                 }
-            });
+            }
         }
     }
 
