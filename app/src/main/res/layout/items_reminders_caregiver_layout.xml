@@ -75,7 +75,7 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="Idoso"
                 android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textDose"
@@ -85,7 +85,7 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="Dose:"
                 android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textTime"
@@ -97,7 +97,7 @@
                 android:text="Horário:"
                 android:textAlignment="viewStart"
                 android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textDate"
@@ -109,7 +109,7 @@
                 android:text="Data:"
                 android:textAlignment="viewStart"
                 android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

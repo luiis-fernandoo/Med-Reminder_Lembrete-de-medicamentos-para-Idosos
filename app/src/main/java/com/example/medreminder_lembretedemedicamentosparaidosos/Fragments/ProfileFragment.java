@@ -315,13 +315,17 @@ public class ProfileFragment extends Fragment {
                 EditText inputAgeEdit = popupView.findViewById(R.id.inputAgeEdit);
 
                 if(selectedUserType.equals("Idoso")){
-                    elderly.setName(inputNameEdit.getText().toString());
-                    elderly.setAge(inputAgeEdit.getText().toString());
+                    if(inputNameEdit.getText().toString().equals("Convidado")){
+                        Toast.makeText(requireContext(), "Usuários sem cadastro não podem editar suas informações!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        elderly.setName(inputNameEdit.getText().toString());
+                        elderly.setAge(inputAgeEdit.getText().toString());
 
-                    if (elderlyDao.updateElderly(elderly)) {
-                        Toast.makeText(requireContext(), "Usuário editado com sucesso!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(requireContext(), "Erro ao editar usuário.", Toast.LENGTH_SHORT).show();
+                        if (elderlyDao.updateElderly(elderly)) {
+                            Toast.makeText(requireContext(), "Usuário editado com sucesso!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(requireContext(), "Erro ao editar usuário.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }else{
                     elderlyCaregiver.setName(inputNameEdit.getText().toString());

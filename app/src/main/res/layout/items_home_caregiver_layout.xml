@@ -67,13 +67,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginEnd="5dp"
-                android:autoSizeTextType="uniform"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="Idoso: "
                 android:textAlignment="viewStart"
-
                 android:textAllCaps="false"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textTime"
@@ -84,7 +82,7 @@
                 android:gravity="center"
                 android:text="Horário:"
                 android:textAlignment="viewStart"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textDose"
@@ -95,19 +93,18 @@
                 android:gravity="center"
                 android:text="Dose:"
                 android:textAlignment="viewStart"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textStatus"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginTop="6dp"
-                android:autoSizeTextType="uniform"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
                 android:text="Status:"
                 android:textAlignment="viewStart"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="140dp"
