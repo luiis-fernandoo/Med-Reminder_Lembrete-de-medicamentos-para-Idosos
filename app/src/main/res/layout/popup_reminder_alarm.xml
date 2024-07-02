@@ -36,7 +36,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="100dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
@@ -44,14 +44,15 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="260dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/nameElderly"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="32.5dp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/aldrich"
                     android:text="Idoso"
@@ -62,7 +63,7 @@
                 <TextView
                     android:id="@+id/quantityMedicine"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="32.5dp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/aldrich"
                     android:text="Dose: 2 comprimido(s)"
@@ -73,7 +74,7 @@
                 <TextView
                     android:id="@+id/typeMedicine"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="32.5dp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/aldrich"
                     android:text="Comprimidos"
@@ -85,13 +86,13 @@
             <ImageView
                 android:id="@+id/imageViewMedicine"
                 android:layout_width="0dp"
-                android:scaleType="fitCenter"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:layout_weight="1" />
+                android:layout_weight="0.3"
+                android:scaleType="fitCenter" />
 
         </LinearLayout>
 

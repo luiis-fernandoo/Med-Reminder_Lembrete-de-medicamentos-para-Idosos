@@ -264,12 +264,10 @@ public class AlarmReminderService extends Service {
         if(reminder.getPhoto_medicine_pill()!=null){
             Glide.with(getApplicationContext())
                     .load(reminder.getPhoto_medicine_pill())
-                    .override(Target.SIZE_ORIGINAL)
                     .into(imageViewMedicine);
         }else if(reminder.getPhoto_medicine_box()!=null){
             Glide.with(getApplicationContext())
                     .load(reminder.getPhoto_medicine_box())
-                    .override(Target.SIZE_ORIGINAL)
                     .into(imageViewMedicine);
         }else{
             imageViewMedicine.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.medicamento_home_2));
