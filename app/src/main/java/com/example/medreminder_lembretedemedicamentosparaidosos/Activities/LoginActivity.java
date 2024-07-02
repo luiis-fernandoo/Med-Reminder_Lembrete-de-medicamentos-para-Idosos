@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView goRegister, notRegister;
     private EditText emailLogin, passwordLogin;
-    private Button buttonLogin;
+    private Button buttonLogin, buttonHelp;
     private String selectedUserType;
     private Dialog progressDialog;
     private SharedPreferences sp;
@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         emailLogin = findViewById(R.id.emailLogin);
         passwordLogin = findViewById(R.id.passwordLogin);
         buttonLogin = findViewById(R.id.buttonLogin);
+        buttonHelp = findViewById(R.id.buttonHelp);
 
         progressDialog = new Dialog(this);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -69,6 +70,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(LoginActivity.this, RegisterAcitivity.class);
                 startActivity(it);
+            }
+        });
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
             }
         });
 
@@ -216,5 +224,27 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpLogin);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

@@ -14,7 +14,7 @@
     <string name="statusToBeSet">Reminder not set yet</string>
     <string name="textWarningCancel">Pressing confirm will cancel your dose of this medication for today and it will not be possible to reverse it. Do you want to confirm the cancellation?</string>
     <string name="textHelpHome">This page contains all the medicines you will need to take today. If you have registered a treatment and it is not here, it is not scheduled for today.</string>
-
+    <string name="textWarningLogout">Are you sure you want to quit? You will have to log in again to access your account!</string>
     <!-- Medicine  -->
     <string name="medicines">Medicines</string>
     <string name="quantity_for_notice">Quantity for notice</string>
@@ -48,13 +48,16 @@
     <string name="sign_in">Sign In</string>
     <string name="enter_without_registration">Enter without registration</string>
     <string name="need_you_help">Need help?</string>
+    <string name="textHelpLogin">On this page you can log in and access your previously registered account. If you dont have an account yet, you can click on register and create your account to access the apps features, however, if you dont want to create an account, you can click on sign in without registering, but we do not guarantee the same efficiency</string>
+
 
     <!--  Register  -->
     <string name="name">Name</string>
     <string name="select_user_type">Select user type</string>
     <string name="register">Register</string>
+    <string name="textHelpRegister">If you dont have an account yet, enter an email, password and what type of user you are, whether elderly or an elderly carer (this cannot be modified later). If you want to log in without an account, click on log in without registration, however, the application does not guarantee the same efficiency.</string>
 
-                        <!--  Register Elderly  -->
+    <!--  Register Elderly  -->
     <string name="name_elderly">Name elderly</string>
     <string name="age_elderly">Age elderly</string>
     <string name="register_later">Register later</string>

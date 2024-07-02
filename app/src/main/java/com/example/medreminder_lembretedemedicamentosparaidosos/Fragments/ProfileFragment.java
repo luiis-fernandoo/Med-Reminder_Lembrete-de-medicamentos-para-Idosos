@@ -184,7 +184,7 @@ public class ProfileFragment extends Fragment {
             buttonLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View viewElderly) {
-                    logoutUser();
+                    popupWarningLogoutAccount();
                 }
             });
 
@@ -256,7 +256,7 @@ public class ProfileFragment extends Fragment {
             buttonLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View viewElderly) {
-                    logoutUser();
+                    popupWarningLogoutAccount();
                 }
             });
 
@@ -494,5 +494,39 @@ public class ProfileFragment extends Fragment {
                 }
             });
         }
+    }
+
+
+    public void popupWarningLogoutAccount(){
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        View popupView = inflater.inflate(R.layout.popup_warnings_delete, null);
+
+        textWarning = popupView.findViewById(R.id.textWarning);
+        textWarning.setText(R.string.textWarningLogout);
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(requireContext());
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        buttonConfirm = popupView.findViewById(R.id.buttonConfirm);
+        buttonConfirm.setText(R.string.confirm);
+
+        buttonCancel = popupView.findViewById(R.id.buttonCancel);
+        buttonCancel.setText(R.string.cancel);
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutUser();
+                alertDialog.dismiss();
+            }
+        });
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

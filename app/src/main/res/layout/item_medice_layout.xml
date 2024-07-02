@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/clickToNext"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="190dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/bg_quad_statiscs"
@@ -28,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/round_image"
@@ -45,7 +44,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -55,6 +54,7 @@
                 android:id="@+id/textNameMedicine"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_marginTop="5dp"
                 android:autoSizeTextType="uniform"
                 android:fontFamily="@font/baloo_chettan"
                 android:text="Dipirona Monohidratada"
@@ -89,25 +89,33 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonRepository"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="8dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/shape_button_confirm"
                 android:fontFamily="@font/baloo_chettan"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="Adicionar reposição"
+                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonDetails"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="8dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/shape_buttons_login"
                 android:fontFamily="@font/baloo_chettan"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="Ver detalhes de medicamento"
+                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 

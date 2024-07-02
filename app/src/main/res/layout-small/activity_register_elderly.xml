@@ -15,6 +15,7 @@
         android:layout_marginEnd="29dp"
         android:background="@drawable/bg_quad_login"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3">
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/fonts_google"
+            android:fontFamily="@font/baloo_chettan"
             android:gravity="center"
             android:text="@string/select_profile_photo"
             android:textColor="#000000"
@@ -43,10 +44,12 @@
 
         <EditText
             android:id="@+id/nameRegisterElderly"
-            android:layout_width="223dp"
+            android:layout_width="match_parent"
             android:layout_height="41dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
             android:background="@drawable/bg_list"
             android:ems="10"
             android:fontFamily="@font/baloo_chettan"
@@ -59,10 +62,12 @@
 
         <EditText
             android:id="@+id/ageRegisterElderly"
-            android:layout_width="227dp"
+            android:layout_width="match_parent"
             android:layout_height="43dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
             android:background="@drawable/bg_list"
             android:ems="10"
             android:fontFamily="@font/baloo_chettan"
@@ -75,28 +80,34 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonRegisterElderly"
-            android:layout_width="223dp"
-            android:layout_height="37dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
             android:background="@drawable/shape_buttons_login"
             android:fontFamily="@font/baloo_chettan"
             android:text="@string/register"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/laterElderly"
-            android:layout_width="170dp"
-            android:layout_height="37dp"
-            android:layout_marginLeft="58dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/shape_button_exit"
             android:fontFamily="@font/baloo_chettan"
             android:gravity="center"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
             android:text="@string/register_later"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -104,9 +115,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="96dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="97dp"
-        android:fontFamily="@font/oswald_medium"
+        android:fontFamily="@font/aldrich"
         android:gravity="center"
         android:text="@string/register_elderly"
         android:textColor="#FFFFFF"

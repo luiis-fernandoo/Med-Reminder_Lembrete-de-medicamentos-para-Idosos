@@ -14,6 +14,7 @@
     <string name="statusToBeSet">Lembrete não definido ainda</string>
     <string name="textWarningCancel">Apertar em confirmar irá cancelar sua dose para hoje desse medicamento e não será possível reverter. Deseja confirmar o cancelamento?</string>
     <string name="textHelpHome">Nesta página contém todos os medicamentos que você terá que tomar no dia de hoje. Caso tenha cadastrado um tratamento e ele não esteja aqui, o mesmo não está agendado para hoje.</string>
+    <string name="textWarningLogout">Tem certeza que deseja sair? terá que fazer login novamente para acessar sua conta!</string>
 
     <!-- Medicine  -->
     <string name="medicines">Medicamentos</string>
@@ -47,14 +48,17 @@
     <string name="sign_up">Fazer cadastro</string>
     <string name="enter_without_registration">Entrar sem cadastro</string>
     <string name="need_you_help">Precisa de ajuda?</string>
+    <string name="textHelpLogin">Nessa página você pode fazer login e entrar em sua conta já cadastrada anteriormente. Caso não tenha uma conta ainda, você pode clicar em fazer cadastro e criar sua conta para acessar as funcionalidades do app, porém, se você não quiser fazer uma conta, pode clicar em entrar sem cadastro, mas não garantimos a mesma eficiência</string>
 
                         <!--  Register  -->
     <string name="name">Nome</string>
     <string name="select_user_type">Selecionar tipo de usuário</string>
     <string name="register">Registrar</string>
     <string name="register_elderly">Registrar idoso</string>
+    <string name="textHelpRegister">Se você ainda não possui uma conta, informe um email, senha e diga qual o tipo de usuário você é, seja idoso ou um cuidador de idoso (isso não pode ser modificado posteriormente). Caso você queira entrar sem uma conta, clique em entrar sem cadastro, porém, o app não garante a mesma eficiência. </string>
 
-                        <!--  Register Elderly  -->
+
+    <!--  Register Elderly  -->
     <string name="name_elderly">Nome do idoso</string>
     <string name="age_elderly">Idade do idoso</string>
     <string name="register_later">Cadastrar mais tarde</string>

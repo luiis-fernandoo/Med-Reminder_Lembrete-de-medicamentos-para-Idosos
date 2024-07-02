@@ -3,15 +3,15 @@
     xmlns:autofit="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#25000000"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="5dp"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="@drawable/bg_list_alarm"
+        android:background="@drawable/bg_quad_statiscs"
         android:orientation="vertical">
 
         <TextView
@@ -23,28 +23,28 @@
             android:layout_marginTop="2dp"
             android:layout_marginEnd="1dp"
             android:autoSizeTextType="uniform"
-            android:background="#B00027FF"
+            android:background="#32FFFFFF"
             android:fontFamily="@font/baloo_chettan"
             android:gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="Medicamento de fulano da dona sla quem raaaapaz"
+            android:text="Dipirona"
             android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp" />
+            android:textAllCaps="true"
+            android:textColor="#95000000"
+            android:textSize="34sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="280dp"
+                android:layout_width="260dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -83,12 +83,15 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageMedicine"
-                android:layout_width="match_parent"
+                android:id="@+id/imageViewMedicine"
+                android:layout_width="0dp"
+                android:scaleType="fitCenter"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/medicamento_home_2" />
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1" />
 
         </LinearLayout>
 

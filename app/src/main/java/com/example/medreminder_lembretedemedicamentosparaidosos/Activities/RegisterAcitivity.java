@@ -57,7 +57,7 @@ public class RegisterAcitivity extends AppCompatActivity {
 
     private EditText emailRegister, nameRegister, passwordRegister;
     private TextView typeUser, registerText;
-    private Button buttonRegister;
+    private Button buttonRegister, buttonHelp;
     private FirebaseAuth firebaseAuth;
     private CircleImageView photo_profile;
     private static final int REQUEST_IMAGE_PICK = 2;
@@ -78,6 +78,7 @@ public class RegisterAcitivity extends AppCompatActivity {
         typeUser = findViewById(R.id.typeUser);
         photo_profile = findViewById(R.id.photo_profile);
         registerText = findViewById(R.id.registerText);
+        buttonHelp = findViewById(R.id.buttonHelp);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -108,6 +109,13 @@ public class RegisterAcitivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent, REQUEST_IMAGE_PICK);
+            }
+        });
+
+        buttonHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupHelp();
             }
         });
     }
@@ -290,5 +298,27 @@ public class RegisterAcitivity extends AppCompatActivity {
 
     private boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public void popupHelp(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View popupView = inflater.inflate(R.layout.popup_help, null);
+
+        TextView textHelp = popupView.findViewById(R.id.textHelp);
+        textHelp.setText(R.string.textHelpRegister);
+
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(popupView);
+
+        final androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        Button buttonOk = popupView.findViewById(R.id.buttonOk);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

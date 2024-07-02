@@ -10,6 +10,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.IBinder;
@@ -26,8 +27,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.medreminder_lembretedemedicamentosparaidosos.Activities.MenuActivity;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyCaregiverDao;
 import com.example.medreminder_lembretedemedicamentosparaidosos.DAO.ElderlyDao;
@@ -205,10 +208,9 @@ public class AlarmReminderService extends Service {
         return builder.build();
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     private void showAlertDialog(Reminder reminder) {
         isPopupOpen = true;
-        Log.d("", "Reminder: " + reminder.getMedicamento_id());
         LayoutInflater inflater = LayoutInflater.from(this);
         View popupView = inflater.inflate(R.layout.popup_reminder_alarm, null);
 
@@ -222,7 +224,7 @@ public class AlarmReminderService extends Service {
         quantityMedicine = popupView.findViewById(R.id.quantityMedicine);
         buttonConfirm = popupView.findViewById(R.id.buttonConfirm);
         buttonCancel = popupView.findViewById(R.id.buttonCancel);
-        imageMedicine = popupView.findViewById(R.id.imageMedicine);
+        ImageView imageViewMedicine = popupView.findViewById(R.id.imageViewMedicine);
 
         AlertDialog dialog = alertDialogBuilder.create();
 
@@ -232,8 +234,15 @@ public class AlarmReminderService extends Service {
         elderlyDao = new ElderlyDao(getApplicationContext(), new Elderly());
         Elderly elderly = elderlyDao.getElderlyById(reminder.getIdoso_id());
 
+        Typeface typefaceBaloon = ResourcesCompat.getFont(this, R.font.baloo_chettan);
+        Typeface typefaceAldrich = ResourcesCompat.getFont(this, R.font.aldrich);
+
         nameMedicine.setText(medicine.getProduct_name());
+        nameMedicine.setTypeface(typefaceBaloon);
+
         nameElderly.setText(getApplicationContext().getString(R.string.elderly) + ": " + elderly.getName());
+        nameElderly.setTypeface(typefaceAldrich);
+
         if(reminder.getType_medicine().equals("pill")){
             typeMedicine.setText("Tipo: " + getApplicationContext().getString(R.string.pill));
         }else if(reminder.getType_medicine().equals("drops")){
@@ -241,6 +250,8 @@ public class AlarmReminderService extends Service {
         }else if(reminder.getType_medicine().equals("dust")){
             typeMedicine.setText("Tipo: " + getApplicationContext().getString(R.string.dust));
         }
+        typeMedicine.setTypeface(typefaceAldrich);
+
         if(reminder.getType_medicine().equals("pill")){
             quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity() + " comprimido(s)");
         }else if(reminder.getType_medicine().equals("drops")){
@@ -248,16 +259,20 @@ public class AlarmReminderService extends Service {
         }else if(reminder.getType_medicine().equals("dust")){
             quantityMedicine.setText(getApplicationContext().getString(R.string.dose) + ": " + reminder.getQuantity() + " mg(s)");
         }
+        quantityMedicine.setTypeface(typefaceAldrich);
+
         if(reminder.getPhoto_medicine_pill()!=null){
-            Glide.with(popupView.getContext())
+            Glide.with(getApplicationContext())
                     .load(reminder.getPhoto_medicine_pill())
-                    .into(imageMedicine);
-            imageMedicine.setBackgroundDrawable(null);
+                    .override(Target.SIZE_ORIGINAL)
+                    .into(imageViewMedicine);
         }else if(reminder.getPhoto_medicine_box()!=null){
-            Glide.with(popupView.getContext())
+            Glide.with(getApplicationContext())
                     .load(reminder.getPhoto_medicine_box())
-                    .into(imageMedicine);
-            imageMedicine.setBackgroundDrawable(null);
+                    .override(Target.SIZE_ORIGINAL)
+                    .into(imageViewMedicine);
+        }else{
+            imageViewMedicine.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.medicamento_home_2));
         }
 
         final Reminder finalReminder = reminder;

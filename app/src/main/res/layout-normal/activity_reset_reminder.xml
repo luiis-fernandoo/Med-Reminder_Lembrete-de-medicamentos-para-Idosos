@@ -155,9 +155,12 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonHelp"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_gravity="end"
                 android:layout_marginTop="70dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/shape_button_delete"
                 android:fontFamily="@font/baloo_chettan"
                 android:text="@string/need_you_help"
