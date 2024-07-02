@@ -127,14 +127,17 @@ public class RegisterAcitivity extends AppCompatActivity {
         String name = nameRegister.getText().toString().trim();
         if (!isValidEmail(email)) {
             Toast.makeText(RegisterAcitivity.this, "O endereço de e-mail é inválido.", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             return;
         }
         if (password.length() < 6) {
             Toast.makeText(RegisterAcitivity.this, "A senha deve ter pelo menos 6 caracteres.", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             return;
         }
         if(selectedUserType == null){
             Toast.makeText(RegisterAcitivity.this, "Selecione o tipo de usuário.", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             return;
         }
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -171,6 +174,7 @@ public class RegisterAcitivity extends AppCompatActivity {
                             }else{
                                 ElderlyCaregiverDao elderlyCaregiverDao = new ElderlyCaregiverDao(getApplicationContext(), new ElderlyCaregiver(name, email, currentPhotoPath, password));
                                 if(elderlyCaregiverDao.insertNewElderlyCaregiver()){
+                                    progressDialog.dismiss();
                                     Toast.makeText(RegisterAcitivity.this, "Usuário criado com sucesso!", Toast.LENGTH_SHORT).show();
                                     Intent it = new Intent(RegisterAcitivity.this, RegisterElderlyActivity.class);
                                     startActivity(it);
@@ -179,6 +183,7 @@ public class RegisterAcitivity extends AppCompatActivity {
                             }
 
                         } else {
+                            progressDialog.dismiss();
                             Toast.makeText(RegisterAcitivity.this, "Falha ao criar usuário: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
