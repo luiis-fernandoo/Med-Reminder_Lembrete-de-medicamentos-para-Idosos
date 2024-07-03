@@ -103,7 +103,7 @@
     <string name="when_you_need_to_take_the_next_dose">Quando você precisa tomar a próxima dose?</string>
     <string name="the_range_of_days_are">O intervalo de dias são:</string>
     <string name="days">Dias</string>
-    <string name="textHelpAnotherDay">Você tomará esse medicamento novamente quando? escolha da data no mapa</string>
+    <string name="textHelpAnotherDay">Quando Você tomará esse medicamento novamente? escolha a data no calendário</string>
 
     <!--  Specific days  -->
     <string name="On_which_days_will_you_take_the_medicine">Em qual(s) dia(s) você irá tomar esse medicamento?</string>
