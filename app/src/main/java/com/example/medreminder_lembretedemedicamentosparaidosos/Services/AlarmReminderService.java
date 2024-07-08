@@ -132,8 +132,10 @@ public class AlarmReminderService extends Service {
 
                     InsertLogHelper.i("AlarmReminderService", "Alarm for the time: " + reminder.getTime() + " success dispatch!!");
 
-                    if (Integer.parseInt(reminder.getWarning()) >= Integer.parseInt(reminder.getRemaining())) {
-                        startForeground(NOTIFICATION_ID, notification);
+                    if(reminder.getWarning() != null && reminder.getRemaining() != null) {
+                        if (Integer.parseInt(reminder.getWarning()) >= Integer.parseInt(reminder.getRemaining())) {
+                            startForeground(NOTIFICATION_ID, notification);
+                        }
                     }
                 }
             }else if(!guest.equals("")){
