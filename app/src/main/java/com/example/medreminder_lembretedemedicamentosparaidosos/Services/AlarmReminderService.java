@@ -70,6 +70,8 @@ public class AlarmReminderService extends Service {
 
         reminderQueue = new LinkedList<>();
 
+        startForeground(NOTIFICATION_ID, createEmptyNotification());
+
         SharedPreferences sp = getSharedPreferences("app", Context.MODE_PRIVATE);
         String savedEmail = sp.getString("email", "");
         String guest = sp.getString("Guest", "");
@@ -345,5 +347,10 @@ public class AlarmReminderService extends Service {
                 mediaPlayer = null;
             }
         }
+    }
+
+    private Notification createEmptyNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+        return builder.build();
     }
 }
