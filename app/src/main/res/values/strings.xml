@@ -21,7 +21,7 @@
     <string name="quantity_for_notice">Quantidade para aviso</string>
     <string name="remaining_pills">Comprimidos restantes</string>
     <string name="is_running_out">está acabando, caso tenha comprado mais pilulas, informe no botão "reposição"</string>
-    <string name="textHelpMedicine">Nesta página estão todos os medicamentos que você cadastrou. Caso o medicamento seja comprimido, você pode controlar sua quantidade, sendo avisando quando perto de acabar.</string>
+    <string name="textHelpMedicine">Nesta página estão todos os medicamentos que você cadastrou. Caso o medicamento seja comprimido, você pode controlar sua quantidade, sendo avisado quando perto de acabar.</string>
 
     <!--  Reminders  -->
     <string name="all_your_reminders">Todos seus lembretes</string>

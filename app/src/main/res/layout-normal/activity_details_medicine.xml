@@ -37,23 +37,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/medicine_for_details" />
 
-    <me.grantland.widget.AutofitTextView
-        android:id="@+id/nomeProduto"
-        android:layout_width="353dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="30dp"
-        android:fontFamily="@font/oswald_medium"
-        android:text="Cloreto de potássio"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView14"
-        autofit:minTextSize="8sp" />
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/nomeProduto"
+            android:layout_width="353dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/oswald_medium"
+            android:text="Nome do medicamento"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView14"
+            autofit:minTextSize="8sp" />
 
         <LinearLayout
             android:layout_width="0dp"
