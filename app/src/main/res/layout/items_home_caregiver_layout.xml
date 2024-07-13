@@ -33,7 +33,7 @@
                 android:src="@drawable/medicamento_home_2" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imagePill"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginStart="5dp"

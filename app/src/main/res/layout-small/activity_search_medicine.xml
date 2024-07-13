@@ -97,6 +97,7 @@
                     android:background="@drawable/shape_buttons_login"
                     android:fontFamily="@font/baloo_chettan"
                     android:text="Pesquisar"
+                    android:autoSizeTextType="uniform"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
 
