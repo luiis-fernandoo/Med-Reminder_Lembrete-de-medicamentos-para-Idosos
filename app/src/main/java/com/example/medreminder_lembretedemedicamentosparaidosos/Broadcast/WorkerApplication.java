@@ -6,8 +6,12 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.AlarmManagerCompat;
 import androidx.work.BackoffPolicy;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
@@ -26,6 +30,10 @@ public class WorkerApplication extends Application {
         super.onCreate();
 
         TimeZone.setDefault(TimeZone.getTimeZone("America/Sao_Paulo"));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            checkCanScheduleExactAlarms(this);
+        }
 
         worker();
         setAlarmRepeting();
@@ -60,5 +68,15 @@ public class WorkerApplication extends Application {
                         .build());
 
         InsertLogHelper.i("WorkerManager", "workerManager started with success!!");
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private void checkCanScheduleExactAlarms(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
+            Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 }
